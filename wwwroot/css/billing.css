@@ -7,7 +7,7 @@
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 li {
@@ -590,6 +590,72 @@ body {
     font-size: 16px;
 }
 
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: var(--light);
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.modal .close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--grey);
+    border-radius: 4px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-pay {
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-pay:hover {
+    background-color: #2a7bb9;
+}
+
 .btn-pay {
     background: var(--blue);
     color: var(--light);
@@ -626,21 +692,207 @@ body {
     color: var(--dark);
 }
 
+/* Payment History Table */
 .payment-history table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--light);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.payment-history table th,
-.payment-history table td {
-    padding: 12px;
+.payment-history th,
+.payment-history td {
+    padding: 12px 15px;
     text-align: left;
-    border-bottom: 1px solid var(--grey);
 }
 
-.payment-history table th {
+.payment-history th {
+    background: var(--blue);
+    color: var(--light);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.payment-history tr {
+    transition: background 0.2s ease;
+}
+
+.payment-history tr:nth-child(even) {
+    background: var(--grey);
+}
+
+.payment-history tr:hover {
+    background: var(--light-blue);
+}
+
+.payment-history .status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.payment-history .status.completed {
+    background: var(--light-green);
+    color: var(--green);
+}
+
+.payment-history .status.pending {
+    background: var(--light-orange);
+    color: var(--orange);
+}
+
+.payment-history .btn-download,
+.payment-history .btn-pay {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.payment-history .btn-download {
+    background: var(--blue);
+    color: var(--light);
+}
+
+.payment-history .btn-download:hover {
+    background: var(--light-blue);
+    color: var(--blue);
+}
+
+.payment-history .btn-pay {
+    background: var(--red);
+    color: var(--light);
+}
+
+.payment-history .btn-pay:hover {
+    background: var(--light-orange);
+    color: var(--orange);
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.card.bg-success,
+.card.bg-warning,
+.card.bg-info {
+    background: white !important;
+    color: var(--dark) !important;
+}
+
+.card.bg-success .card-title,
+.card.bg-warning .card-title,
+.card.bg-info .card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-header {
+    margin-bottom: 20px;
+}
+
+.card-header h2 {
+    font-size: 24px;
     font-weight: 600;
     color: var(--dark);
+    margin-bottom: 5px;
+}
+
+.card-header .subtitle {
+    color: var(--dark-grey);
+    font-size: 14px;
+}
+
+.card-content {
+    margin-bottom: 20px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.info-row .label {
+    color: var(--dark-grey);
+}
+
+.info-row .value {
+    color: var(--dark);
+    font-weight: 500;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 10px 0;
+}
+
+.status-badge.available {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.status-badge.unavailable {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #f44336;
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.card-actions .btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.btn-primary {
+    background: var(--blue);
+    color: var(--light);
+    border: none;
+}
+
+.btn-secondary {
+    background: var(--grey);
+    color: var(--dark);
+    border: none;
+}
+
+.btn i {
+    font-size: 16px;
 }
 
 .status {
@@ -655,9 +907,20 @@ body {
     color: #1e8449;
 }
 
-.status.pending {
-    background: var(--light-yellow);
-    color: var(--yellow);
+.status-pending {
+    color: var(--orange);
+    background: var(--light-orange);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.status-paid {
+    color: var(--green);
+    background: var(--light-green);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
 }
 
 .btn-download {
@@ -673,6 +936,111 @@ body {
 
 .btn-download:hover {
     background: var(--dark);
+}
+
+/* Status styling */
+.status-paid {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.status-pending {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.status-paid {
+    color: var(--green);
+    background: var(--light-green);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.btn-download {
+    padding: 6px 12px;
+    background: var(--blue);
+    color: var(--light);
+    border-radius: 6px;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-download:hover {
+    background: var(--dark);
+}
+
+/* Billing Type Cards */
+.billing-card {
+    background: var(--light);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.billing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.billing-card .card-header {
+    margin-bottom: 15px;
+}
+
+.billing-card .card-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 5px;
+}
+
+.billing-card .card-header .subtitle {
+    font-size: 14px;
+    color: var(--dark-grey);
+}
+
+.billing-card .card-content .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.billing-card .card-content .label {
+    font-size: 14px;
+    color: var(--dark-grey);
+}
+
+.billing-card .card-content .value {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--dark);
+}
+
+.billing-card .card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.billing-card .card-actions .btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 /* Responsive Design */
@@ -697,5 +1065,111 @@ body {
     
     .head-title .left h1 {
         font-size: 28px;
+    }
+}
+
+.action-btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.action-btn-group .btn {
+    width: 100%;
+    margin-bottom: 2px;
+    font-size: 0.95rem;
+    padding: 4px 8px;
+}
+.action-btn-group .btn:last-child {
+    margin-bottom: 0;
+}
+
+
+/* Billing Modal Table Styles */
+#billingsModal .modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#billingsModal .modal-header {
+    background: var(--blue);
+    color: white;
+    border-bottom: none;
+    padding: 1rem;
+}
+
+#billingsModal .modal-body {
+    padding: 0;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+#billingsModal table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+#billingsModal th {
+    background: var(--light);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 12px;
+    font-weight: 600;
+    color: var(--dark);
+    border-bottom: 2px solid var(--grey);
+}
+
+#billingsModal td {
+    padding: 12px;
+    border-bottom: 1px solid var(--grey);
+    vertical-align: middle;
+}
+
+#billingsModal tr:hover {
+    background-color: var(--light-blue);
+}
+
+#billingsModal .status-paid {
+    color: var(--green);
+    font-weight: 500;
+}
+
+#billingsModal .status-pending {
+    color: var(--orange);
+    font-weight: 500;
+}
+
+#billingsModal .action-btn-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+#billingsModal .btn {
+    padding: 6px 12px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+#billingsModal .btn-sm {
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    #billingsModal .modal-dialog {
+        margin: 1rem;
+    }
+    
+    #billingsModal th,
+    #billingsModal td {
+        padding: 8px;
+        font-size: 14px;
+    }
+    
+    #billingsModal .btn {
+        padding: 4px 8px;
+        font-size: 12px;
     }
 }

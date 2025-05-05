@@ -21,7 +21,7 @@ builder.Services.AddControllersWithViews()
 
 builder.Services.AddDbContext<HomeContext>(options =>
 {
-    options.UseSqlServer("Server=ALEXA\\SQLEXPRESS;Database=SubdivisionManagement_db;Trusted_Connection=True;TrustServerCertificate=True;");
+    options.UseSqlServer("Server=LAPTOP-2E6VUSUM\\SQLEXPRESS;Database=SubdivisionManagement_db;Trusted_Connection=True;TrustServerCertificate=True;");
 });
 
 var app = builder.Build();
@@ -52,6 +52,11 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Homeowner}/{action=Dashboard}/{id?}");
+
+app.MapControllerRoute(
+    name: "admin_facility_reservation",
+    pattern: "Admin/FacilityReservation",
+    defaults: new { controller = "Admin", action = "AdminFacilityReservation" });
 
 SeedDatabase(app.Services);
 

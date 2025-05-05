@@ -1,0 +1,608 @@
+@model IEnumerable<SubdivisionManagement.Model.Facility>
+
+@{
+    ViewData["Title"] = "Staff Facility Reservation";
+}
+
+<head>
+    <!-- BOXICONS -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- MY CSS -->
+    <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/facility_reservation.css" asp-append-version="true">
+</head>
+
+<title>Staff Facility Reservation</title>
+<body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <i class='bx bxs-smile'></i>
+            <span class="text">Staff Panel</span>
+        </a>
+        <ul class="side-menu top">
+            <li>
+                <a asp-area="" asp-controller="Staff" asp-action="Dashboard">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+				<a href="#">
+					<i class='bx bxs-user'></i>
+					<span class="text">Profile</span>
+				</a>
+			</li>
+			<li>
+				<a asp-action="Announcements" asp-controller="Staff">
+					<i class='bx bxs-megaphone'></i>
+					<span class="text">Announcement</span>
+				</a>
+			</li>
+			<li>
+				<a asp-area="" asp-controller="Staff" asp-action="StaffBilling">
+					<i class='bx bxs-credit-card-front'></i>
+					<span class="text">Payment and Billing</span>
+				</a>
+			</li>
+            <li class="active">
+                <a asp-area="" asp-controller="Staff" asp-action="StaffFacilityReservation">
+                    <i class='bx bxs-calendar'></i>
+                    <span class="text">Facility Reservation</span>
+                </a>
+            </li>
+            <li>
+				<a asp-area="" asp-controller="Staff" asp-action="staff_services">
+					<i class='bx bxs-briefcase'></i>
+					<span class="text">Services</span>
+				</a>
+			</li>
+            <li>
+				<a asp-area="" asp-controller="Staff" asp-action="staff_community_forum">
+					<i class='bx bxs-message-square-dots'></i>
+					<span class="text">Community Forum</span>
+				</a>
+			</li>
+			<li>
+				<a asp-area="" asp-controller="Staff" asp-action="staff_security_visitors">
+					<i class='bx bxs-shield-alt-2'></i>
+					<span class="text">Security and Visitors</span>
+				</a>
+			</li>
+			<li>
+                <a asp-area="" asp-controller="Staff" asp-action="staff_contact_and_support">
+                    <i class='bx bx-support'></i>
+                    <span class="text">Contact and Support</span>
+                </a>
+            </li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a href="#">
+					<i class='bx bxs-cog'></i>
+					<span class="text">Settings</span>
+				</a>
+			</li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a asp-action="Logout" class="logout">
+                    <i class='bx bxs-log-out-circle'></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a asp-area="" asp-controller="Staff" asp-action="Dashboard" class="breadcrumb">Dashboard</a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Facility Management</h1>
+                </div>
+                <button id="addFacilityBtn" class="view-btn">
+                    <i class='bx bx-plus'></i> Add Facility
+                </button>
+            </div>
+
+            <!-- FACILITIES SECTION -->
+            <div class="facilities-section">
+                <div class="facilities-header">
+                    <h2>Existing Facilities</h2>
+                </div>
+
+                <div class="facilities-grid">
+                    @foreach (var facility in Model)
+                    {
+                        <div class="facility-card">
+                            <div class="facility-image">
+                                <img src="@facility.ImagePath" alt="@facility.Name">
+                            </div>
+                            <div class="facility-info">
+                                <h3>@facility.Name</h3>
+                                <p>@facility.Description</p>
+                                <p><strong>Capacity:</strong> @facility.Capacity</p>
+                                <p><strong>Added:</strong> @facility.DateCreated.ToString("yyyy-MM-dd")</p>
+                                <p class="facility-status @(facility.Status.ToLower())">
+                                    <strong>Status:</strong> @facility.Status
+                                </p>
+                            </div>
+                            <div class="facility-actions">
+                                <button class="book-btn view-reservation-btn" data-facility-id="@facility.Id">
+                                    <i class='bx bx-calendar'></i> View Reservations
+                                </button>
+                                <button class="book-btn edit-facility-btn" data-facility-id="@facility.Id">
+                                    <i class='bx bx-edit'></i> Edit
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+
+    <!-- ADD FACILITY MODAL -->
+    <div id="addFacilityModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Facility</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form asp-action="AddFacility" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="Name">Facility Name</label>
+                        <input type="text" id="Name" name="Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Description">Description</label>
+                        <textarea id="Description" name="Description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="Capacity">Capacity</label>
+                        <input type="number" id="Capacity" name="Capacity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ImagePath">Image</label>
+                        <input type="file" id="ImagePath" name="ImagePath" accept="image/*" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn">Cancel</button>
+                        <button type="submit" class="submit-btn">Add Facility</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT FACILITY MODAL -->
+    <div id="editFacilityModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Facility</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="editFacilityForm" asp-action="EditFacility" method="post" enctype="multipart/form-data">
+                    <input type="hidden" id="EditId" name="Id" />
+                    <div class="form-group">
+                        <label for="EditName">Facility Name</label>
+                        <input type="text" id="EditName" name="Name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="EditDescription">Description</label>
+                        <textarea id="EditDescription" name="Description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="EditCapacity">Capacity</label>
+                        <input type="number" id="EditCapacity" name="Capacity" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="EditImagePath">Image</label>
+                        <input type="file" id="EditImagePath" name="ImagePath" accept="image/*" />
+                    </div>
+                    <div class="form-group">
+                        <label for="EditStatus">Status</label>
+                        <select id="EditStatus" name="Status" required>
+                            <option value="Available">Available</option>
+                            <option value="Unavailable">Unavailable</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn">Cancel</button>
+                        <button type="submit" class="submit-btn">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESERVATION MODAL -->
+    <div id="reservationModal" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h2>Facility Reservations</h2>
+                <span class="close-btn" id="closeReservationModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <table class="reservation-table" style="width:100%; border-collapse:collapse;">
+                    <thead>
+                        <tr>
+                            <th>Homeowner</th>
+                            <th>Purpose</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Note</th>
+                            <th>Last Updated By</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reservationTableBody">
+                        <!-- Reservations will be loaded here -->
+                    </tbody>
+                </table>
+                <div id="reservationModalPagination" style="margin-top:16px; text-align:center;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // MODAL FUNCTIONALITY
+        const addFacilityBtn = document.getElementById('addFacilityBtn');
+        const addFacilityModal = document.getElementById('addFacilityModal');
+        const closeBtn = document.querySelector('.close-btn');
+        const cancelBtn = document.querySelector('.cancel-btn');
+
+        if (addFacilityBtn) {
+            addFacilityBtn.addEventListener('click', () => {
+                addFacilityModal.style.display = 'block';
+            });
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                addFacilityModal.style.display = 'none';
+            });
+        }
+
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', () => {
+                addFacilityModal.style.display = 'none';
+            });
+        }
+
+        window.addEventListener('click', (e) => {
+            if (e.target === addFacilityModal) {
+                addFacilityModal.style.display = 'none';
+            }
+        });
+
+        // VIEW RESERVATION BUTTONS
+        const viewReservationBtns = document.querySelectorAll('.view-reservation-btn');
+        viewReservationBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const facilityId = btn.getAttribute('data-facility-id');
+            });
+        });
+
+        // FUNCTION TO SHOW NOTIFICATION
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `message ${type}`;
+            
+            let icon = '';
+            switch(type) {
+                case 'success':
+                    icon = 'bx bx-check-circle';
+                    break;
+                case 'error':
+                    icon = 'bx bx-x-circle';
+                    break;
+                case 'warning':
+                    icon = 'bx bx-error';
+                    break;
+                default:
+                    icon = 'bx bx-info-circle';
+            }
+            
+            notification.innerHTML = `
+                <i class='${icon}'></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            const existingNotifications = document.querySelectorAll('.message');
+            existingNotifications.forEach(notif => {
+                if (notif !== notification) {
+                    notif.remove();
+                }
+            });
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease forwards';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // SIDEBAR TOGGLE
+        const menuBar = document.querySelector('#content nav .bx-menu');
+        const sidebar = document.getElementById('sidebar');
+
+        if (menuBar && sidebar) {
+            menuBar.addEventListener('click', function () {
+                sidebar.classList.toggle('hide');
+            });
+        }
+
+        // SIDEBAR ACTIVE STATE
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+        if (allSideMenu.length > 0) {
+            const currentPath = window.location.pathname;
+            allSideMenu.forEach(item => {
+                const li = item.parentElement;
+                if (item.getAttribute('href') === currentPath || 
+                    (currentPath.includes(item.getAttribute('href')) && item.getAttribute('href') !== '/')) {
+                    allSideMenu.forEach(i => {
+                        i.parentElement.classList.remove('active');
+                    });
+                    li.classList.add('active');
+                }
+            });
+        }
+
+        // DARK MODE
+        const switchMode = document.getElementById('switch-mode');
+        if (switchMode) {
+            switchMode.addEventListener('change', function () {
+                if(this.checked) {
+                    document.body.classList.add('dark');
+                } else {
+                    document.body.classList.remove('dark');
+                }
+            });
+        }
+
+        // FILTER BUTTONS
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // You can implement filtering logic here
+            });
+        });
+
+        // Pass the facilities data to JavaScript
+        const facilities = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model));
+
+        // EDIT MODAL FUNCTIONALITY
+        const editFacilityBtns = document.querySelectorAll('.edit-facility-btn');
+        const editFacilityModal = document.getElementById('editFacilityModal');
+        const editCloseBtn = editFacilityModal.querySelector('.close-btn');
+        const editCancelBtn = editFacilityModal.querySelector('.cancel-btn');
+        const editForm = document.getElementById('editFacilityForm');
+
+        editFacilityBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const facilityId = btn.getAttribute('data-facility-id');
+                const facility = facilities.find(f => f.Id == facilityId); // Find the facility by ID
+
+                if (facility) {
+                    document.getElementById('EditId').value = facility.Id;
+                    document.getElementById('EditName').value = facility.Name;
+                    document.getElementById('EditDescription').value = facility.Description;
+                    document.getElementById('EditCapacity').value = facility.Capacity;
+                    document.getElementById('EditStatus').value = facility.Status;
+                }
+
+                editFacilityModal.style.display = 'block';
+            });
+        });
+
+        if (editCloseBtn) {
+            editCloseBtn.addEventListener('click', () => {
+                editFacilityModal.style.display = 'none';
+            });
+        }
+
+        if (editCancelBtn) {
+            editCancelBtn.addEventListener('click', () => {
+                editFacilityModal.style.display = 'none';
+            });
+        }
+
+        window.addEventListener('click', (e) => {
+            if (e.target === editFacilityModal) {
+                editFacilityModal.style.display = 'none';
+            }
+        });
+
+        // Add confirmation and success message on form submission
+        editForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent default form submission
+
+            // Show confirmation dialog
+            const confirmSave = confirm("Are you sure you want to save changes?");
+            if (confirmSave) {
+                // Simulate form submission (replace with actual form submission logic if needed)
+                const formData = new FormData(editForm);
+
+                fetch(editForm.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        editFacilityModal.style.display = 'none'; // Close the modal
+                        showNotification("Changes saved successfully!", "success"); // Show success message
+                        location.reload(); // Reload the page to reflect changes
+                    } else {
+                        showNotification("Failed to save changes.", "error");
+                    }
+                })
+                .catch(() => {
+                    showNotification("An error occurred while saving changes.", "error");
+                });
+            }
+        });
+
+        // RESERVATION MODAL LOGIC
+        const reservationModal = document.getElementById('reservationModal');
+        const closeReservationModal = document.getElementById('closeReservationModal');
+        let currentFacilityId = null;
+        let modalReservations = [];
+        let modalCurrentPage = 1;
+        const modalPageSize = 5;
+
+        function renderModalReservationsPage(page) {
+            const tbody = document.getElementById('reservationTableBody');
+            tbody.innerHTML = '';
+            if (!modalReservations || modalReservations.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No reservations found.</td></tr>';
+                document.getElementById('reservationModalPagination').innerHTML = '';
+                return;
+            }
+            const start = (page - 1) * modalPageSize;
+            const end = Math.min(start + modalPageSize, modalReservations.length);
+            for (let i = start; i < end; i++) {
+                const resv = modalReservations[i];
+                const row = document.createElement('tr');
+                const statusClass = `status-cell status-${resv.status.toLowerCase()}`;
+                row.innerHTML = `
+                    <td>${resv.homeowner ? resv.homeowner.firstName + ' ' + resv.homeowner.lastName : ''}</td>
+                    <td>${resv.purpose}</td>
+                    <td>${resv.reservationDate.split('T')[0]}</td>
+                    <td>${resv.reservationTimeStart.substring(0,5)} - ${resv.reservationTimeEnd.substring(0,5)}</td>
+                    <td class="${statusClass}" data-id="status-cell-${resv.id}">
+                        <select class="status-select" data-id="${resv.id}">
+                            <option value="Pending" ${resv.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option value="Approved" ${resv.status === 'Approved' ? 'selected' : ''}>Approved</option>
+                            <option value="Disapproved" ${resv.status === 'Disapproved' ? 'selected' : ''}>Disapproved</option>
+                        </select>
+                    </td>
+                    <td><input type="text" class="note-input" data-id="${resv.id}" value="${resv.note ? resv.note : ''}" style="width:120px;" /></td>
+                    <td>${resv.lastUpdatedBy ? resv.lastUpdatedBy : ''}</td>
+                    <td><button class="save-reservation-btn" data-id="${resv.id}">Save</button></td>
+                `;
+                tbody.appendChild(row);
+            }
+            renderModalPaginationControls(page);
+        }
+
+        function renderModalPaginationControls(page) {
+            const totalPages = Math.ceil(modalReservations.length / modalPageSize);
+            const container = document.getElementById('reservationModalPagination');
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+            let html = '';
+            if (page > 1) {
+                html += `<button class='page-btn' onclick='goToModalReservationPage(${page-1})'>&laquo; Prev</button> `;
+            }
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button class='page-btn${i === page ? ' active' : ''}' onclick='goToModalReservationPage(${i})'>${i}</button> `;
+            }
+            if (page < totalPages) {
+                html += `<button class='page-btn' onclick='goToModalReservationPage(${page+1})'>Next &raquo;</button>`;
+            }
+            container.innerHTML = html;
+        }
+
+        window.goToModalReservationPage = function(page) {
+            modalCurrentPage = page;
+            renderModalReservationsPage(page);
+        }
+
+        viewReservationBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const facilityId = btn.getAttribute('data-facility-id');
+                currentFacilityId = facilityId;
+                fetch(`/Staff/GetFacilityReservations?facilityId=${facilityId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        modalReservations = data || [];
+                        modalCurrentPage = 1;
+                        renderModalReservationsPage(modalCurrentPage);
+                        reservationModal.style.display = 'block';
+                    });
+            });
+        });
+
+        if (closeReservationModal) {
+            closeReservationModal.addEventListener('click', () => {
+                reservationModal.style.display = 'none';
+            });
+        }
+        window.addEventListener('click', (e) => {
+            if (e.target === reservationModal) {
+                reservationModal.style.display = 'none';
+            }
+        });
+
+        // Save reservation status/note
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('save-reservation-btn')) {
+                const id = e.target.getAttribute('data-id');
+                const status = document.querySelector(`.status-select[data-id='${id}']`).value;
+                const note = document.querySelector(`.note-input[data-id='${id}']`).value;
+                const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+                fetch('/Staff/UpdateFacilityReservationStatus', {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': token || '',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `reservationId=${id}&status=${encodeURIComponent(status)}&note=${encodeURIComponent(note)}`
+                })
+                .then(res => res.json())
+                .then(data => {
+                    showNotification(data.message, data.success ? 'success' : 'error');
+                    // Update the status cell color immediately
+                    const statusCell = document.querySelector(`td[data-id='status-cell-${id}']`);
+                    if (statusCell) {
+                        statusCell.className = `status-cell status-${status.toLowerCase()}`;
+                    }
+                })
+                .catch(() => {
+                    showNotification('Failed to update reservation.', 'error');
+                });
+            }
+        });
+    </script>
+    <style>
+    /* Pagination button styles for modal */
+    .page-btn {
+        background: var(--grey);
+        color: var(--dark);
+        border: none;
+        border-radius: 4px;
+        padding: 6px 14px;
+        margin: 0 2px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .page-btn.active, .page-btn:hover {
+        background: var(--blue);
+        color: var(--light);
+    }
+    </style>
+</body> 

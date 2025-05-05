@@ -608,5 +608,229 @@ namespace SubdivisionManagement.Controllers
             public int HomeownerId { get; set; }
             public string NewStatus { get; set; } = string.Empty;
         }
+
+        // STAFF FACILITY RESERVATION MANAGEMENT
+        [HttpGet]
+        public IActionResult StaffFacilityReservation()
+        {
+            if (!IsStaffLoggedIn(out _))
+            {
+                return RedirectToAction("Login");
+            }
+            var facilities = _context.Facilities.ToList();
+            return View("StaffFacilityReservation", facilities);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddFacility(Facility facility, IFormFile ImagePath)
+        {
+            if (!IsStaffLoggedIn(out _))
+            {
+                return RedirectToAction("Login");
+            }
+            if (ImagePath != null)
+            {
+                var filePath = Path.Combine("wwwroot/images", ImagePath.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ImagePath.CopyToAsync(stream);
+                }
+                facility.ImagePath = $"/images/{ImagePath.FileName}";
+            }
+            _context.Facilities.Add(facility);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("StaffFacilityReservation");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditFacility(Facility facility, IFormFile? ImagePath)
+        {
+            if (!IsStaffLoggedIn(out _))
+            {
+                return RedirectToAction("Login");
+            }
+            var existingFacility = await _context.Facilities.FindAsync(facility.Id);
+            if (existingFacility == null)
+            {
+                return NotFound();
+            }
+            existingFacility.Name = facility.Name;
+            existingFacility.Description = facility.Description;
+            existingFacility.Capacity = facility.Capacity;
+            existingFacility.Status = facility.Status;
+            if (ImagePath != null)
+            {
+                var filePath = Path.Combine("wwwroot/images", ImagePath.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ImagePath.CopyToAsync(stream);
+                }
+                existingFacility.ImagePath = $"/images/{ImagePath.FileName}";
+            }
+            _context.Facilities.Update(existingFacility);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("StaffFacilityReservation");
+        }
+
+        // API: Get reservations for a facility
+        [HttpGet]
+        public IActionResult GetFacilityReservations(int facilityId)
+        {
+            if (!IsStaffLoggedIn(out _))
+                return Unauthorized();
+            var reservations = _context.FacilityReservations
+                .Include(r => r.Homeowner)
+                .Where(r => r.FacilityId == facilityId)
+                .OrderByDescending(r => r.DateSubmitted)
+                .ToList();
+            return Json(reservations);
+        }
+
+        // API: Update reservation status and note
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateFacilityReservationStatus(int reservationId, string status, string? note)
+        {
+            if (!IsStaffLoggedIn(out _))
+                return Unauthorized();
+            var reservation = await _context.FacilityReservations.FindAsync(reservationId);
+            if (reservation == null)
+                return NotFound();
+            reservation.Status = status;
+            reservation.Note = note;
+            // Set LastUpdatedBy to staff's Id as string
+            var staff = GetLoggedInStaffUser(HttpContext.Session.GetString("StaffUser"));
+            if (staff != null) reservation.LastUpdatedBy = staff.Id.ToString();
+            _context.FacilityReservations.Update(reservation);
+            await _context.SaveChangesAsync();
+            return Json(new { success = true, message = "Reservation updated." });
+        }
+
+        public IActionResult StaffBilling()
+        {
+            if (!IsStaffLoggedIn(out _))
+            {
+                return RedirectToAction("Login");
+            }
+
+            var billings = _context.Billings
+                .OrderByDescending(b => b.Date)  // Changed from DateCreated to Date
+                .ToList();
+            
+            return View(billings);
+        }
+
+ [HttpPost]
+    public async Task<IActionResult> AddBilling([FromForm] string Type, [FromForm] decimal Amount, 
+        [FromForm] string Status, [FromForm] string? Note, [FromForm] int HomeownerId, 
+        [FromForm] DateTime Date, IFormFile? ReceiptFile)
+    {
+        if (!IsStaffLoggedIn(out var username))
+            return Json(new { success = false, message = "Unauthorized" });
+        try
+        {
+            var billing = new Billing
+            {
+                Type = Type,
+                Amount = Amount,
+                Status = Status,
+                Note = Note,
+                HomeownerId = HomeownerId,
+                Date = Date,
+                LastUpdatedBy = username
+            };
+
+            if (ReceiptFile != null)
+            {
+                // Create directory if it doesn't exist
+                var uploadDir = Path.Combine("wwwroot", "uploads", "receipts");
+                Directory.CreateDirectory(uploadDir);
+
+                // Generate unique filename
+                var fileName = $"{Guid.NewGuid()}_{ReceiptFile.FileName}";
+                var filePath = Path.Combine(uploadDir, fileName);
+
+                // Save file
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ReceiptFile.CopyToAsync(stream);
+                }
+
+                // Save relative path to database
+                billing.ReceiptPath = $"/uploads/receipts/{fileName}";
+            }
+
+            _context.Billings.Add(billing);
+            await _context.SaveChangesAsync();
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = "Error saving billing: " + ex.Message });
+        }
     }
+
+    [HttpPost]
+    public async Task<IActionResult> MarkAsPaid(int id, string? note)
+    {
+        if (!IsStaffLoggedIn(out var username))
+            return Json(new { success = false, message = "Unauthorized" });
+    
+        var billing = await _context.Billings.FindAsync(id);
+        if (billing == null)
+            return NotFound();
+    
+        billing.Status = "Paid";
+        billing.Note = note;
+        billing.LastUpdatedBy = username;
+    
+        _context.Billings.Update(billing);
+        await _context.SaveChangesAsync();
+    
+        // Redirect to AdminBilling after marking as paid
+        return RedirectToAction("StaffBilling");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> DownloadReceipt(int id)
+    {
+        var billing = await _context.Billings.FindAsync(id);
+        if (billing == null || string.IsNullOrEmpty(billing.ReceiptPath))
+            return NotFound();
+    
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", billing.ReceiptPath.TrimStart('/').Replace("/", Path.DirectorySeparatorChar.ToString()));
+        if (!System.IO.File.Exists(filePath))
+            return NotFound();
+    
+        var fileName = Path.GetFileName(filePath);
+        var contentType = "application/octet-stream";
+        return PhysicalFile(filePath, contentType, fileName);
+    }
+    
+    
+    [HttpPost]
+    public async Task<IActionResult> DeleteBilling(int id)
+    {
+        var billing = await _context.Billings.FindAsync(id);
+        if (billing == null)
+            return Json(new { success = false, message = "Billing not found." });
+    
+        // Delete receipt file if exists
+        if (!string.IsNullOrEmpty(billing.ReceiptPath))
+        {
+            var filePath = Path.Combine("wwwroot", billing.ReceiptPath.TrimStart('/').Replace("/", Path.DirectorySeparatorChar.ToString()));
+            if (System.IO.File.Exists(filePath))
+                System.IO.File.Delete(filePath);
+        }
+    
+        _context.Billings.Remove(billing);
+        await _context.SaveChangesAsync();
+        return Json(new { success = true });
+
+       
+    }
+}
+
 }

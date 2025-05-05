@@ -12,6 +12,9 @@ namespace SubdivisionManagement.Model
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<ServiceRequest> ServiceRequests { get; set; }
         public DbSet<ContactRequest> ContactRequests { get; set; }
+        public DbSet<Facility> Facilities { get; set; } // Ensure this line exists
+        public DbSet<FacilityReservation> FacilityReservations { get; set; } // Add this line
+        public DbSet<Billing> Billings { get; set; } // Add Billing table
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +38,18 @@ namespace SubdivisionManagement.Model
                 .HasOne(cr => cr.Homeowner)
                 .WithMany()
                 .HasForeignKey(cr => cr.HomeownerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<FacilityReservation>()
+                .HasOne(fr => fr.Homeowner)
+                .WithMany()
+                .HasForeignKey(fr => fr.HomeownerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Billing>()
+                .HasOne(b => b.Homeowner)
+                .WithMany()
+                .HasForeignKey(b => b.HomeownerId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

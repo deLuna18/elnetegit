@@ -14,7 +14,7 @@
 			<span class="text">Welcome</span>
 		</a>
 		<ul class="side-menu top">
-			<li class="active">
+			<li>
 				<a asp-area="" asp-controller="Home" asp-action="dashboard">
 					<i class='bx bxs-dashboard'></i>
 					<span class="text">Dashboard</span>
@@ -32,7 +32,7 @@
 					<span class="text">Announcement</span>
 				</a>
 			</li>
-			<li>
+			<li class="active">
 				<a asp-area="" asp-controller="Home" asp-action="billing">
 					<i class='bx bxs-credit-card-front'></i>
 					<span class="text">Payment and Billing</span>
@@ -112,58 +112,33 @@
             </div>
         </div>
 
-        <div class="box-info">
-            <li>
-                <i class='bx bxs-dollar-circle'></i>
-                <div class="text">
-                    <h3>₱5,500.00</h3>
-                    <p>Outstanding Balance</p>
-                </div>
-            </li>
-
-             <li>
-                <i class='bx bxs-calendar'></i>
-                <div class="text">
-                    <h3>December 15, 2023</h3>
-                    <p>Next Due Date</p>
-                </div>
-            </li>
-
-             <li>
-                <i class='bx bxs-credit-card'></i>
-                <div class="text">
-                    <h3>₱2,500.00</h3>
-                    <p>Monthly Dues</p>
-                </div>
-            </li>
+<!-- Statistics -->
+<div class="box-info">
+    <li>
+        <i class='bx bxs-dollar-circle'></i>
+        <div class="text">
+            <h3>₱@ViewBag.TotalPending.ToString("N2")</h3>
+            <p>Total Pending Bills</p>
         </div>
+    </li>
 
-        <div class="make-payment">
-            <div class="head">
-                <h3>Make a Payment</h3>
-            </div>
-            <form class="payment-form">
-                <div class="form-group">
-                    <label>Payment Amount (₱)</label>
-                    <input type="number" placeholder="Enter amount" required>
-                </div>
-                <div class="form-group">
-                    <label>Payment Method</label>
-                    <select required>
-                        <option value="">Select payment method</option>
-                        <option value="credit">Credit Card</option>
-                        <option value="debit">Debit Card</option>
-                        <option value="gcash">GCash</option>
-                        <option value="maya">Maya</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Invoice Number (Optional)</label>
-                    <input type="text" placeholder="Enter invoice number">
-                </div>
-                <button type="submit" class="btn-pay">Pay Now</button>
-            </form>
+    <li>
+        <i class='bx bxs-calendar'></i>
+        <div class="text">
+            <h3>@ViewBag.MostRecentDueDate.ToString("MMMM dd, yyyy")</h3>
+            <p>Most Recent Due Date</p>
         </div>
+    </li>
+
+    <li>
+        <i class='bx bxs-credit-card'></i>
+        <div class="text">
+            <h3>₱@ViewBag.CurrentMonthTotal.ToString("N2")</h3>
+            <p>Current Month Total</p>
+        </div>
+    </li>
+</div>
+
 
         <div class="payment-history">
             <div class="head">
@@ -173,39 +148,54 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Invoice No.</th>
-                        <th>Date</th>
-                        <th>Description</th>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Due Date</th>
                         <th>Amount</th>
+                        <th>Payment Method</th>
                         <th>Status</th>
+                        <th>Note</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>INV-2023-001</td>
-                        <td>Dec 1, 2023</td>
-                        <td>Monthly Association Dues</td>
-                        <td>₱2,500.00</td>
-                        <td><span class="status completed">Paid</span></td>
-                        <td><a href="#" class="btn-download"><i class='bx bx-download'></i> Receipt</a></td>
-                    </tr>
-                    <tr>
-                        <td>INV-2023-002</td>
-                        <td>Nov 1, 2023</td>
-                        <td>Monthly Association Dues</td>
-                        <td>₱2,500.00</td>
-                        <td><span class="status completed">Paid</span></td>
-                        <td><a href="#" class="btn-download"><i class='bx bx-download'></i> Receipt</a></td>
-                    </tr>
-                    <tr>
-                        <td>INV-2023-003</td>
-                        <td>Oct 1, 2023</td>
-                        <td>Monthly Association Dues + Penalty</td>
-                        <td>₱2,800.00</td>
-                        <td><span class="status pending">Pending</span></td>
-                        <td><a href="#" class="btn-download"><i class='bx bx-download'></i> Invoice</a></td>
-                    </tr>
+                    @foreach (var billing in ViewBag.Billings)
+                    {
+                        <tr>
+                            <td>@billing.Id</td>
+                            <td>@billing.Type</td>
+                            <td>@billing.Date.ToString("MMMM dd, yyyy")</td>
+                            <td>₱@billing.Amount.ToString("N2")</td>
+                            <td>@(billing.PaymentMethod ?? "N/A")</td>
+                            <td>
+                                <span class="status @(billing.Status.ToLower() == "paid" ? "completed" : "pending")">
+                                    @billing.Status
+                                </span>
+                            </td>
+                            <td>@(billing.Note ?? "N/A")</td>
+                            <td>
+                                @if (billing.Status.ToLower() == "paid")
+                                {
+                                    @if (!string.IsNullOrEmpty(billing.ReceiptPath))
+                                    {
+                                        <a href="@billing.ReceiptPath" class="btn-download" download>
+                                            <i class='bx bx-download'></i> Receipt
+                                        </a>
+                                    }
+                                }
+                                else
+                                {
+                                    <button class="btn-pay" data-billing-id="@billing.Id">Pay Now</button>
+                                    @if (!string.IsNullOrEmpty(billing.ReceiptPath))
+                                    {
+                                        <a href="@billing.ReceiptPath" class="btn-download" download>
+                                            <i class='bx bx-download'></i> Receipt
+                                        </a>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
@@ -243,4 +233,70 @@
 				document.body.classList.remove('dark');
 			}
 		})
+</script>
+
+<!-- Add this modal at the bottom of the file -->
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Select Payment Method</h2>
+        <form id="paymentForm">
+            <div class="form-group">
+                <label for="paymentMethod">Payment Method:</label>
+                <select id="paymentMethod" name="paymentMethod" required>
+                    <option value="">Select...</option>
+                    <option value="Debit Card">Debit Card</option>
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="Gcash">Gcash</option>
+                    <option value="Maya">Maya</option>
+                </select>
+            </div>
+            <input type="hidden" id="billingId" name="billingId">
+            <div class="form-actions">
+                <button type="submit" class="btn-pay">Submit Payment</button>
+                <button type="button" class="btn-secondary close-modal">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Modal handling
+    const modal = document.getElementById('paymentModal');
+    const closeBtns = document.querySelectorAll('.close, .close-modal');
+    const paymentForm = document.getElementById('paymentForm');
+    
+    document.querySelectorAll('.btn-pay').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.getElementById('billingId').value = btn.dataset.billingId;
+            modal.style.display = 'block';
+        });
+    });
+
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    });
+
+    paymentForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(paymentForm);
+        
+        try {
+            const response = await fetch('/Home/ProcessPayment', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Payment failed. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        }
+    });
 </script>

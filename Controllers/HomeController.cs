@@ -170,6 +170,41 @@ public class HomeController : Controller
 
     public IActionResult Billing()
     {
+        if (!IsUserLoggedIn()) return RedirectToAction("Index");
+
+        var loggedInUserId = GetLoggedInUserId();
+        var currentDate = DateTime.Now;
+    
+        // Get total pending bills
+        var totalPending = _context.Billings
+            .Where(b => b.HomeownerId == loggedInUserId && b.Status == "Pending")
+            .Sum(b => b.Amount);
+    
+        // Get nearest upcoming due date
+        var upcomingDueDate = _context.Billings
+            .Where(b => b.HomeownerId == loggedInUserId && b.Date >= currentDate)
+            .OrderBy(b => b.Date)
+            .Select(b => b.Date)
+            .FirstOrDefault();
+    
+        // Get total amount for current month
+        var currentMonthTotal = _context.Billings
+            .Where(b => b.HomeownerId == loggedInUserId && 
+                       b.Date.Month == currentDate.Month && 
+                       b.Date.Year == currentDate.Year)
+            .Sum(b => b.Amount);
+    
+        // Get all billings for the logged in user
+        var billings = _context.Billings
+            .Where(b => b.HomeownerId == loggedInUserId)
+            .OrderByDescending(b => b.Date)
+            .ToList();
+    
+        ViewBag.TotalPending = totalPending;
+        ViewBag.MostRecentDueDate = upcomingDueDate;
+        ViewBag.CurrentMonthTotal = currentMonthTotal;
+        ViewBag.Billings = billings;
+    
         return View();
     }
 
@@ -270,12 +305,94 @@ public class HomeController : Controller
     public IActionResult facility_reservation()
     {
         if (!IsUserLoggedIn()) return RedirectToAction("Index");
-        return View();
+
+        var facilities = _context.Facilities.ToList(); // Fetch facilities from the database
+        return View(facilities); // Pass the facilities to the view
     }
 
     public IActionResult Logout()
     {
         HttpContext.Session.Clear();
         return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> BookFacility([FromForm] FacilityReservationDto reservationDto)
+    {
+        var loggedInUserId = GetLoggedInUserId();
+        if (loggedInUserId == null) return Unauthorized();
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        var facilityReservation = new FacilityReservation
+        {
+            FacilityId = reservationDto.FacilityId,
+            FacilityName = reservationDto.FacilityName,
+            Purpose = reservationDto.Purpose,
+            ReservationDate = reservationDto.ReservationDate,
+            ReservationTimeStart = reservationDto.ReservationTimeStart,
+            ReservationTimeEnd = reservationDto.ReservationTimeEnd,
+            DateSubmitted = DateTime.UtcNow,
+            Status = "Pending",
+            HomeownerId = loggedInUserId.Value // Set HomeownerId from session
+        };
+
+        _context.FacilityReservations.Add(facilityReservation);
+        await _context.SaveChangesAsync();
+
+        return Json(new {
+            success = true,
+            message = "Facility reservation submitted successfully!"
+        });
+    }
+
+    public class FacilityReservationDto
+    {
+        [Required] public int FacilityId { get; set; }
+        [Required] public string FacilityName { get; set; } = string.Empty;
+        [Required] public DateTime ReservationDate { get; set; }
+        [Required] public TimeSpan ReservationTimeStart { get; set; }
+        [Required] public TimeSpan ReservationTimeEnd { get; set; }
+        [Required] public string Purpose { get; set; } = string.Empty;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetHomeownerFacilityReservations()
+    {
+        var loggedInUserId = GetLoggedInUserId();
+        if (loggedInUserId == null) return Unauthorized();
+        var reservations = await _context.FacilityReservations
+            .Where(r => r.HomeownerId == loggedInUserId.Value)
+            .OrderByDescending(r => r.DateSubmitted)
+            .Select(r => new {
+                r.FacilityName,
+                r.Purpose,
+                ReservationDate = r.ReservationDate.ToString("yyyy-MM-dd"),
+                ReservationTimeStart = r.ReservationTimeStart.ToString(),
+                ReservationTimeEnd = r.ReservationTimeEnd.ToString(),
+                r.Status,
+                r.Note
+            })
+            .ToListAsync();
+        return Json(reservations);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ProcessPayment(int billingId, string paymentMethod)
+    {
+        var billing = await _context.Billings.FindAsync(billingId);
+        if (billing == null)
+        {
+            return NotFound();
+        }
+    
+        billing.Status = "Paid";
+        billing.PaymentMethod = paymentMethod;
+        billing.LastUpdatedBy = User.Identity?.Name ?? "System";
+    
+        _context.Billings.Update(billing);
+        await _context.SaveChangesAsync();
+    
+        return Ok();
     }
 }

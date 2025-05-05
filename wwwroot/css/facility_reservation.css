@@ -239,7 +239,7 @@ body.dark .cancel-btn {
 }
 
 .message.success {
-    background: #3C91E6;
+    background: lightgreen;
 }
 
 .message.error {
@@ -366,32 +366,58 @@ body.dark .message.warning {
     border-radius: 15px;
     font-size: 0.8rem;
     margin-top: 10px;
+    text-transform: capitalize;
 }
 
 .facility-status.available {
-    background: var(--light-green);
-    color: var(--green);
+    background: #DFF2BF; /* Light green */
+    color: #4F8A10; /* Green */
 }
 
 .facility-status.unavailable {
-    background: var(--light-orange);
-    color: var(--orange);
+    background: #FFCCCC; /* Light red */
+    color: #FF0000; /* Red */
 }
 
 .book-btn {
     width: 100%;
     padding: 10px;
     border: none;
-    background: var(--blue);
-    color: var(--light);
+    background: #3C91E6; /* Blue color */
+    color: white; /* Text color */
     cursor: pointer;
     transition: all 0.3s ease;
+    border-radius: 5px; /* Optional: Add rounded corners */
 }
 
 .book-btn:hover {
     background: var(--dark);
 }
 
+/* Facility card actions layout */
+.facility-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.facility-actions .book-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px, 5px 0 0 5px;
+    background: var(--blue);
+    color: var(--light);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.facility-actions .book-btn:hover {
+    background: var(--dark);
+}
+
+/* MODAL STYLES */
 .modal {
     display: none;
     position: fixed;
@@ -532,6 +558,158 @@ body.dark .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
 body.dark .fc .fc-daygrid-day.fc-day-past {
     background: var(--dark);
     opacity: 0.5;
-} 
+}
+
+/* Reservation Modal Table Styles */
+.reservation-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--light);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    font-family: var(--poppins);
+    margin-bottom: 0;
+    overflow: hidden;
+}
+.reservation-table th, .reservation-table td {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.97rem;
+}
+.reservation-table th {
+    background: var(--grey);
+    color: var(--dark);
+    font-weight: 600;
+    border-bottom: 2px solid var(--blue);
+}
+.reservation-table tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s;
+}
+.reservation-table tr:last-child {
+    border-bottom: none;
+}
+.reservation-table td {
+    color: var(--dark);
+    vertical-align: middle;
+}
+.reservation-table tr:hover {
+    background: #f7faff;
+}
+.reservation-table select.status-select {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--grey);
+    background: var(--light);
+    color: var(--dark);
+    font-size: 0.95rem;
+}
+.reservation-table input.note-input {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--grey);
+    background: var(--light);
+    color: var(--dark);
+    font-size: 0.95rem;
+}
+.reservation-table button.save-reservation-btn {
+    background: var(--blue);
+    color: var(--light);
+    border: none;
+    border-radius: 5px;
+    padding: 6px 16px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.reservation-table button.save-reservation-btn:hover {
+    background: var(--dark);
+}
+
+/* Responsive for modal table */
+@media (max-width: 700px) {
+    .reservation-table th, .reservation-table td {
+        padding: 8px 6px;
+        font-size: 0.9rem;
+    }
+    .modal-content {
+        max-width: 99vw !important;
+    }
+}
+
+/* Dark mode for reservation modal table */
+body.dark .reservation-table {
+    background: var(--dark);
+}
+body.dark .reservation-table th {
+    background: #23272f;
+    color: var(--light);
+    border-bottom: 2px solid var(--blue);
+}
+body.dark .reservation-table td {
+    color: var(--light);
+}
+body.dark .reservation-table tr:hover {
+    background: #23272f;
+}
+body.dark .reservation-table select.status-select,
+body.dark .reservation-table input.note-input {
+    background: #23272f;
+    color: var(--light);
+    border: 1px solid var(--grey);
+}
+body.dark .reservation-table button.save-reservation-btn {
+    background: var(--blue);
+    color: var(--light);
+}
+body.dark .reservation-table button.save-reservation-btn:hover {
+    background: var(--grey);
+}
+
+/* Reservation status color coding */
+.reservation-table td.status-cell {
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 0;
+}
+.reservation-table .status-select {
+    min-width: 110px;
+    font-weight: 600;
+}
+.reservation-table .status-approved {
+    background: #DFF2BF;
+    color: #4F8A10;
+}
+.reservation-table .status-pending {
+    background: #FFF6BF;
+    color: #9F6000;
+}
+.reservation-table .status-disapproved {
+    background: #FFCCCC;
+    color: #D8000C;
+}
+body.dark .reservation-table .status-approved {
+    background: #2e4d1c;
+    color: #b6ffb6;
+}
+body.dark .reservation-table .status-pending {
+    background: #665c1e;
+    color: #ffe680;
+}
+body.dark .reservation-table .status-disapproved {
+    background: #5a2323;
+    color: #ffb3b3;
+}
+
+#reservationModal .modal-content {
+    max-width: 1100px;
+    width: 98vw;
+    overflow-x: auto;
+}
+
+#reservationModal .reservation-table {
+    min-width: 1000px;
+}
 
 
