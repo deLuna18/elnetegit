@@ -133,6 +133,165 @@
                 margin-bottom: 5px;
             }
         }
+
+        /* Enhanced Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .close-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .request-info {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-row .label {
+            font-weight: 600;
+            width: 120px;
+            color: #666;
+        }
+
+        .info-row .value {
+            color: #333;
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-select, .form-control {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-select:focus, .form-control:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+
+        .form-text {
+            display: block;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+
+        .modal-footer {
+            padding: 1rem;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status.pending { background-color: #ffeeba; color: #856404; }
+        .status.accepted { background-color: #b8daff; color: #004085; }
+        .status.in-progress { background-color: #c3e6cb; color: #155724; }
+        .status.completed { background-color: #d4edda; color: #155724; }
+        .status.rejected { background-color: #f8d7da; color: #721c24; }
     </style>
 </head>
 
@@ -163,15 +322,9 @@
 				</a>
 			</li>
 			<li>
-				<a asp-area="" asp-controller="Staff" asp-action="StaffBilling">
+				<a href="#">
 					<i class='bx bxs-credit-card-front'></i>
 					<span class="text">Payment and Billing</span>
-				</a>
-			</li>
-            <li>
-				<a asp-area="" asp-controller="Staff" asp-action="StaffFacilityReservation">
-					<i class='bx bxs-credit-card-front'></i>
-					<span class="text">Facility Reservation</span>
 				</a>
 			</li>
 			<li class="active">
@@ -250,10 +403,6 @@
                     </select>
                     <select id="typeFilter" onchange="filterRequests()">
                         <option value="all">All Types</option>
-                        <option value="maintenance">Maintenance</option>
-                        <option value="security">Security</option>
-                        <option value="landscaping">Landscaping</option>
-                        <option value="facility">Facility</option>
                     </select>
                     <div class="search-box">
                         <i class='bx bx-search'></i>
@@ -410,22 +559,61 @@
     <!-- UPDATE STATUS MODAL -->
     <div id="updateStatusModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeUpdateStatusModal()">&times;</span>
-            <h2>Update Request Status</h2>
+            <div class="modal-header">
+                <h2>Update Service Request</h2>
+                <span class="close-btn" onclick="closeUpdateStatusModal()">&times;</span>
+            </div>
             <form id="updateStatusForm">
-                <div class="form-group">
-                    <label for="newStatus">New Status</label>
-                    <select id="newStatus" required>
-                        <option value="pending">Pending</option>
-                        <option value="in-progress">In Progress</option>
-                        <option value="completed">Completed</option>
-                    </select>
+                <div class="modal-body">
+                    <div class="request-info">
+                        <div class="info-row">
+                            <span class="label">Request ID:</span>
+                            <span id="modalRequestId" class="value"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Homeowner:</span>
+                            <span id="modalHomeowner" class="value"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Service Type:</span>
+                            <span id="modalServiceType" class="value"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Current Status:</span>
+                            <span id="modalCurrentStatus" class="value"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newStatus">Update Status To</label>
+                        <select id="newStatus" class="form-select" required>
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assignedEmployee">Assign Service Employee</label>
+                        <select id="assignedEmployee" class="form-select">
+                            <option value="">Select an employee</option>
+                        </select>
+                        <small class="form-text">Choose a service employee to handle this request</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="staffNotes">Staff Notes</label>
+                        <textarea id="staffNotes" class="form-control" rows="3" 
+                            placeholder="Add any relevant notes about this status update..."></textarea>
+                        <small class="form-text">Notes are required when rejecting a request</small>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="staffNotes">Staff Notes</label>
-                    <textarea id="staffNotes" placeholder="Add any relevant notes..."></textarea>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeUpdateStatusModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update Request</button>
+                    <button type="button" id="completeRequestBtn" class="btn btn-success" style="display: none;">
+                        Mark as Completed
+                    </button>
                 </div>
-                <button type="submit" class="submit-btn">Update Status</button>
             </form>
         </div>
     </div>
@@ -510,6 +698,13 @@
         let currentSortColumn = 'dateSubmitted'; // Default sort
         let currentSortDirection = 'desc';
 
+        // Add these variables at the top with other state variables
+        let serviceEmployees = [];
+        let serviceCategories = [];
+        let serviceLogs = [];
+        let currentLogsPage = 1;
+        const logsPerPage = 10;
+
         // ------ UTILITY FUNCTIONS ------
         function getStatusText(status) {
             if (!status) return 'Unknown';
@@ -581,6 +776,64 @@
             } finally {
                  showLoadingIndicator(false);
             }
+        }
+
+        // Add this function to fetch service employees
+        async function fetchServiceEmployees() {
+            try {
+                const response = await fetch('/Staff/GetServiceEmployees');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                serviceEmployees = await response.json();
+                populateEmployeeDropdown();
+            } catch (error) {
+                console.error("Error fetching service employees:", error);
+                showNotification("Failed to load service employees.", "error");
+            }
+        }
+
+        function populateEmployeeDropdown() {
+            const dropdown = document.getElementById('assignedEmployee');
+            if (!dropdown) return;
+
+            dropdown.innerHTML = '<option value="">Select an employee</option>';
+            
+            serviceEmployees.forEach(employee => {
+                if (employee.status.toLowerCase() === 'active') {
+                    const option = document.createElement('option');
+                    option.value = employee.id;
+                    option.textContent = `${employee.name} (${employee.specialization})`;
+                    dropdown.appendChild(option);
+                }
+            });
+        }
+
+        // Fetch service categories
+        async function fetchServiceCategories() {
+            try {
+                const response = await fetch('/Admin/GetServiceCategories');
+                if (!response.ok) throw new Error('Failed to fetch categories');
+                serviceCategories = await response.json();
+                populateTypeFilter();
+            } catch (error) {
+                console.error('Error fetching service categories:', error);
+            }
+        }
+
+        // Populate type filter with service categories
+        function populateTypeFilter() {
+            const typeFilter = document.getElementById('typeFilter');
+            if (!typeFilter) return;
+
+            typeFilter.innerHTML = '<option value="all">All Types</option>';
+            
+            serviceCategories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.name.toLowerCase();
+                option.textContent = category.name;
+                typeFilter.appendChild(option);
+            });
         }
 
         // ------ FILTERING AND SORTING ------
@@ -772,31 +1025,28 @@
 
                 if (currentStatusLower === 'pending') {
                     actionButtons += `
-                        <button class="action-btn accept" onclick="promptUpdateStatus(${request.id}, 'Accepted')" title="Accept Request">
+                        <button class="action-btn accept" onclick="openUpdateStatusModal(${request.id})" title="Update Status">
                             <i class='bx bx-check-double'></i>
                         </button>
-                        <button class="action-btn reject" onclick="promptUpdateStatus(${request.id}, 'Rejected')" title="Reject Request">
+                        <button class="action-btn reject" onclick="openUpdateStatusModal(${request.id})" title="Reject Request">
                             <i class='bx bx-x-circle'></i>
                         </button>
                     `;
                 } else if (currentStatusLower === 'accepted') {
                     actionButtons += `
-                        <button class="action-btn progress" onclick="promptUpdateStatus(${request.id}, 'In-Progress')" title="Start Progress">
+                        <button class="action-btn progress" onclick="openUpdateStatusModal(${request.id})" title="Update Status">
                             <i class='bx bx-play-circle'></i>
                         </button>
-                         <button class="action-btn reject" onclick="promptUpdateStatus(${request.id}, 'Rejected')" title="Reject Request">
+                        <button class="action-btn reject" onclick="openUpdateStatusModal(${request.id})" title="Reject Request">
                             <i class='bx bx-x-circle'></i>
                         </button>
-                         <button class="action-btn complete" onclick="promptUpdateStatus(${request.id}, 'Completed', true)" title="Mark Complete">
-                             <i class='bx bx-check-circle'></i>
-                         </button>
                     `;
                 } else if (currentStatusLower === 'in-progress') {
-                     actionButtons += `
-                        <button class="action-btn complete" onclick="promptUpdateStatus(${request.id}, 'Completed', true)" title="Mark Complete">
+                    actionButtons += `
+                        <button class="action-btn complete" onclick="openUpdateStatusModal(${request.id})" title="Update Status">
                             <i class='bx bx-check-circle'></i>
                         </button>
-                         <button class="action-btn reject" onclick="promptUpdateStatus(${request.id}, 'Rejected')" title="Reject Request">
+                        <button class="action-btn reject" onclick="openUpdateStatusModal(${request.id})" title="Reject Request">
                             <i class='bx bx-x-circle'></i>
                         </button>
                     `;
@@ -1031,20 +1281,27 @@
         async function updateStatusOnServer(requestId, newStatus, staffNotes = null) {
              showLoadingIndicator(true);
              try {
+                 const assignedEmployeeId = document.getElementById('assignedEmployee')?.value;
+                 
                  const response = await fetch('/Staff/UpdateServiceRequestStatus', {
                      method: 'POST',
                      headers: {
                          'Content-Type': 'application/json',
                          'RequestVerificationToken': antiForgeryToken
                      },
-                     body: JSON.stringify({ requestId, newStatus, staffNotes })
+                     body: JSON.stringify({ 
+                         requestId, 
+                         newStatus, 
+                         staffNotes,
+                         assignedEmployeeId: assignedEmployeeId ? parseInt(assignedEmployeeId) : null
+                     })
                  });
 
                  const result = await response.json();
 
                  if (response.ok && result.success) {
                      showNotification(result.message || `Request status updated to ${newStatus}.`, 'success');
-                     await fetchServiceRequests(); 
+                     await fetchServiceRequests();
                  } else {
                      throw new Error(result.message || 'Failed to update status.');
                  }
@@ -1085,32 +1342,65 @@
         function viewRequestDetails(requestId) {
             const request = allServiceRequests.find(r => r.id === parseInt(requestId));
             if (!request) {
-                 showNotification('Request details not found.', 'error');
-                 return;
+                showNotification('Request details not found.', 'error');
+                return;
             }
+
+            const assignedEmployee = request.staffId ? serviceEmployees.find(e => e.id === request.staffId) : null;
+            const serviceCategory = serviceCategories.find(c => c.name.toLowerCase() === request.serviceType.toLowerCase());
 
             const modal = document.getElementById('requestDetailsModal');
             const content = document.getElementById('requestDetailsContent');
             if (!modal || !content) return;
 
             content.innerHTML = `
-                 <p><strong>Request ID:</strong> ${request.requestId || 'N/A'}</p>
-                 <p><strong>Homeowner:</strong> ${request.homeownerName || 'N/A'}</p>
-                 <p><strong>Service Type:</strong> ${request.serviceType || 'N/A'}</p>
-                 <p><strong>Priority:</strong> <span class="priority ${request.priority?.toLowerCase() || 'unknown'}">${request.priority || 'N/A'}</span></p>
-                 <p><strong>Status:</strong> <span class="status ${request.status?.toLowerCase().replace('-', '') || 'unknown'}">${getStatusText(request.status)}</span></p>
-                 <p><strong>Date Submitted:</strong> ${formatDate(request.dateSubmitted)}</p>
-                 <p><strong>Description:</strong></p>
-                 <p style="white-space: pre-wrap; max-height: 150px; overflow-y: auto;">${request.description || '-'}</p>
-                 <hr>
-                 <p><strong>Staff Notes:</strong></p>
-                 <p style="white-space: pre-wrap; max-height: 150px; overflow-y: auto;">${request.staffNotes || '-'}</p>
-                  <hr>
-                  ${request.dateAccepted ? `<p><strong>Date Accepted:</strong> ${formatDate(request.dateAccepted)}</p>` : ''}
-                  ${request.dateStarted ? `<p><strong>Date Started:</strong> ${formatDate(request.dateStarted)}</p>` : ''}
-                  ${request.dateCompleted ? `<p><strong>Date Completed:</strong> ${formatDate(request.dateCompleted)}</p>` : ''}
-                  ${request.completionTime ? `<p><strong>Completion Time:</strong> ${request.completionTime}</p>` : ''}
-             `;
+                <div class="request-details">
+                    <div class="detail-row">
+                        <span class="label">Request ID:</span>
+                        <span class="value">${request.requestId || 'N/A'}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Service Type:</span>
+                        <span class="value">
+                            <i class='bx ${serviceCategory ? serviceCategory.icon : 'bx-question-mark'}'></i>
+                            ${request.serviceType || 'N/A'}
+                        </span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Homeowner:</span>
+                        <span class="value">${request.homeownerName || 'N/A'}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Priority:</span>
+                        <span class="value priority ${request.priority?.toLowerCase()}">${request.priority || 'N/A'}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Status:</span>
+                        <span class="value status ${request.status?.toLowerCase()}">${request.status || 'N/A'}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Assigned Employee:</span>
+                        <span class="value">${assignedEmployee ? assignedEmployee.name : 'Not assigned'}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Description:</span>
+                        <p class="value description">${request.description || 'No description provided'}</p>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Staff Notes:</span>
+                        <p class="value notes">${request.staffNotes || 'No notes added'}</p>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Timeline:</span>
+                        <div class="value timeline">
+                            <div>Submitted: ${formatDate(request.dateSubmitted)}</div>
+                            ${request.dateAccepted ? `<div>Accepted: ${formatDate(request.dateAccepted)}</div>` : ''}
+                            ${request.dateStarted ? `<div>Started: ${formatDate(request.dateStarted)}</div>` : ''}
+                            ${request.dateCompleted ? `<div>Completed: ${formatDate(request.dateCompleted)}</div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
 
             modal.style.display = 'block';
         }
@@ -1209,11 +1499,26 @@
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
-            await fetchServiceRequests(); 
-
-            populateYearFilter(); 
+            await Promise.all([
+                fetchServiceCategories(),
+                fetchServiceEmployees(),
+                fetchServiceRequests()
+            ]);
             
-            applyFiltersAndSort(); 
+            populateYearFilter();
+            
+            applyFiltersAndSort();
+
+            // Add event listener for the update status form
+            document.getElementById('updateStatusForm')?.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const requestId = currentRequestId; // Add this variable at the top of your script
+                const newStatus = document.getElementById('newStatus').value;
+                const staffNotes = document.getElementById('staffNotes').value;
+                
+                await updateStatusOnServer(requestId, newStatus, staffNotes);
+                closeUpdateStatusModal();
+            });
 
             document.getElementById('statusFilter')?.addEventListener('change', applyFiltersAndSort);
             document.getElementById('typeFilter')?.addEventListener('change', applyFiltersAndSort);
@@ -1276,6 +1581,89 @@
                 }
                 yearFilterSelect.appendChild(option);
             });
+        }
+
+        // Add this variable at the top of your script
+        let currentRequestId = null;
+
+        function openUpdateStatusModal(requestId) {
+            currentRequestId = requestId;
+            const modal = document.getElementById('updateStatusModal');
+            if (!modal) return;
+            
+            const request = allServiceRequests.find(r => r.id === requestId);
+            if (!request) return;
+
+            // Update request info
+            document.getElementById('modalRequestId').textContent = request.requestId || 'N/A';
+            document.getElementById('modalHomeowner').textContent = request.homeownerName || 'N/A';
+            document.getElementById('modalServiceType').textContent = request.serviceType || 'N/A';
+            document.getElementById('modalCurrentStatus').innerHTML = 
+                `<span class="status ${request.status?.toLowerCase()}">${getStatusText(request.status)}</span>`;
+
+            // Update status options based on current status
+            const statusSelect = document.getElementById('newStatus');
+            const currentStatus = request.status?.toLowerCase();
+            
+            statusSelect.innerHTML = ''; // Clear existing options
+            
+            if (currentStatus === 'pending') {
+                statusSelect.innerHTML = `
+                    <option value="accepted">Accept Request</option>
+                    <option value="rejected">Reject Request</option>
+                `;
+            } else if (currentStatus === 'accepted') {
+                statusSelect.innerHTML = `
+                    <option value="in-progress">Start Progress</option>
+                    <option value="completed">Mark as Completed</option>
+                    <option value="rejected">Reject Request</option>
+                `;
+            } else if (currentStatus === 'in-progress') {
+                statusSelect.innerHTML = `
+                    <option value="completed">Mark as Completed</option>
+                    <option value="rejected">Reject Request</option>
+                `;
+            }
+
+            // Pre-fill the form with current values
+            document.getElementById('staffNotes').value = request.staffNotes || '';
+            
+            // Pre-select the assigned employee if any
+            const assignedEmployeeSelect = document.getElementById('assignedEmployee');
+            if (assignedEmployeeSelect) {
+                assignedEmployeeSelect.value = request.staffId || '';
+            }
+
+            // Show/hide complete button based on assigned employee
+            const completeBtn = document.getElementById('completeRequestBtn');
+            if (completeBtn) {
+                const hasEmployee = assignedEmployeeSelect.value !== '';
+                const canComplete = currentStatus === 'in-progress' || currentStatus === 'accepted';
+                completeBtn.style.display = hasEmployee && canComplete ? 'block' : 'none';
+            }
+
+            // Add event listener for employee selection
+            assignedEmployeeSelect.addEventListener('change', function() {
+                const hasEmployee = this.value !== '';
+                const canComplete = currentStatus === 'in-progress' || currentStatus === 'accepted';
+                completeBtn.style.display = hasEmployee && canComplete ? 'block' : 'none';
+            });
+
+            // Add event listener for complete button
+            document.getElementById('completeRequestBtn').onclick = function() {
+                document.getElementById('newStatus').value = 'completed';
+                document.getElementById('updateStatusForm').submit();
+            };
+
+            modal.style.display = 'block';
+        }
+
+        function closeUpdateStatusModal() {
+            const modal = document.getElementById('updateStatusModal');
+            if (modal) {
+                modal.style.display = 'none';
+                currentRequestId = null;
+            }
         }
 
     </script>

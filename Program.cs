@@ -21,10 +21,40 @@ builder.Services.AddControllersWithViews()
 
 builder.Services.AddDbContext<HomeContext>(options =>
 {
-    options.UseSqlServer("Server=LAPTOP-2E6VUSUM\\SQLEXPRESS;Database=SubdivisionManagement_db;Trusted_Connection=True;TrustServerCertificate=True;");
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlServerOptionsAction: sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                errorNumbersToAdd: null);
+        });
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<HomeContext>();
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
+        context.Database.Migrate();
+        
+        if (!context.Admins.Any())
+        {
+            context.Admins.Add(new Admin("admin", HashPassword("password123")));
+            context.SaveChanges();
+        }
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while creating/migrating the database.");
+    }
+}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -58,23 +88,11 @@ app.MapControllerRoute(
     pattern: "Admin/FacilityReservation",
     defaults: new { controller = "Admin", action = "AdminFacilityReservation" });
 
-SeedDatabase(app.Services);
-
-app.Run();
-
-void SeedDatabase(IServiceProvider services)
+app.UseStaticFiles(new StaticFileOptions
 {
-    using var scope = services.CreateScope();
-    var context = scope.ServiceProvider.GetRequiredService<HomeContext>();
-    context.Database.Migrate();
-
-    if (!context.Admins.Any())
-{
-    context.Admins.Add(new Admin("admin", HashPassword("password123")));
-    context.SaveChanges();
-}
-
-}
+    ServeUnknownFileTypes = true,
+    DefaultContentType = "text/plain"
+});
 
 static string HashPassword(string password)
 {
@@ -87,9 +105,5 @@ static string HashPassword(string password)
         numBytesRequested: 256 / 8));
 }
 
-app.UseStaticFiles(new StaticFileOptions
-{
-    ServeUnknownFileTypes = true,
-    DefaultContentType = "text/plain"
-});
+app.Run();
 

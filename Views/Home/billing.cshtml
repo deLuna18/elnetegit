@@ -241,6 +241,7 @@
         <span class="close">&times;</span>
         <h2>Select Payment Method</h2>
         <form id="paymentForm">
+            @Html.AntiForgeryToken()
             <div class="form-group">
                 <label for="paymentMethod">Payment Method:</label>
                 <select id="paymentMethod" name="paymentMethod" required>

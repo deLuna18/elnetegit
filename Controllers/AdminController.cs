@@ -6,15 +6,21 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Antiforgery;
 
 
 public class AdminController : Controller
 {
     private readonly HomeContext _context;
+    private readonly ILogger<AdminController> _logger;
+    private readonly IAntiforgery _antiforgery;
 
-    public AdminController(HomeContext context)
+    public AdminController(HomeContext context, ILogger<AdminController> logger, IAntiforgery antiforgery)
     {
         _context = context;
+        _logger = logger;
+        _antiforgery = antiforgery;
     }
 
     public IActionResult Login()
@@ -101,6 +107,452 @@ public class AdminController : Controller
         await _context.SaveChangesAsync();
 
         return Json(new { message = "Staff successfully registered." });
+    }
+
+     public IActionResult Services()
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+        {
+            return RedirectToAction("Login");
+        }
+
+        var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+        ViewBag.AntiForgeryToken = tokens.RequestToken;
+        return View("admin_services");
+    }
+
+    public IActionResult SecurityVisitors()
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+        {
+            return RedirectToAction("Login");
+        }
+
+        var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+        ViewBag.AntiForgeryToken = tokens.RequestToken;
+        ViewBag.AdminName = HttpContext.Session.GetString("AdminUser");
+        return View("admin_security_visitors");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetServiceCategories()
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            var categories = await _context.ServiceCategories
+                .OrderBy(c => c.Name)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Name,
+                    c.Description,
+                    c.Icon
+                })
+                .ToListAsync();
+
+            return Json(categories);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching service categories");
+            return StatusCode(500, new { message = "Error fetching service categories" });
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddServiceCategory([FromBody] ServiceCategory category)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            _context.ServiceCategories.Add(category);
+            await _context.SaveChangesAsync();
+            return Json(new { success = true, message = "Category added successfully" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error adding service category");
+            return StatusCode(500, new { success = false, message = "Error adding category" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetServiceEmployees()
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            var employees = await _context.Staffs
+                .Where(s => s.Role == "ServiceEmployee" || s.Role == "Staff")
+                .Select(s => new
+                {
+                    s.Id,
+                    s.Username,
+                    Name = s.FullName,
+                    s.Email,
+                    Phone = s.ContactNumber,
+                    s.Status,
+                    s.Specialization,
+                    s.Department,
+                    s.Position
+                })
+                .ToListAsync();
+
+            return Json(employees);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching service employees");
+            return StatusCode(500, new { message = "Error fetching service employees" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetServiceLogs()
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            var logs = await _context.ServiceRequests
+                .Include(sr => sr.Homeowner)
+                .Include(sr => sr.Staff)
+                .OrderByDescending(sr => sr.DateSubmitted)
+                .Select(sr => new
+                {
+                    sr.Id,
+                    RequestId = $"SR-{sr.Id:D3}",
+                    HomeownerName = sr.Homeowner != null ? $"{sr.Homeowner.FirstName} {sr.Homeowner.LastName}" : "N/A",
+                    sr.ServiceType,
+                    sr.Priority,
+                    sr.Status,
+                    DateSubmitted = sr.DateSubmitted,
+                    sr.Description,
+                    sr.DateAccepted,
+                    sr.DateStarted,
+                    sr.DateCompleted,
+                    CompletionTime = sr.DateCompleted.HasValue && sr.DateAccepted.HasValue 
+                        ? (sr.DateCompleted.Value - sr.DateAccepted.Value).TotalDays.ToString("F1") + " days"
+                        : null,
+                    sr.StaffNotes,
+                    StaffName = sr.Staff != null ? sr.Staff.FullName : null
+                })
+                .ToListAsync();
+
+            return Json(logs);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching service logs");
+            return StatusCode(500, new { message = "Error fetching service logs" });
+        }
+    }
+
+    [HttpPut]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateServiceCategory([FromBody] ServiceCategory category)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            var existingCategory = await _context.ServiceCategories.FindAsync(category.Id);
+            if (existingCategory == null)
+                return NotFound(new { success = false, message = "Category not found" });
+
+            existingCategory.Name = category.Name;
+            existingCategory.Description = category.Description;
+            existingCategory.Icon = category.Icon;
+            existingCategory.DateModified = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+            return Json(new { success = true, message = "Category updated successfully" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating service category");
+            return StatusCode(500, new { success = false, message = "Error updating category" });
+        }
+    }
+
+    [HttpDelete]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteServiceCategory(int id)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            var category = await _context.ServiceCategories.FindAsync(id);
+            if (category == null)
+                return NotFound(new { success = false, message = "Category not found" });
+
+            _context.ServiceCategories.Remove(category);
+            await _context.SaveChangesAsync();
+            return Json(new { success = true, message = "Category deleted successfully" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting service category");
+            return StatusCode(500, new { success = false, message = "Error deleting category" });
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddServiceEmployee([FromBody] ServiceEmployeeDto employeeDto)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            var staff = new Staff
+            {
+                FullName = employeeDto.Name,
+                Email = employeeDto.Email,
+                ContactNumber = employeeDto.Phone,
+                Specialization = employeeDto.Specialization,
+                Role = "ServiceEmployee",
+                Status = "active",
+                Username = employeeDto.Email, // Using email as username
+                PasswordHash = HashPassword("password123") // Default password
+            };
+
+            _context.Staffs.Add(staff);
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true, message = "Employee added successfully" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error adding service employee");
+            return StatusCode(500, new { success = false, message = "Error adding employee" });
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateEmployeeStatus([FromBody] UpdateEmployeeStatusDto model)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            var employee = await _context.Staffs.FindAsync(model.EmployeeId);
+            if (employee == null)
+                return NotFound(new { success = false, message = "Employee not found" });
+
+            employee.Status = model.Status;
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true, message = $"Employee status updated to {model.Status}" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating employee status");
+            return StatusCode(500, new { success = false, message = "Error updating employee status" });
+        }
+    }
+
+    [HttpPut]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateServiceEmployee([FromBody] UpdateServiceEmployeeDto model)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            var employee = await _context.Staffs.FindAsync(model.Id);
+            if (employee == null)
+                return NotFound(new { success = false, message = "Employee not found" });
+
+            employee.FullName = model.Name;
+            employee.Email = model.Email;
+            employee.ContactNumber = model.Phone;
+            employee.Specialization = model.Specialization;
+            employee.Username = model.Email; // Update username to match new email
+
+            await _context.SaveChangesAsync();
+            return Json(new { success = true, message = "Employee updated successfully" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating service employee");
+            return StatusCode(500, new { success = false, message = "Error updating employee" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllVisitorPasses()
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            _logger.LogInformation("Fetching visitor passes from database");
+            
+            var passes = await _context.VisitorPasses
+                .Include(vp => vp.Homeowner)
+                .OrderByDescending(vp => vp.VisitDate)
+                .Select(vp => new
+                {
+                    vp.Id,
+                    vp.VisitorName,
+                    vp.VisitDate,
+                    vp.Purpose,
+                    vp.Status,
+                    vp.EntryTime,
+                    vp.ExitTime,
+                    HomeownerName = vp.Homeowner != null ? $"{vp.Homeowner.FirstName} {vp.Homeowner.LastName}" : "N/A",
+                    RequestDate = vp.VisitDate
+                })
+                .ToListAsync();
+
+            _logger.LogInformation($"Retrieved {passes.Count} visitor passes");
+            return Json(passes);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching visitor passes");
+            return StatusCode(500, new { message = "Error fetching visitor passes", error = ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllVehicleRegistrations()
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            _logger.LogInformation("Fetching vehicle registrations from database");
+            
+            var registrations = await _context.VehicleRegistrations
+                .Include(vr => vr.Homeowner)
+                .OrderByDescending(vr => vr.RegistrationDate)
+                .Select(vr => new
+                {
+                    vr.Id,
+                    vr.VehicleMake,
+                    vr.VehicleModel,
+                    vr.PlateNumber,
+                    vr.Status,
+                    vr.RegistrationDate,
+                    HomeownerName = vr.Homeowner != null ? $"{vr.Homeowner.FirstName} {vr.Homeowner.LastName}" : "N/A"
+                })
+                .ToListAsync();
+
+            _logger.LogInformation($"Retrieved {registrations.Count} vehicle registrations");
+            return Json(registrations);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching vehicle registrations");
+            return StatusCode(500, new { message = "Error fetching vehicle registrations", error = ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> ExportVisitorPasses()
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            var passes = await _context.VisitorPasses
+                .Include(vp => vp.Homeowner)
+                .OrderByDescending(vp => vp.VisitDate)
+                .Select(vp => new
+                {
+                    vp.VisitorName,
+                    VisitDate = vp.VisitDate.ToString("MM/dd/yyyy"),
+                    vp.Purpose,
+                    vp.Status,
+                    EntryTime = vp.EntryTime.HasValue ? vp.EntryTime.Value.ToString("HH:mm:ss") : "N/A",
+                    ExitTime = vp.ExitTime.HasValue ? vp.ExitTime.Value.ToString("HH:mm:ss") : "N/A",
+                    HomeownerName = vp.Homeowner != null ? $"{vp.Homeowner.FirstName} {vp.Homeowner.LastName}" : "N/A",
+                    RequestDate = vp.VisitDate.ToString("MM/dd/yyyy")
+                })
+                .ToListAsync();
+
+            return Json(passes);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error exporting visitor passes");
+            return StatusCode(500, new { message = "Error exporting visitor passes", error = ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> ExportVehicleRegistrations()
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            var registrations = await _context.VehicleRegistrations
+                .Include(vr => vr.Homeowner)
+                .OrderByDescending(vr => vr.RegistrationDate)
+                .Select(vr => new
+                {
+                    vr.VehicleMake,
+                    vr.VehicleModel,
+                    vr.PlateNumber,
+                    vr.Status,
+                    RegistrationDate = vr.RegistrationDate.ToString("MM/dd/yyyy"),
+                    HomeownerName = vr.Homeowner != null ? $"{vr.Homeowner.FirstName} {vr.Homeowner.LastName}" : "N/A"
+                })
+                .ToListAsync();
+
+            return Json(registrations);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error exporting vehicle registrations");
+            return StatusCode(500, new { message = "Error exporting vehicle registrations", error = ex.Message });
+        }
+    }
+
+    public class ServiceEmployeeDto
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+        public string Specialization { get; set; } = string.Empty;
+    }
+
+    public class UpdateEmployeeStatusDto
+    {
+        public int EmployeeId { get; set; }
+        public string Status { get; set; } = string.Empty;
+    }
+
+    public class UpdateServiceEmployeeDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+        public string Specialization { get; set; } = string.Empty;
     }
 
     public IActionResult AdminFacilityReservation()

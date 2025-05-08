@@ -964,3 +964,241 @@ body.dark .vehicle-list::-webkit-scrollbar-thumb {
         gap: 3px;
     }
 }
+
+
+.logs-container {
+    margin-top: 20px;
+}
+
+.log-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.log-summary {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.summary-item i {
+    font-size: 1.2rem;
+}
+
+.summary-item span {
+    font-weight: bold;
+    color: #2980b9;
+}
+
+.log-list {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.log-item {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.log-header {
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.log-body {
+    padding: 15px;
+}
+
+.log-type {
+    font-weight: 600;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.log-time {
+    color: #7f8c8d;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.log-message {
+    margin-bottom: 10px;
+    color: #34495e;
+}
+
+.log-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #eee;
+    font-size: 0.85rem;
+}
+
+.log-staff {
+    color: #7f8c8d;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.log-resolution {
+    margin-top: 15px;
+    padding: 10px;
+    background: #e8f5e9;
+    border-radius: 5px;
+    font-size: 0.85rem;
+}
+
+.log-resolution strong {
+    color: #27ae60;
+}
+
+.log-actions {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.btn-handle {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s;
+}
+
+.btn-handle:hover {
+    background: #2980b9;
+}
+
+.btn-refresh {
+    background: #2ecc71;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s;
+}
+
+.btn-refresh:hover {
+    background: #27ae60;
+}
+
+.badge-completed {
+    background: #2ecc71;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+}
+
+.badge-pending {
+    background: #f39c12;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+}
+
+.no-data {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-style: italic;
+    background: #f9f9f9;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.list-item {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.list-item .request-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.list-item .request-info span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.list-item .request-info i {
+    font-size: 1.1em;
+    color: #2980b9;
+}
+
+.btn-handle {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s;
+}
+
+.btn-handle:hover {
+    background: #2980b9;
+}
+
+.btn-exit {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s;
+}
+
+.btn-exit:hover {
+    background: #c0392b;
+}

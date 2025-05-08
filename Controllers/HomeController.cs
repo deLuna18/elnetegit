@@ -290,9 +290,183 @@ public class HomeController : Controller
         [Required] public string Priority { get; set; } = string.Empty;
     }
 
+[HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> RequestVisitorPass([FromBody] VisitorPassDto passDto)
+    {
+        try
+        {
+            var loggedInUserId = GetLoggedInUserId();
+            if (loggedInUserId == null) return Unauthorized(new { success = false, message = "Please log in to continue." });
+            if (!ModelState.IsValid) return BadRequest(new { success = false, message = "Invalid form data." });
+
+            var visitorPass = new VisitorPass
+            {
+                HomeownerId = loggedInUserId.Value,
+                VisitorName = passDto.VisitorName,
+                VisitDate = DateTime.Parse(passDto.VisitDate),
+                Purpose = passDto.Purpose,
+                Status = "Pending",
+                RequestDate = DateTime.UtcNow
+            };
+
+            _context.VisitorPasses.Add(visitorPass);
+            await _context.SaveChangesAsync();
+
+            return Json(new
+            {
+                success = true,
+                message = "Visitor pass request submitted successfully!",
+                pass = new
+                {
+                    visitorPass.Id,
+                    visitorPass.VisitorName,
+                    VisitDate = visitorPass.VisitDate.ToString("yyyy-MM-dd"),
+                    visitorPass.Purpose,
+                    visitorPass.Status
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error submitting visitor pass request");
+            return StatusCode(500, new { success = false, message = "An error occurred while submitting the request." });
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> RegisterVehicle([FromBody] VehicleRegistrationDto regDto)
+    {
+        try
+        {
+            var loggedInUserId = GetLoggedInUserId();
+            if (loggedInUserId == null) return Unauthorized(new { success = false, message = "Please log in to continue." });
+            if (!ModelState.IsValid) return BadRequest(new { success = false, message = "Invalid form data." });
+
+            var registration = new VehicleRegistration
+            {
+                HomeownerId = loggedInUserId.Value,
+                VehicleMake = regDto.VehicleMake,
+                VehicleModel = regDto.VehicleModel,
+                PlateNumber = regDto.PlateNumber,
+                Status = "Pending",
+                RegistrationDate = DateTime.UtcNow
+            };
+
+            _context.VehicleRegistrations.Add(registration);
+            await _context.SaveChangesAsync();
+
+            return Json(new
+            {
+                success = true,
+                message = "Vehicle registration submitted successfully!",
+                registration = new
+                {
+                    registration.Id,
+                    registration.VehicleMake,
+                    registration.VehicleModel,
+                    registration.PlateNumber,
+                    registration.Status
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error submitting vehicle registration");
+            return StatusCode(500, new { success = false, message = "An error occurred while submitting the registration." });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetVisitorPasses()
+    {
+        try
+        {
+            var loggedInUserId = GetLoggedInUserId();
+            if (loggedInUserId == null) return Unauthorized();
+
+            var passes = await _context.VisitorPasses
+                .Where(v => v.HomeownerId == loggedInUserId.Value)
+                .OrderByDescending(v => v.RequestDate)
+                .Select(v => new
+                {
+                    v.Id,
+                    v.VisitorName,
+                    VisitDate = v.VisitDate.ToString("yyyy-MM-dd"),
+                    v.Purpose,
+                    v.Status
+                })
+                .ToListAsync();
+
+            return Json(passes);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving visitor passes");
+            return StatusCode(500, new { message = "An error occurred while retrieving visitor passes." });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetVehicleRegistrations()
+    {
+        try
+        {
+            var loggedInUserId = GetLoggedInUserId();
+            if (loggedInUserId == null) return Unauthorized();
+
+            var registrations = await _context.VehicleRegistrations
+                .Where(v => v.HomeownerId == loggedInUserId.Value)
+                .OrderByDescending(v => v.RegistrationDate)
+                .Select(v => new
+                {
+                    v.Id,
+                    v.VehicleMake,
+                    v.VehicleModel,
+                    v.PlateNumber,
+                    v.Status
+                })
+                .ToListAsync();
+
+            return Json(registrations);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving vehicle registrations");
+            return StatusCode(500, new { message = "An error occurred while retrieving vehicle registrations." });
+        }
+    }
+
+    public class VisitorPassDto
+    {
+        [Required]
+        public string VisitorName { get; set; } = string.Empty;
+        
+        [Required]
+        public string VisitDate { get; set; } = string.Empty;
+        
+        [Required]
+        public string Purpose { get; set; } = string.Empty;
+    }
+
+    public class VehicleRegistrationDto
+    {
+        [Required]
+        public string VehicleMake { get; set; } = string.Empty;
+        
+        [Required]
+        public string VehicleModel { get; set; } = string.Empty;
+        
+        [Required]
+        public string PlateNumber { get; set; } = string.Empty;
+    }
+
     public IActionResult security_visitors()
     {
         if (!IsUserLoggedIn()) return RedirectToAction("Index");
+        var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+        ViewBag.AntiForgeryToken = tokens.RequestToken;
         return View();
     }
 
@@ -378,6 +552,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> ProcessPayment(int billingId, string paymentMethod)
     {
         var billing = await _context.Billings.FindAsync(billingId);

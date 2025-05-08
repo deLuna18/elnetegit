@@ -1,0 +1,1349 @@
+@{
+    ViewData["Title"] = "Admin Services";
+    Layout = "_Layout";
+}
+
+<head>
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- My CSS -->
+    <link rel="stylesheet" href="~/css/admin_services.css" asp-append-version="true">  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<section id="sidebar">
+    <a href="#" class="brand">
+        <i class='bx bxs-smile'></i>
+        <span class="text">Admin</span>
+    </a>
+    <ul class="side-menu top">
+        <li>
+            <a asp-area="" asp-controller="Admin" asp-action="Dashboard">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-user'></i>
+                <span class="text">Profile</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-megaphone'></i>
+                <span class="text">Announcement</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-credit-card-front'></i>
+                <span class="text">Payment and Billing</span>
+            </a>
+        </li>
+        <li class="active">
+            <a asp-area="" asp-controller="Admin" asp-action="Services">
+                <i class='bx bxs-briefcase'></i>
+                <span class="text">Services</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-shield-alt-2'></i>
+                <span class="text">Security and Visitors</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="#">
+                <i class='bx bxs-cog'></i>
+                <span class="text">Settings</span>
+            </a>
+        </li>
+        <li>
+            <a asp-action="logout" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+        </li>
+    </ul>
+</section>
+
+<!-- CONTENT -->
+<section id="content">
+    <!-- NAVBAR -->
+    <nav>
+        <i class='bx bx-menu'></i>
+        <input type="hidden" id="antiForgeryToken" value="@ViewBag.AntiForgeryToken" />
+        <form action="#">
+            <div class="form-input">
+                <input type="search" placeholder="Search...">
+                <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+            </div>
+        </form>
+        <input type="checkbox" id="switch-mode" hidden>
+        <label for="switch-mode" class="switch-mode"></label>
+        <div class="profile">
+            <img src="~/images/admin-avatar.jpg" alt="Admin Profile" class="profile-pic">
+        </div>
+    </nav>
+
+    <div class="container">
+        <main>
+            <!-- Statistics Overview -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class='bx bx-list-check'></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="number" id="totalRequests">0</div>
+                        <div class="label">Total Requests</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class='bx bx-time'></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="number" id="pendingRequests">0</div>
+                        <div class="label">Pending</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class='bx bx-check-circle'></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="number" id="completedRequests">0</div>
+                        <div class="label">Completed</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class='bx bx-user'></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="number" id="totalEmployees">0</div>
+                        <div class="label">Service Employees</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Categories Section -->
+            <div class="card-section">
+                <div class="section-header">
+                    <h3>Service Categories</h3>
+                    <button class="btn btn-primary" onclick="openAddCategoryModal()">
+                        <i class='bx bx-plus'></i> Add Category
+                    </button>
+                </div>
+                <div class="category-grid" id="categoryGrid">
+                    <!-- Categories will be loaded dynamically -->
+                    <div class="empty-state">
+                        <i class='bx bx-package'></i>
+                        <p>No service categories found</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Employees Section -->
+            <div class="card-section">
+                <div class="section-header">
+                    <h3>Service Employees</h3>
+                    <button class="btn btn-primary" onclick="openAddEmployeeModal()">
+                        <i class='bx bx-user-plus'></i> Add Employee
+                    </button>
+                </div>
+                <div class="search-filter-bar">
+                    <div class="search-box">
+                        <i class='bx bx-search'></i>
+                        <input type="text" id="employeeSearch" placeholder="Search employees...">
+                    </div>
+                    <select id="employeeStatusFilter" class="form-select">
+                        <option value="all">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="employee-grid" id="employeeGrid">
+                    <!-- Employees will be loaded dynamically -->
+                    <div class="empty-state">
+                        <i class='bx bx-user-x'></i>
+                        <p>No service employees found</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Logs Section -->
+            <div class="card-section">
+                <div class="section-header">
+                    <h3>Service Request Logs</h3>
+                    <div class="logs-filters">
+                        <div class="search-box">
+                            <i class='bx bx-search'></i>
+                            <input type="text" id="logSearch" placeholder="Search logs...">
+                        </div>
+                        <select id="logStatusFilter" class="form-select">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="accepted">Accepted</option>
+                            <option value="completed">Completed</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        <select id="logDateFilter" class="form-select">
+                            <option value="all">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Request ID</th>
+                                <th>Service Type</th>
+                                <th>Homeowner</th>
+                                <th>Employee</th>
+                                <th>Status</th>
+                                <th>Date Submitted</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logsTableBody">
+                            <!-- Logs will be loaded dynamically -->
+                            <tr class="empty-state-row">
+                                <td colspan="7">
+                                    <div class="empty-state">
+                                        <i class='bx bx-file'></i>
+                                        <p>No service logs found</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="logsPagination">
+                    <button id="prevLogsPage" class="btn btn-outline-secondary" onclick="changeLogsPage(-1)">Previous</button>
+                    <span id="logsPageInfo">Page 1 of 1</span>
+                    <button id="nextLogsPage" class="btn btn-outline-secondary" onclick="changeLogsPage(1)">Next</button>
+                </div>
+            </div>
+        </main>
+    </div>
+</section>
+
+<!-- Add Category Modal -->
+<div id="addCategoryModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Service Category</h5>
+                <button type="button" class="btn-close" onclick="closeAddCategoryModal()"></button>
+            </div>
+            <form id="addCategoryForm" class="modal-form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="categoryName">Category Name *</label>
+                        <input type="text" id="categoryName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryDescription">Description *</label>
+                        <textarea id="categoryDescription" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryIcon">Icon (Boxicons class) *</label>
+                        <div class="input-group">
+                            <span class="input-group-text">bx-</span>
+                            <input type="text" id="categoryIcon" class="form-control" placeholder="wrench" required>
+                        </div>
+                        <small class="form-text">Example: wrench, cog, building-house</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddCategoryModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Category Modal -->
+<div id="editCategoryModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Service Category</h5>
+                <button type="button" class="btn-close" onclick="closeEditCategoryModal()"></button>
+            </div>
+            <form id="editCategoryForm" class="modal-form">
+                <input type="hidden" id="editCategoryId">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editCategoryName">Category Name *</label>
+                        <input type="text" id="editCategoryName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategoryDescription">Description *</label>
+                        <textarea id="editCategoryDescription" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategoryIcon">Icon (Boxicons class) *</label>
+                        <div class="input-group">
+                            <span class="input-group-text">bx-</span>
+                            <input type="text" id="editCategoryIcon" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeEditCategoryModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Employee Modal -->
+<div id="addEmployeeModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Service Employee</h5>
+                <button type="button" class="btn-close" onclick="closeAddEmployeeModal()"></button>
+            </div>
+            <form id="addEmployeeForm" class="modal-form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="employeeName">Full Name *</label>
+                        <input type="text" id="employeeName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="employeeEmail">Email *</label>
+                        <input type="email" id="employeeEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="employeePhone">Phone *</label>
+                        <input type="tel" id="employeePhone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="employeeSpecialization">Specialization *</label>
+                        <select id="employeeSpecialization" class="form-select" required>
+                            <option value="">Select a specialization</option>
+                        </select>
+                        <small class="form-text text-muted">Choose from available service categories</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddEmployeeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Employee</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- View Request Details Modal -->
+<div id="viewRequestModal" class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Request Details</h5>
+                <button type="button" class="btn-close" onclick="closeViewRequestModal()"></button>
+            </div>
+            <div class="modal-body" id="requestDetailsContent">
+                <!-- Details will be loaded dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeViewRequestModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View Employee Modal -->
+<div id="viewEmployeeModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Employee Details</h5>
+                <button type="button" class="btn-close" onclick="closeViewEmployeeModal()"></button>
+            </div>
+            <div class="modal-body" id="viewEmployeeContent">
+                <!-- Content will be loaded dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeViewEmployeeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Spinner -->
+<div id="loadingSpinner" class="loading-overlay">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1070;">
+    <div id="toastNotification" class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body d-flex align-items-center">
+                <i class='bx bx-info-circle me-2'></i>
+                <span id="toastMessage"></span>
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global variables
+    let serviceCategories = [];
+    let serviceEmployees = [];
+    let serviceLogs = [];
+    let currentLogsPage = 1;
+    const logsPerPage = 10;
+    const antiForgeryToken = document.getElementById('antiForgeryToken')?.value;
+
+    // Initialize everything when the document is ready
+    document.addEventListener('DOMContentLoaded', async () => {
+        await Promise.all([
+            fetchServiceCategories(),
+            fetchServiceEmployees(),
+            fetchServiceLogs()
+        ]);
+
+        setupEventListeners();
+        initializeDarkMode();
+    });
+
+    // Dark Mode Toggle
+    function initializeDarkMode() {
+        const switchMode = document.getElementById('switch-mode');
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark');
+            switchMode.checked = true;
+        }
+
+        switchMode.addEventListener('change', function() {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+        });
+    }
+
+    // Service Categories Management
+    async function fetchServiceCategories() {
+        showLoading(true);
+        try {
+            const response = await fetch('/Admin/GetServiceCategories');
+            if (!response.ok) throw new Error('Failed to fetch categories');
+            serviceCategories = await response.json();
+            updateCategoryGrid();
+            populateEmployeeSpecializationDropdown();
+        } catch (error) {
+            showToast('Error fetching service categories', 'error');
+            console.error(error);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    function updateCategoryGrid() {
+        const grid = document.getElementById('categoryGrid');
+        if (!grid) return;
+
+        if (serviceCategories.length === 0) {
+            grid.innerHTML = `
+                <div class="empty-state">
+                    <i class='bx bx-package'></i>
+                    <p>No service categories found</p>
+                </div>
+            `;
+            return;
+        }
+
+        grid.innerHTML = serviceCategories.map(category => `
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class='bx bx-${category.icon}'></i>
+                </div>
+                <div class="category-content">
+                    <h4>${category.name}</h4>
+                    <p>${category.description}</p>
+                </div>
+                <div class="category-actions">
+                    <button class="btn btn-sm btn-icon btn-outline-primary" onclick="editCategory(${category.id})">
+                        <i class='bx bx-edit'></i>
+                    </button>
+                    <button class="btn btn-sm btn-icon btn-outline-danger" onclick="deleteCategory(${category.id})">
+                        <i class='bx bx-trash'></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function populateEmployeeSpecializationDropdown() {
+        const dropdown = document.getElementById('employeeSpecialization');
+        if (!dropdown) return;
+
+        // Clear existing options except the first one
+        while (dropdown.options.length > 1) {
+            dropdown.remove(1);
+        }
+
+        // Sort categories alphabetically
+        const sortedCategories = [...serviceCategories].sort((a, b) => a.name.localeCompare(b.name));
+
+        // Add new options from service categories
+        sortedCategories.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category.name;
+            option.textContent = category.name;
+            dropdown.appendChild(option);
+        });
+
+        // If no categories available, add a disabled message
+        if (sortedCategories.length === 0) {
+            const option = document.createElement('option');
+            option.value = "";
+            option.textContent = "No categories available";
+            option.disabled = true;
+            dropdown.appendChild(option);
+        }
+    }
+
+    function openAddCategoryModal() {
+        const modal = new bootstrap.Modal(document.getElementById('addCategoryModal'));
+        modal.show();
+    }
+
+    function closeAddCategoryModal() {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('addCategoryModal'));
+        modal.hide();
+        document.getElementById('addCategoryForm').reset();
+    }
+
+    function editCategory(categoryId) {
+        const category = serviceCategories.find(c => c.id === categoryId);
+        if (!category) return;
+
+        document.getElementById('editCategoryId').value = category.id;
+        document.getElementById('editCategoryName').value = category.name;
+        document.getElementById('editCategoryDescription').value = category.description;
+        document.getElementById('editCategoryIcon').value = category.icon.replace('bx-', '');
+
+        const modal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
+        modal.show();
+    }
+
+    function closeEditCategoryModal() {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('editCategoryModal'));
+        modal.hide();
+    }
+
+    async function deleteCategory(categoryId) {
+        if (!confirm('Are you sure you want to delete this category? This action cannot be undone.')) {
+            return;
+        }
+
+        showLoading(true);
+        try {
+            const response = await fetch(`/Admin/DeleteServiceCategory/${categoryId}`, {
+                method: 'DELETE',
+                headers: {
+                    'RequestVerificationToken': antiForgeryToken
+                }
+            });
+
+            if (!response.ok) throw new Error('Failed to delete category');
+
+            await fetchServiceCategories();
+            showToast('Category deleted successfully', 'success');
+        } catch (error) {
+            showToast('Error deleting category', 'error');
+            console.error(error);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Service Employees Management
+    async function fetchServiceEmployees() {
+        showLoading(true);
+        try {
+            const response = await fetch('/Admin/GetServiceEmployees');
+            if (!response.ok) throw new Error('Failed to fetch employees');
+            serviceEmployees = await response.json();
+            updateEmployeeGrid();
+            updateStatistics();
+        } catch (error) {
+            showToast('Error fetching service employees', 'error');
+            console.error(error);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    function updateEmployeeGrid() {
+        const grid = document.getElementById('employeeGrid');
+        if (!grid) return;
+
+        const searchText = document.getElementById('employeeSearch')?.value.toLowerCase();
+        const statusFilter = document.getElementById('employeeStatusFilter')?.value;
+
+        const filteredEmployees = serviceEmployees.filter(employee => {
+            const matchesSearch = !searchText || 
+                employee.name.toLowerCase().includes(searchText) ||
+                employee.email.toLowerCase().includes(searchText) ||
+                employee.specialization.toLowerCase().includes(searchText);
+            
+            const matchesStatus = statusFilter === 'all' || employee.status === statusFilter;
+
+            return matchesSearch && matchesStatus;
+        });
+
+        if (filteredEmployees.length === 0) {
+            grid.innerHTML = `
+                <div class="empty-state">
+                    <i class='bx bx-user-x'></i>
+                    <p>No service employees found</p>
+                </div>
+            `;
+            return;
+        }
+
+        grid.innerHTML = filteredEmployees.map(employee => `
+            <div class="employee-card">
+                <div class="employee-avatar-container">
+                    <img src="${employee.avatar || '/images/default-avatar.jpg'}" alt="${employee.name}" class="employee-avatar">
+                    <span class="status-badge ${employee.status === 'active' ? 'active' : 'inactive'}"></span>
+                </div>
+                <div class="employee-info">
+                    <h4>${employee.name}</h4>
+                    <p class="text-muted">${employee.specialization}</p>
+                    <div class="employee-meta">
+                        <span><i class='bx bx-envelope'></i> ${employee.email}</span>
+                        <span><i class='bx bx-phone'></i> ${employee.phone || 'N/A'}</span>
+                    </div>
+                </div>
+                <div class="employee-actions">
+                    <button class="btn btn-sm btn-icon btn-outline-primary" onclick="editEmployee(${employee.id})" title="Edit Employee">
+                        <i class='bx bx-edit'></i>
+                    </button>
+                    <button class="btn btn-sm btn-icon btn-outline-secondary" onclick="viewEmployee(${employee.id})" title="View Details">
+                        <i class='bx bx-show'></i>
+                    </button>
+                    <button class="btn btn-sm btn-icon btn-outline-danger" onclick="toggleEmployeeStatus(${employee.id})" title="${employee.status === 'active' ? 'Deactivate' : 'Activate'} Employee">
+                        <i class='bx bx-${employee.status === 'active' ? 'power-off' : 'revision'}'></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function openAddEmployeeModal() {
+        const modal = new bootstrap.Modal(document.getElementById('addEmployeeModal'));
+        modal.show();
+    }
+
+    function closeAddEmployeeModal() {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('addEmployeeModal'));
+        modal.hide();
+        document.getElementById('addEmployeeForm').reset();
+    }
+
+    // Service Logs Management
+    async function fetchServiceLogs() {
+        showLoading(true);
+        try {
+            const response = await fetch('/Admin/GetServiceLogs');
+            if (!response.ok) throw new Error('Failed to fetch service logs');
+            serviceLogs = await response.json();
+            updateLogsTable();
+            updateStatistics();
+        } catch (error) {
+            showToast('Error fetching service logs', 'error');
+            console.error(error);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    function updateLogsTable() {
+        const tbody = document.getElementById('logsTableBody');
+        if (!tbody) return;
+
+        const statusFilter = document.getElementById('logStatusFilter')?.value;
+        const dateFilter = document.getElementById('logDateFilter')?.value;
+        const searchText = document.getElementById('logSearch')?.value.toLowerCase();
+
+        const filteredLogs = filterLogs(serviceLogs, statusFilter, dateFilter, searchText);
+        const paginatedLogs = paginateLogs(filteredLogs);
+
+        if (paginatedLogs.length === 0) {
+            tbody.innerHTML = `
+                <tr class="empty-state-row">
+                    <td colspan="7">
+                        <div class="empty-state">
+                            <i class='bx bx-file'></i>
+                            <p>No service logs found</p>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = paginatedLogs.map(log => `
+            <tr>
+                <td>#${log.requestId}</td>
+                <td>${log.serviceType}</td>
+                <td>${log.homeownerName}</td>
+                <td>${log.employeeAssigned || 'Not Assigned'}</td>
+                <td>
+                    <span class="badge bg-${getStatusBadgeColor(log.status)}">
+                        ${log.status}
+                    </span>
+                </td>
+                <td>${formatDate(log.dateSubmitted)}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewRequestDetails(${log.id})">
+                        <i class='bx bx-show'></i> View
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+
+        updateLogsPagination(filteredLogs.length);
+    }
+
+    function getStatusBadgeColor(status) {
+        switch(status.toLowerCase()) {
+            case 'pending': return 'warning';
+            case 'accepted': return 'info';
+            case 'completed': return 'success';
+            case 'rejected': return 'danger';
+            default: return 'secondary';
+        }
+    }
+
+    function viewRequestDetails(logId) {
+        const log = serviceLogs.find(l => l.id === logId);
+        if (!log) return;
+
+        const modalContent = document.getElementById('requestDetailsContent');
+        modalContent.innerHTML = `
+            <div class="request-details">
+                <div class="detail-row">
+                    <span class="detail-label">Request ID:</span>
+                    <span class="detail-value">#${log.requestId}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Service Type:</span>
+                    <span class="detail-value">${log.serviceType}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Homeowner:</span>
+                    <span class="detail-value">${log.homeownerName}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Employee Assigned:</span>
+                    <span class="detail-value">${log.employeeAssigned || 'Not Assigned'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Status:</span>
+                    <span class="detail-value">
+                        <span class="badge bg-${getStatusBadgeColor(log.status)}">
+                            ${log.status}
+                        </span>
+                    </span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Date Submitted:</span>
+                    <span class="detail-value">${formatDate(log.dateSubmitted)}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Last Updated:</span>
+                    <span class="detail-value">${formatDate(log.lastUpdated)}</span>
+                </div>
+                <div class="detail-row full-width">
+                    <span class="detail-label">Description:</span>
+                    <div class="detail-value">
+                        <p>${log.description || 'No description provided'}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const modal = new bootstrap.Modal(document.getElementById('viewRequestModal'));
+        modal.show();
+    }
+
+    function closeViewRequestModal() {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('viewRequestModal'));
+        modal.hide();
+    }
+
+    // Utility Functions
+    function filterLogs(logs, status, dateFilter, searchText) {
+        return logs.filter(log => {
+            const matchesStatus = status === 'all' || log.status.toLowerCase() === status;
+            const matchesDate = dateFilter === 'all' || isWithinDateFilter(log.dateSubmitted, dateFilter);
+            const matchesSearch = !searchText || 
+                log.requestId.toLowerCase().includes(searchText) ||
+                log.homeownerName.toLowerCase().includes(searchText) ||
+                log.serviceType.toLowerCase().includes(searchText);
+
+            return matchesStatus && matchesDate && matchesSearch;
+        });
+    }
+
+    function isWithinDateFilter(dateStr, filter) {
+        const date = new Date(dateStr);
+        const now = new Date();
+        
+        switch(filter) {
+            case 'today':
+                return date.toDateString() === now.toDateString();
+            case 'week':
+                const weekAgo = new Date(now);
+                weekAgo.setDate(now.getDate() - 7);
+                return date >= weekAgo;
+            case 'month':
+                const monthAgo = new Date(now);
+                monthAgo.setMonth(now.getMonth() - 1);
+                return date >= monthAgo;
+            default:
+                return true;
+        }
+    }
+
+    function paginateLogs(logs) {
+        const startIndex = (currentLogsPage - 1) * logsPerPage;
+        return logs.slice(startIndex, startIndex + logsPerPage);
+    }
+
+    function updateLogsPagination(totalLogs) {
+        const totalPages = Math.ceil(totalLogs / logsPerPage);
+        const pageInfo = document.getElementById('logsPageInfo');
+        const prevBtn = document.getElementById('prevLogsPage');
+        const nextBtn = document.getElementById('nextLogsPage');
+
+        if (pageInfo) pageInfo.textContent = `Page ${currentLogsPage} of ${totalPages}`;
+        if (prevBtn) prevBtn.disabled = currentLogsPage === 1;
+        if (nextBtn) nextBtn.disabled = currentLogsPage === totalPages || totalPages === 0;
+    }
+
+    function updateStatistics() {
+        document.getElementById('totalRequests').textContent = serviceLogs.length;
+        document.getElementById('pendingRequests').textContent = 
+            serviceLogs.filter(log => log.status.toLowerCase() === 'pending').length;
+        document.getElementById('completedRequests').textContent = 
+            serviceLogs.filter(log => log.status.toLowerCase() === 'completed').length;
+        document.getElementById('totalEmployees').textContent = serviceEmployees.length;
+    }
+
+    function formatDate(dateString) {
+        if (!dateString) return 'N/A';
+        const date = new Date(dateString);
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    }
+
+    function showLoading(show) {
+        const spinner = document.getElementById('loadingSpinner');
+        if (spinner) spinner.style.display = show ? 'flex' : 'none';
+    }
+
+    function showToast(message, type = 'info') {
+        const toast = document.getElementById('toastNotification');
+        const toastMessage = document.getElementById('toastMessage');
+        
+        // Set message
+        toastMessage.textContent = message;
+        
+        // Remove existing background classes
+        toast.classList.remove('bg-success', 'bg-danger', 'bg-warning', 'bg-info');
+        
+        // Add appropriate background class
+        toast.classList.add(`bg-${type}`);
+        
+        // Show toast using Bootstrap's toast API
+        const bsToast = new bootstrap.Toast(toast, {
+            autohide: true,
+            delay: 3000
+        });
+        bsToast.show();
+    }
+
+    // Form Submissions
+    document.getElementById('addCategoryForm')?.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        showLoading(true);
+
+        const categoryData = {
+            name: document.getElementById('categoryName').value.trim(),
+            description: document.getElementById('categoryDescription').value.trim(),
+            icon: `bx-${document.getElementById('categoryIcon').value.trim()}`
+        };
+
+        try {
+            const response = await fetch('/Admin/AddServiceCategory', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': antiForgeryToken
+                },
+                body: JSON.stringify(categoryData)
+            });
+
+            if (!response.ok) throw new Error('Failed to add category');
+
+            await fetchServiceCategories();
+            closeAddCategoryModal();
+            showToast('Category added successfully', 'success');
+        } catch (error) {
+            showToast('Error adding category', 'error');
+            console.error(error);
+        } finally {
+            showLoading(false);
+        }
+    });
+
+    document.getElementById('editCategoryForm')?.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        showLoading(true);
+
+        const categoryData = {
+            id: parseInt(document.getElementById('editCategoryId').value),
+            name: document.getElementById('editCategoryName').value.trim(),
+            description: document.getElementById('editCategoryDescription').value.trim(),
+            icon: `bx-${document.getElementById('editCategoryIcon').value.trim()}`
+        };
+
+        try {
+            const response = await fetch('/Admin/UpdateServiceCategory', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': antiForgeryToken
+                },
+                body: JSON.stringify(categoryData)
+            });
+
+            if (!response.ok) throw new Error('Failed to update category');
+
+            await fetchServiceCategories();
+            closeEditCategoryModal();
+            showToast('Category updated successfully', 'success');
+        } catch (error) {
+            showToast('Error updating category', 'error');
+            console.error(error);
+        } finally {
+            showLoading(false);
+        }
+    });
+
+    document.getElementById('addEmployeeForm')?.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        showLoading(true);
+
+        const employeeData = {
+            name: document.getElementById('employeeName').value.trim(),
+            email: document.getElementById('employeeEmail').value.trim(),
+            phone: document.getElementById('employeePhone').value.trim(),
+            specialization: document.getElementById('employeeSpecialization').value
+        };
+
+        try {
+            const response = await fetch('/Admin/AddServiceEmployee', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': antiForgeryToken
+                },
+                body: JSON.stringify(employeeData)
+            });
+
+            if (!response.ok) throw new Error('Failed to add employee');
+
+            await fetchServiceEmployees();
+            closeAddEmployeeModal();
+            showToast('Employee added successfully', 'success');
+        } catch (error) {
+            showToast('Error adding employee', 'error');
+            console.error(error);
+        } finally {
+            showLoading(false);
+        }
+    });
+
+    // Event Listeners Setup
+    function setupEventListeners() {
+        document.getElementById('employeeSearch')?.addEventListener('input', updateEmployeeGrid);
+        document.getElementById('employeeStatusFilter')?.addEventListener('change', updateEmployeeGrid);
+        document.getElementById('logStatusFilter')?.addEventListener('change', updateLogsTable);
+        document.getElementById('logDateFilter')?.addEventListener('change', updateLogsTable);
+        document.getElementById('logSearch')?.addEventListener('input', updateLogsTable);
+
+        // Initialize all Bootstrap tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    }
+
+    // Navigation Functions
+    function changeLogsPage(delta) {
+        const newPage = currentLogsPage + delta;
+        const totalPages = Math.ceil(serviceLogs.length / logsPerPage);
+        
+        if (newPage >= 1 && newPage <= totalPages) {
+            currentLogsPage = newPage;
+            updateLogsTable();
+        }
+    }
+
+    // Add these new functions for employee management
+    function viewEmployee(employeeId) {
+        const employee = serviceEmployees.find(e => e.id === employeeId);
+        if (!employee) return;
+
+        const modalContent = document.getElementById('viewEmployeeContent');
+        modalContent.innerHTML = `
+            <div class="employee-details">
+                <div class="detail-row">
+                    <span class="detail-label">Name:</span>
+                    <span class="detail-value">${employee.name}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Email:</span>
+                    <span class="detail-value">${employee.email}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Phone:</span>
+                    <span class="detail-value">${employee.phone || 'N/A'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Specialization:</span>
+                    <span class="detail-value">${employee.specialization}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Status:</span>
+                    <span class="detail-value">
+                        <span class="badge bg-${employee.status === 'active' ? 'success' : 'danger'}">
+                            ${employee.status.charAt(0).toUpperCase() + employee.status.slice(1)}
+                        </span>
+                    </span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Joined Date:</span>
+                    <span class="detail-value">${formatDate(employee.dateJoined)}</span>
+                </div>
+            </div>
+        `;
+
+        const modal = new bootstrap.Modal(document.getElementById('viewEmployeeModal'));
+        modal.show();
+    }
+
+    async function toggleEmployeeStatus(employeeId) {
+        const employee = serviceEmployees.find(e => e.id === employeeId);
+        if (!employee) return;
+
+        const newStatus = employee.status === 'active' ? 'inactive' : 'active';
+        const confirmMessage = `Are you sure you want to ${newStatus === 'active' ? 'activate' : 'deactivate'} this employee?`;
+
+        if (!confirm(confirmMessage)) return;
+
+        showLoading(true);
+        try {
+            const response = await fetch('/Admin/UpdateEmployeeStatus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': antiForgeryToken
+                },
+                body: JSON.stringify({
+                    employeeId: employeeId,
+                    status: newStatus
+                })
+            });
+
+            if (!response.ok) throw new Error('Failed to update employee status');
+
+            await fetchServiceEmployees();
+            showToast(`Employee ${newStatus === 'active' ? 'activated' : 'deactivated'} successfully`, 'success');
+        } catch (error) {
+            showToast('Error updating employee status', 'error');
+            console.error(error);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Add close modal function
+    function closeViewEmployeeModal() {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('viewEmployeeModal'));
+        if (modal) modal.hide();
+    }
+
+    function editEmployee(employeeId) {
+        const employee = serviceEmployees.find(e => e.id === employeeId);
+        if (!employee) return;
+
+        // Populate the edit form
+        document.getElementById('editEmployeeId').value = employee.id;
+        document.getElementById('editEmployeeName').value = employee.name;
+        document.getElementById('editEmployeeEmail').value = employee.email;
+        document.getElementById('editEmployeePhone').value = employee.phone || '';
+        
+        // Populate specialization dropdown
+        const specializationSelect = document.getElementById('editEmployeeSpecialization');
+        populateEmployeeSpecializationDropdown();
+        specializationSelect.value = employee.specialization;
+
+        // Show the modal
+        const modal = new bootstrap.Modal(document.getElementById('editEmployeeModal'));
+        modal.show();
+    }
+
+    function closeEditEmployeeModal() {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('editEmployeeModal'));
+        if (modal) modal.hide();
+        document.getElementById('editEmployeeForm').reset();
+    }
+
+    // Add event listener for edit employee form
+    document.getElementById('editEmployeeForm')?.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        showLoading(true);
+
+        const employeeData = {
+            id: parseInt(document.getElementById('editEmployeeId').value),
+            name: document.getElementById('editEmployeeName').value.trim(),
+            email: document.getElementById('editEmployeeEmail').value.trim(),
+            phone: document.getElementById('editEmployeePhone').value.trim(),
+            specialization: document.getElementById('editEmployeeSpecialization').value
+        };
+
+        try {
+            const response = await fetch('/Admin/UpdateServiceEmployee', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': antiForgeryToken
+                },
+                body: JSON.stringify(employeeData)
+            });
+
+            if (!response.ok) throw new Error('Failed to update employee');
+
+            await fetchServiceEmployees();
+            closeEditEmployeeModal();
+            showToast('Employee updated successfully', 'success');
+        } catch (error) {
+            showToast('Error updating employee', 'danger');
+            console.error(error);
+        } finally {
+            showLoading(false);
+        }
+    });
+</script>
+
+<!-- Employee Card Styles -->
+<style>
+    .employee-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .employee-avatar-container {
+        position: relative;
+        margin-right: 5px;
+    }
+
+    .employee-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--light);
+    }
+
+    .status-badge {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid white;
+    }
+
+    .status-badge.active {
+        background-color: #28a745;
+    }
+
+    .status-badge.inactive {
+        background-color: #dc3545;
+    }
+
+    .employee-info {
+        flex: 1;
+        padding-right: 15px;
+    }
+
+    .employee-info h4 {
+        margin: 0 0 5px 0;
+        font-size: 1.1rem;
+        color: var(--dark);
+    }
+
+    .employee-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-top: 10px;
+        font-size: 0.9rem;
+    }
+
+    .employee-meta span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: rgb(26, 26, 26);
+    }
+
+    .employee-meta i {
+        font-size: 1.1rem;
+        color: var(--primary);
+    }
+
+    .employee-actions {
+        display: flex;
+        gap: 8px;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .employee-actions .btn-icon {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .employee-actions .btn-icon i {
+        font-size: 1.1rem;
+    }
+
+    .employee-actions .btn-icon:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Employee Details Styles */
+    .employee-details {
+        padding: 15px;
+    }
+
+    .detail-row {
+        display: flex;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    .detail-row:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        width: 120px;
+        color: #666;
+    }
+
+    .detail-value {
+        flex: 1;
+        color: #333;
+    }
+
+    .badge {
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+
+    /* Toast Styles */
+    .toast-container {
+        --bs-toast-spacing: 1.5rem;
+    }
+
+    .toast {
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+    }
+
+    .toast.bg-success {
+        background-color: #28a745 !important;
+        color: white;
+    }
+
+    .toast.bg-danger {
+        background-color: #dc3545 !important;
+        color: white;
+    }
+
+    .toast.bg-warning {
+        background-color: #ffc107 !important;
+        color: #000;
+    }
+
+    .toast.bg-info {
+        background-color: #17a2b8 !important;
+        color: white;
+    }
+
+    .toast .btn-close {
+        filter: none;
+    }
+
+    .toast.bg-success .btn-close,
+    .toast.bg-danger .btn-close,
+    .toast.bg-info .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+    }
+
+    .toast .toast-body {
+        padding: 1rem;
+        font-size: 0.95rem;
+    }
+
+    .toast .bx {
+        font-size: 1.25rem;
+    }
+</style>

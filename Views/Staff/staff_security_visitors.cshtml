@@ -6,10 +6,13 @@
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="~/css/staff_security_visitors.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true">
+    <!-- Add Toastr for notifications -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
 <title>Staff Security & Visitors Management</title>
 <body>
+    @Html.AntiForgeryToken()
     <!-- SIDEBAR -->
     <section id="sidebar">
 		<a href="#" class="brand">
@@ -36,15 +39,9 @@
 				</a>
 			</li>
 			<li>
-				<a asp-area="" asp-controller="Staff" asp-action="StaffBilling">
+				<a href="#">
 					<i class='bx bxs-credit-card-front'></i>
 					<span class="text">Payment and Billing</span>
-				</a>
-			</li>
-            <li>
-				<a asp-area="" asp-controller="Staff" asp-action="StaffFacilityReservation">
-					<i class='bx bxs-credit-card-front'></i>
-					<span class="text">Facility Reservation</span>
 				</a>
 			</li>
 			<li>
@@ -128,43 +125,13 @@
                     <h2><i class='bx bx-user-check'></i>Visitor Pass Management</h2>
                     <div class="requests-container">
                         <h3>Pending Visitor Pass Requests</h3>
-                        <div class="visitor-list">
-                            <div class="list-item">
-                                <div class="request-info">
-                                    <span class="visitor-name">Alexa de Luna</span>
-                                    <span class="visit-date">2025-03-15</span>
-                                    <span class="visit-purpose">Family Visit</span>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-approve"><i class='bx bx-check'></i> Approve</button>
-                                    <button class="btn-reject"><i class='bx bx-x'></i> Reject</button>
-                                </div>
-                            </div>
-                            <div class="list-item">
-                                <div class="request-info">
-                                    <span class="visitor-name">John Loui</span>
-                                    <span class="visit-date">2025-03-16</span>
-                                    <span class="visit-purpose">Service Provider</span>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-approve"><i class='bx bx-check'></i> Approve</button>
-                                    <button class="btn-reject"><i class='bx bx-x'></i> Reject</button>
-                                </div>
-                            </div>
+                        <div id="pendingVisitorPasses" class="visitor-list">
+
                         </div>
 
                         <h3>Approved Visitor Passes</h3>
-                        <div class="visitor-list">
-                            <div class="list-item">
-                                <div class="request-info">
-                                    <span class="visitor-name">JC Hontiveros</span>
-                                    <span class="visit-date">2025-03-14</span>
-                                    <span class="visit-purpose">Business Meeting</span>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-revoke"><i class='bx bx-block'></i> Revoke</button>
-                                </div>
-                            </div>
+                        <div id="approvedVisitorPasses" class="visitor-list">
+
                         </div>
                     </div>
                 </div>
@@ -174,28 +141,11 @@
                     <h2><i class='bx bx-log-out'></i>Visitor Exit Management</h2>
                     <div class="requests-container">
                         <h3>Active Visitors</h3>
-                        <div class="visitor-list">
-                            <div class="list-item">
-                                <div class="request-info">
-                                    <span class="visitor-name">JC Hontiveros</span>
-                                    <span class="visit-time">Entered: 14:30</span>
-                                    <span class="visit-purpose">Business Meeting</span>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-exit"><i class='bx bx-log-out'></i> Record Exit</button>
-                                </div>
-                            </div>
+                        <div id="activeVisitors" class="visitor-list">
                         </div>
 
                         <h3>Today's Exits</h3>
-                        <div class="visitor-list">
-                            <div class="list-item">
-                                <div class="request-info">
-                                    <span class="visitor-name">Maria Santos</span>
-                                    <span class="exit-time">Exited: 16:45</span>
-                                    <span class="visit-purpose">Family Visit</span>
-                                </div>
-                            </div>
+                        <div id="todayExits" class="visitor-list">
                         </div>
                     </div>
                 </div>
@@ -205,113 +155,45 @@
                     <h2><i class='bx bx-car'></i>Vehicle Registration Management</h2>
                     <div class="requests-container">
                         <h3>Pending Vehicle Registrations</h3>
-                        <div class="vehicle-list">
-                            <div class="list-item">
-                                <div class="request-info">
-                                    <span class="vehicle-make">Toyota</span>
-                                    <span class="vehicle-model">Camry</span>
-                                    <span class="plate-number">ABC123</span>
-                                    <span class="owner-name">Maria Santos</span>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-approve"><i class='bx bx-check'></i> Approve</button>
-                                    <button class="btn-reject"><i class='bx bx-x'></i> Reject</button>
-                                </div>
-                            </div>
+                        <div id="pendingVehicleRegistrations" class="vehicle-list">
+                            
                         </div>
 
                         <h3>Approved Vehicle Registrations</h3>
-                        <div class="vehicle-list">
-                            <div class="list-item">
-                                <div class="request-info">
-                                    <span class="vehicle-make">Honda</span>
-                                    <span class="vehicle-model">Civic</span>
-                                    <span class="plate-number">XYZ789</span>
-                                    <span class="owner-name">Juan Dela Cruz</span>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-revoke"><i class='bx bx-block'></i> Revoke</button>
-                                </div>
-                            </div>
+                        <div id="approvedVehicleRegistrations" class="vehicle-list">
+                                
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- REGISTERED VEHICLES AND SECURITY LOGS -->
-            <div class="security-section">
-                <!-- REGISTERED VEHICLES TABLE -->
-                <div class="summary-table-container">
-                    <h2><i class='bx bx-car'></i>Registered Vehicles</h2>
-                    <div class="table-responsive">
-                        <table class="summary-table">
-                            <thead>
-                                <tr>
-                                    <th>Owner Name</th>
-                                    <th>Vehicle Make</th>
-                                    <th>Vehicle Model</th>
-                                    <th>Plate Number</th>
-                                    <th>Registration Date</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Juan Dela Cruz</td>
-                                    <td>Honda</td>
-                                    <td>Civic</td>
-                                    <td>XYZ789</td>
-                                    <td>2025-03-14</td>
-                                    <td><span class="status-badge status-approved">Approved</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Maria Santos</td>
-                                    <td>Toyota</td>
-                                    <td>Camry</td>
-                                    <td>ABC123</td>
-                                    <td>2025-03-14</td>
-                                    <td><span class="status-badge status-pending">Pending</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- SECURITY LOGS -->
-                <div class="security-card">
-                    <h2><i class='bx bx-history'></i>Security Logs</h2>
-                    <div class="logs-container">
-                        <div class="log-filters">
-                            <select id="logType">
-                                <option value="all">All Logs</option>
-                                <option value="visitor">Visitor Logs</option>
-                                <option value="vehicle">Vehicle Logs</option>
-                                <option value="incident">Incident Reports</option>
-                            </select>
-                            <input type="date" id="logDate" placeholder="Select Date">
-                        </div>
-                        <div class="log-list">
-                            <div class="log-item">
-                                <div class="log-info">
-                                    <span class="log-time">2025-03-14 14:30</span>
-                                    <span class="log-type">Visitor Entry</span>
-                                    <span class="log-details">JC Hontiveros entered through Main Gate (Approved Visitor Pass)</span>
-                                </div>
-                            </div>
-                            <div class="log-item">
-                                <div class="log-info">
-                                    <span class="log-time">2025-03-14 15:45</span>
-                                    <span class="log-type">Vehicle Entry</span>
-                                    <span class="log-details">Honda Civic (XYZ789) entered through South Gate (Approved Registration)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- REGISTERED VEHICLES TABLE -->
+            <div class="summary-table-container" style="margin-top: 20px;">
+                <h2><i class='bx bx-car'></i>Registered Vehicles</h2>
+                <div class="table-responsive">
+                    <table class="summary-table">
+                        <thead>
+                            <tr>
+                                <th>Owner Name</th>
+                                <th>Vehicle Make</th>
+                                <th>Vehicle Model</th>
+                                <th>Plate Number</th>
+                                <th>Registration Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="registeredVehiclesBody">
+                            
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </main>
         <!-- MAIN -->
     </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
         const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
@@ -375,5 +257,448 @@
                 document.body.classList.remove('dark');
             }
         })
+
+        function loadPendingVisitorPasses() {
+            $.get('/Staff/GetPendingVisitorPasses', function(data) {
+                $('#pendingVisitorPasses').empty();
+                data.forEach(function(pass) {
+                    const html = `
+                        <div class="list-item" data-id="${pass.id}">
+                            <div class="request-info">
+                                <span class="visitor-name">${pass.visitorName}</span>
+                                <span class="visit-date">${pass.visitDate}</span>
+                                <span class="visit-purpose">${pass.purpose}</span>
+                                <span class="homeowner-name">Homeowner: ${pass.homeownerName}</span>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-approve" onclick="updateVisitorPassStatus(${pass.id}, 'approve')">
+                                    <i class='bx bx-check'></i> Approve
+                                </button>
+                                <button class="btn-reject" onclick="updateVisitorPassStatus(${pass.id}, 'reject')">
+                                    <i class='bx bx-x'></i> Reject
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    $('#pendingVisitorPasses').append(html);
+                });
+            });
+        }
+
+        function loadApprovedVisitorPasses() {
+            $.get('/Staff/GetApprovedVisitorPasses', function(data) {
+                $('#approvedVisitorPasses').empty();
+                data.forEach(function(pass) {
+                    const html = `
+                        <div class="list-item" data-id="${pass.id}">
+                            <div class="request-info">
+                                <span class="visitor-name">${pass.visitorName}</span>
+                                <span class="visit-date">${pass.visitDate}</span>
+                                <span class="visit-purpose">${pass.purpose}</span>
+                                <span class="homeowner-name">Homeowner: ${pass.homeownerName}</span>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-revoke" onclick="updateVisitorPassStatus(${pass.id}, 'revoke')">
+                                    <i class='bx bx-block'></i> Revoke
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    $('#approvedVisitorPasses').append(html);
+                });
+            });
+        }
+
+        function loadPendingVehicleRegistrations() {
+            $.get('/Staff/GetPendingVehicleRegistrations', function(data) {
+                $('#pendingVehicleRegistrations').empty();
+                data.forEach(function(reg) {
+                    const html = `
+                        <div class="list-item" data-id="${reg.id}">
+                            <div class="request-info">
+                                <span class="vehicle-make">${reg.vehicleMake}</span>
+                                <span class="vehicle-model">${reg.vehicleModel}</span>
+                                <span class="plate-number">${reg.plateNumber}</span>
+                                <span class="owner-name">Owner: ${reg.homeownerName}</span>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-approve" onclick="updateVehicleRegistrationStatus(${reg.id}, 'approve')">
+                                    <i class='bx bx-check'></i> Approve
+                                </button>
+                                <button class="btn-reject" onclick="updateVehicleRegistrationStatus(${reg.id}, 'reject')">
+                                    <i class='bx bx-x'></i> Reject
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    $('#pendingVehicleRegistrations').append(html);
+                });
+            });
+        }
+
+        function loadApprovedVehicleRegistrations() {
+            $.get('/Staff/GetApprovedVehicleRegistrations', function(data) {
+                $('#approvedVehicleRegistrations').empty();
+                data.forEach(function(reg) {
+                    const html = `
+                        <div class="list-item" data-id="${reg.id}">
+                            <div class="request-info">
+                                <span class="vehicle-make">${reg.vehicleMake}</span>
+                                <span class="vehicle-model">${reg.vehicleModel}</span>
+                                <span class="plate-number">${reg.plateNumber}</span>
+                                <span class="owner-name">Owner: ${reg.homeownerName}</span>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-revoke" onclick="updateVehicleRegistrationStatus(${reg.id}, 'revoke')">
+                                    <i class='bx bx-block'></i> Revoke
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    $('#approvedVehicleRegistrations').append(html);
+                });
+            });
+        }
+
+        window.updateVisitorPassStatus = function(passId, action) {
+            const data = {
+                passId: passId,
+                action: action
+            };
+            
+            $.ajax({
+                url: '/Staff/UpdateVisitorPassStatus',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').first().val()
+                },
+                success: function(response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+
+                        if (action.toLowerCase() === 'approve') {
+                            const activeVisitorHtml = `
+                                <div class="list-item" data-id="${response.passDetails.id}">
+                                    <div class="request-info">
+                                        <span class="visitor-name"><i class='bx bx-user'></i> ${response.passDetails.visitorName}</span>
+                                        <span class="entry-time"><i class='bx bx-log-in'></i> Entry: ${response.passDetails.entryTime}</span>
+                                        <span class="visit-purpose"><i class='bx bx-info-circle'></i> ${response.passDetails.purpose}</span>
+                                        <span class="homeowner-name"><i class='bx bx-home'></i> Host: ${response.passDetails.homeownerName}</span>
+                                        <span class="visit-duration" data-entry="${response.passDetails.entryTime}">
+                                            <i class='bx bx-time'></i> Duration: Just now
+                                        </span>
+                                    </div>
+                                    <div class="action-buttons">
+                                        <button class="btn-exit" onclick="recordVisitorExit(${response.passDetails.id})">
+                                            <i class='bx bx-log-out'></i> Record Exit
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            $('#activeVisitors .no-data').remove();
+                            
+                            $('#activeVisitors').prepend(activeVisitorHtml);
+                        }
+
+                        $(`#pendingVisitorPasses .list-item[data-id="${passId}"]`).fadeOut(function() {
+                            $(this).remove();
+                            if ($('#pendingVisitorPasses .list-item').length === 0) {
+                                $('#pendingVisitorPasses').append('<div class="no-data">No pending visitor passes</div>');
+                            }
+                        });
+                    } else {
+                        toastr.error(response.message || 'An error occurred');
+                    }
+                },
+                error: function(xhr) {
+                    console.error('Error:', xhr);
+                    toastr.error(xhr.responseJSON?.message || 'An error occurred while updating the visitor pass status.');
+                }
+            });
+        };
+
+        window.updateVehicleRegistrationStatus = function(registrationId, action) {
+            const data = {
+                registrationId: registrationId,
+                action: action
+            };
+
+            $.ajax({
+                url: '/Staff/UpdateVehicleRegistrationStatus',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').first().val()
+                },
+                success: function(response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        loadPendingVehicleRegistrations();
+                        loadApprovedVehicleRegistrations();
+                        loadRegisteredVehicles();
+                    } else {
+                        toastr.error(response.message || 'An error occurred');
+                    }
+                },
+                error: function(xhr) {
+                    console.error('Error:', xhr);
+                    toastr.error(xhr.responseJSON?.message || 'An error occurred while updating the vehicle registration status.');
+                }
+            });
+        };
+
+        function loadActiveVisitors() {
+            $.get('/Staff/GetActiveVisitors', function(data) {
+                $('#activeVisitors').empty();
+                data.forEach(function(visitor) {
+                    const html = `
+                        <div class="list-item" data-id="${visitor.id}">
+                            <div class="request-info">
+                                <span class="visitor-name"><i class='bx bx-user'></i> ${visitor.visitorName}</span>
+                                <span class="entry-time"><i class='bx bx-log-in'></i> Entry: ${visitor.entryTime || 'Not recorded'}</span>
+                                <span class="visit-purpose"><i class='bx bx-info-circle'></i> ${visitor.purpose}</span>
+                                <span class="homeowner-name"><i class='bx bx-home'></i> Host: ${visitor.homeownerName}</span>
+                                <span class="visit-duration"><i class='bx bx-time'></i> Duration: ${visitor.visitDuration}</span>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-exit" onclick="recordVisitorExit(${visitor.id})">
+                                    <i class='bx bx-log-out'></i> Record Exit
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    $('#activeVisitors').append(html);
+                });
+
+                if (data.length === 0) {
+                    $('#activeVisitors').append('<div class="no-data">No active visitors</div>');
+                }
+            });
+        }
+
+        function loadTodayExits() {
+            $.get('/Staff/GetTodayExits', function(data) {
+                $('#todayExits').empty();
+                data.forEach(function(visitor) {
+                    const html = `
+                        <div class="list-item">
+                            <div class="request-info">
+                                <span class="visitor-name"><i class='bx bx-user'></i> ${visitor.visitorName}</span>
+                                <span class="entry-time"><i class='bx bx-log-in'></i> Entry: ${visitor.entryTime || 'Not recorded'}</span>
+                                <span class="exit-time"><i class='bx bx-log-out'></i> Exit: ${visitor.exitTime}</span>
+                                <span class="visit-purpose"><i class='bx bx-info-circle'></i> ${visitor.purpose}</span>
+                                <span class="homeowner-name"><i class='bx bx-home'></i> Host: ${visitor.homeownerName}</span>
+                            </div>
+                        </div>
+                    `;
+                    $('#todayExits').append(html);
+                });
+
+                if (data.length === 0) {
+                    $('#todayExits').append('<div class="no-data">No visitor exits recorded today</div>');
+                }
+            });
+        }
+
+        function recordVisitorExit(passId) {
+            if (!confirm('Are you sure you want to record this visitor\'s exit?')) return;
+
+            $.ajax({
+                url: '/Staff/RecordVisitorExit',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ passId: passId }),
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').first().val()
+                },
+                success: function(response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        
+                        const exitHtml = `
+                            <div class="list-item">
+                                <div class="request-info">
+                                    <span class="visitor-name"><i class='bx bx-user'></i> ${response.exitDetails.visitorName}</span>
+                                    <span class="entry-time"><i class='bx bx-log-in'></i> Entry: ${response.exitDetails.entryTime || 'Not recorded'}</span>
+                                    <span class="exit-time"><i class='bx bx-log-out'></i> Exit: ${response.exitDetails.exitTime}</span>
+                                    <span class="visit-purpose"><i class='bx bx-info-circle'></i> ${response.exitDetails.purpose}</span>
+                                    <span class="homeowner-name"><i class='bx bx-home'></i> Host: ${response.exitDetails.homeownerName}</span>
+                                </div>
+                            </div>
+                        `;
+                        
+                        $('#todayExits .no-data').remove();
+                        
+                        $('#todayExits').prepend(exitHtml);
+                        
+                        $(`#activeVisitors .list-item[data-id="${passId}"]`).fadeOut(function() {
+                            $(this).remove();
+                            if ($('#activeVisitors .list-item').length === 0) {
+                                $('#activeVisitors').append('<div class="no-data">No active visitors</div>');
+                            }
+                        });
+                    } else {
+                        toastr.error(response.message || 'An error occurred');
+                    }
+                },
+                error: function(xhr) {
+                    console.error('Error:', xhr);
+                    toastr.error('An error occurred while recording visitor exit.');
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+            };
+
+            loadPendingVisitorPasses();
+            loadApprovedVisitorPasses();
+            loadPendingVehicleRegistrations();
+            loadApprovedVehicleRegistrations();
+            
+            loadActiveVisitors();
+            loadTodayExits();
+            
+            loadRegisteredVehicles();
+            
+            setInterval(function() {
+                loadActiveVisitors();
+                loadTodayExits();
+                loadRegisteredVehicles();
+            }, 300000);
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .status-completed { border-left-color: #2ecc71; }
+            .status-pending { border-left-color: #f1c40f; }
+            .status-rejected { border-left-color: #e74c3c; }
+        `;
+        document.head.appendChild(style);
+
+        function updateVisitDurations() {
+            $('.visit-duration').each(function() {
+                const entryTime = new Date($(this).data('entry'));
+                const now = new Date();
+                const duration = now - entryTime;
+                
+                let durationText;
+                if (duration >= 86400000) { // 24 hours in milliseconds
+                    durationText = `${Math.floor(duration / 86400000)} days`;
+                } else if (duration >= 3600000) { // 1 hour in milliseconds
+                    durationText = `${Math.floor(duration / 3600000)} hours`;
+                } else {
+                    durationText = `${Math.floor(duration / 60000)} minutes`;
+                }
+                
+                $(this).html(`<i class='bx bx-time'></i> Duration: ${durationText}`);
+            });
+        }
+
+        setInterval(updateVisitDurations, 60000);
+
+        const durationStyle = document.createElement('style');
+        durationStyle.textContent = `
+            .visit-duration {
+                color: #666;
+                font-style: italic;
+            }
+            
+            .visit-duration i {
+                color: #3498db;
+            }
+        `;
+        document.head.appendChild(durationStyle);
+
+        function loadRegisteredVehicles() {
+            $.get('/Staff/GetAllVehicleRegistrations', function(data) {
+                const tbody = $('#registeredVehiclesBody');
+                tbody.empty();
+                
+                data.forEach(function(vehicle) {
+                    const statusClass = vehicle.status.toLowerCase();
+                    const html = `
+                        <tr>
+                            <td>${vehicle.homeownerName}</td>
+                            <td>${vehicle.vehicleMake}</td>
+                            <td>${vehicle.vehicleModel}</td>
+                            <td>${vehicle.plateNumber}</td>
+                            <td>${vehicle.registrationDate}</td>
+                            <td><span class="status-badge status-${statusClass}">${vehicle.status}</span></td>
+                        </tr>
+                    `;
+                    tbody.append(html);
+                });
+
+                if (data.length === 0) {
+                    tbody.append('<tr><td colspan="6" class="no-data">No registered vehicles found</td></tr>');
+                }
+            }).fail(function(xhr) {
+                console.error('Error loading registered vehicles:', xhr);
+                $('#registeredVehiclesBody').html('<tr><td colspan="6" class="error-message">Failed to load registered vehicles</td></tr>');
+            });
+        }
+
+        const statusStyle = document.createElement('style');
+        statusStyle.textContent = `
+            .status-badge {
+                padding: 4px 8px;
+                border-radius: 12px;
+                font-size: 0.9em;
+                font-weight: 500;
+            }
+            .status-approved {
+                background-color: #e1f7e1;
+                color: #27ae60;
+            }
+            .status-pending {
+                background-color: #fef9e7;
+                color: #f1c40f;
+            }
+            .status-rejected {
+                background-color: #fde9e9;
+                color: #e74c3c;
+            }
+            .status-revoked {
+                background-color: #f4f6f7;
+                color: #95a5a6;
+            }
+            .summary-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .summary-table th,
+            .summary-table td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #eee;
+            }
+            .summary-table th {
+                background-color: #f8f9fa;
+                font-weight: 600;
+            }
+            .summary-table tr:hover {
+                background-color: #f8f9fa;
+            }
+            .error-message {
+                color: #e74c3c;
+                text-align: center;
+                padding: 20px;
+                font-style: italic;
+            }
+        `;
+        document.head.appendChild(statusStyle);
     </script>
 </body>
+
+<style>
+
+</style>

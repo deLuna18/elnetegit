@@ -7,6 +7,8 @@
 	<!-- My CSS -->
 	<link rel="stylesheet" href="~/css/security_visitors.css" asp-append-version="true">
 	<link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true">
+	<!-- Add Toastr for notifications -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 	<style>
         @@media screen and (max-width: 1200px) {
             .security-section {
@@ -198,7 +200,8 @@
 	<section id="content">
 		<!-- NAVBAR -->
 		<nav>
-			<form>
+			<i class='bx bx-menu' id="menuBar"></i>
+			<form action="#">
 				<div class="form-input">
 					<input type="search" placeholder="Search...">
 					<button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
@@ -236,18 +239,19 @@
 				<!-- VISITOR PASS REQUEST -->
 				<div class="security-card">
 					<h2><i class='bx bx-user-plus'></i>Visitor Pass Request</h2>
-					<form>
+					<form id="visitorPassForm">
+						@Html.AntiForgeryToken()
 						<div class="form-group">
 							<label for="visitorName">Visitor Name</label>
-							<input type="text" id="visitorName" placeholder="Enter visitor's name">
+							<input type="text" id="visitorName" name="visitorName" required placeholder="Enter visitor's name">
 						</div>
 						<div class="form-group">
 							<label for="visitDate">Visit Date</label>
-							<input type="date" id="visitDate">
+							<input type="date" id="visitDate" name="visitDate" required min="@DateTime.Now.ToString("yyyy-MM-dd")">
 						</div>
 						<div class="form-group">
 							<label for="visitPurpose">Purpose of Visit</label>
-							<textarea id="visitPurpose" placeholder="Enter purpose of visit"></textarea>
+							<textarea id="visitPurpose" name="purpose" required placeholder="Enter purpose of visit"></textarea>
 						</div>
 						<button type="submit" class="btn-submit">Request Pass</button>
 					</form>
@@ -256,18 +260,19 @@
 				<!-- VEHICLE REGISTRATION -->
 				<div class="security-card">
 					<h2><i class='bx bx-car'></i>Vehicle Registration</h2>
-					<form>
+					<form id="vehicleRegistrationForm">
+						@Html.AntiForgeryToken()
 						<div class="form-group">
 							<label for="vehicleMake">Vehicle Make</label>
-							<input type="text" id="vehicleMake" placeholder="Enter vehicle make">
+							<input type="text" id="vehicleMake" name="vehicleMake" required placeholder="Enter vehicle make">
 						</div>
 						<div class="form-group">
 							<label for="vehicleModel">Vehicle Model</label>
-							<input type="text" id="vehicleModel" placeholder="Enter vehicle model">
+							<input type="text" id="vehicleModel" name="vehicleModel" required placeholder="Enter vehicle model">
 						</div>
 						<div class="form-group">
 							<label for="plateNumber">Plate Number</label>
-							<input type="text" id="plateNumber" placeholder="Enter plate number">
+							<input type="text" id="plateNumber" name="plateNumber" required placeholder="Enter plate number">
 						</div>
 						<button type="submit" class="btn-submit">Register Vehicle</button>
 					</form>
@@ -324,32 +329,13 @@
 					<h2><i class='bx bx-list-ul'></i>Visitor Pass Requests</h2>
 					<div class="requests-container">
 						<h3>Pending Requests</h3>
-						<div class="visitor-list">
-							<div class="list-item">
-								<div class="request-info">
-									<span class="visitor-name">Alexa de Luna</span>
-									<span class="visit-date">2025-03-15</span>
-								</div>
-								<div class="status-badge status-pending">Pending</div>
-							</div>
-							<div class="list-item">
-								<div class="request-info">
-									<span class="visitor-name">John Loui</span>
-									<span class="visit-date">2025-03-16</span>
-								</div>
-								<div class="status-badge status-pending">Pending</div>
-							</div>
+						<div id="pendingVisitorPasses" class="visitor-list">
+							<!-- Dynamically populated -->
 						</div>
 
 						<h3>Approved Requests</h3>
-						<div class="visitor-list">
-							<div class="list-item">
-								<div class="request-info">
-									<span class="visitor-name">JC Hontiveros</span>
-									<span class="visit-date">2025-03-14</span>
-								</div>
-								<div class="status-badge status-approved">Approved</div>
-							</div>
+						<div id="approvedVisitorPasses" class="visitor-list">
+							<!-- Dynamically populated -->
 						</div>
 					</div>
 				</div>
@@ -359,27 +345,13 @@
 					<h2><i class='bx bx-car'></i>Vehicle Registrations</h2>
 					<div class="requests-container">
 						<h3>Pending Registrations</h3>
-						<div class="vehicle-list">
-							<div class="list-item">
-								<div class="request-info">
-									<span class="vehicle-make">Toyota</span>
-									<span class="vehicle-model">Camry</span>
-									<span class="plate-number">ABC123</span>
-								</div>
-								<div class="status-badge status-pending">Pending</div>
-							</div>
+						<div id="pendingVehicleRegistrations" class="vehicle-list">
+							<!-- Dynamically populated -->
 						</div>
 
 						<h3>Approved Registrations</h3>
-						<div class="vehicle-list">
-							<div class="list-item">
-								<div class="request-info">
-									<span class="vehicle-make">Honda</span>
-									<span class="vehicle-model">Civic</span>
-									<span class="plate-number">XYZ789</span>
-								</div>
-								<div class="status-badge status-approved">Approved</div>
-							</div>
+						<div id="approvedVehicleRegistrations" class="vehicle-list">
+							<!-- Dynamically populated -->
 						</div>
 					</div>
 				</div>
@@ -388,91 +360,160 @@
 		<!-- MAIN -->
 	</section>
 
+	<!-- Add jQuery and Toastr -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 	<script>
-		const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+		$(document).ready(function() {
+			// Configure toastr
+			toastr.options = {
+				"closeButton": true,
+				"progressBar": true,
+				"positionClass": "toast-top-right",
+			};
 
-        const currentPath = window.location.pathname;
-        allSideMenu.forEach(item => {
-            const li = item.parentElement;
-            if (item.getAttribute('href') === currentPath || 
-                (currentPath.includes(item.getAttribute('href')) && item.getAttribute('href') !== '/')) {
-                allSideMenu.forEach(i => {
-                    i.parentElement.classList.remove('active');
-                })
-                li.classList.add('active');
-            }
-        });
-
-		allSideMenu.forEach(item=> {
-			const li = item.parentElement;
-
-			item.addEventListener('click', function () {
-				allSideMenu.forEach(i=> {
-					i.parentElement.classList.remove('active');
-				})
-				li.classList.add('active');
-                localStorage.setItem('activeMenu', item.getAttribute('href'));
-			})
-		});
-
-        const activeMenu = localStorage.getItem('activeMenu');
-        if (activeMenu) {
-            allSideMenu.forEach(item => {
-                if (item.getAttribute('href') === activeMenu) {
-                    allSideMenu.forEach(i => {
-                        i.parentElement.classList.remove('active');
-                    })
-                    item.parentElement.classList.add('active');
-                }
-            });
-        }
-
-		// TOGGLE SIDEBAR
-		const menuBar = document.querySelector('#content nav .bx.bx-menu');
-		const sidebar = document.getElementById('sidebar');
-
-		menuBar.addEventListener('click', function () {
-			sidebar.classList.toggle('hide');
-		})
-
-		const searchButton = document.querySelector('#content nav form .form-input button');
-		const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-		const searchForm = document.querySelector('#content nav form');
-
-		searchButton.addEventListener('click', function (e) {
-			if(window.innerWidth < 576) {
+			// Handle visitor pass form submission
+			$('#visitorPassForm').on('submit', function(e) {
 				e.preventDefault();
-				searchForm.classList.toggle('show');
-				if(searchForm.classList.contains('show')) {
-					searchButtonIcon.classList.replace('bx-search', 'bx-x');
-				} else {
-					searchButtonIcon.classList.replace('bx-x', 'bx-search');
-				}
+				const formData = {
+					visitorName: $('#visitorName').val(),
+					visitDate: $('#visitDate').val(),
+					purpose: $('#visitPurpose').val()
+				};
+
+				$.ajax({
+					url: '/Home/RequestVisitorPass',
+					type: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify(formData),
+					headers: {
+						'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+					},
+					success: function(response) {
+						if (response.success) {
+							toastr.success(response.message);
+							$('#visitorPassForm')[0].reset();
+							loadVisitorPasses();
+						} else {
+							toastr.error(response.message || 'An error occurred');
+						}
+					},
+					error: function(xhr) {
+						console.error('Error:', xhr);
+						toastr.error('An error occurred while submitting the visitor pass request.');
+					}
+				});
+			});
+
+			// Handle vehicle registration form submission
+			$('#vehicleRegistrationForm').on('submit', function(e) {
+				e.preventDefault();
+				const formData = {
+					vehicleMake: $('#vehicleMake').val(),
+					vehicleModel: $('#vehicleModel').val(),
+					plateNumber: $('#plateNumber').val()
+				};
+
+				$.ajax({
+					url: '/Home/RegisterVehicle',
+					type: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify(formData),
+					headers: {
+						'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+					},
+					success: function(response) {
+						if (response.success) {
+							toastr.success(response.message);
+							$('#vehicleRegistrationForm')[0].reset();
+							loadVehicleRegistrations();
+						} else {
+							toastr.error(response.message || 'An error occurred');
+						}
+					},
+					error: function(xhr) {
+						console.error('Error:', xhr);
+						toastr.error('An error occurred while submitting the vehicle registration.');
+					}
+				});
+			});
+
+			// Load visitor passes
+			function loadVisitorPasses() {
+				$.get('/Home/GetVisitorPasses')
+					.done(function(data) {
+						$('#pendingVisitorPasses').empty();
+						$('#approvedVisitorPasses').empty();
+
+						data.forEach(function(pass) {
+							const html = `
+								<div class="list-item">
+									<div class="request-info">
+										<span class="visitor-name">${pass.visitorName}</span>
+										<span class="visit-date">${pass.visitDate}</span>
+										<span class="purpose">${pass.purpose}</span>
+									</div>
+									<div class="status-badge status-${pass.status.toLowerCase()}">${pass.status}</div>
+								</div>
+							`;
+							if (pass.status === 'Pending') {
+								$('#pendingVisitorPasses').append(html);
+							} else if (pass.status === 'Approved') {
+								$('#approvedVisitorPasses').append(html);
+							}
+						});
+					})
+					.fail(function(xhr) {
+						console.error('Error loading visitor passes:', xhr);
+						toastr.error('Failed to load visitor passes');
+					});
 			}
-		})
 
-		if(window.innerWidth < 768) {
-			sidebar.classList.add('hide');
-		} else if(window.innerWidth > 576) {
-			searchButtonIcon.classList.replace('bx-x', 'bx-search');
-			searchForm.classList.remove('show');
-		}
+			// Load vehicle registrations
+			function loadVehicleRegistrations() {
+				$.get('/Home/GetVehicleRegistrations')
+					.done(function(data) {
+						$('#pendingVehicleRegistrations').empty();
+						$('#approvedVehicleRegistrations').empty();
 
-		window.addEventListener('resize', function () {
-			if(this.innerWidth > 576) {
-				searchButtonIcon.classList.replace('bx-x', 'bx-search');
-				searchForm.classList.remove('show');
+						data.forEach(function(reg) {
+							const html = `
+								<div class="list-item">
+									<div class="request-info">
+										<span class="vehicle-make">${reg.vehicleMake}</span>
+										<span class="vehicle-model">${reg.vehicleModel}</span>
+										<span class="plate-number">${reg.plateNumber}</span>
+									</div>
+									<div class="status-badge status-${reg.status.toLowerCase()}">${reg.status}</div>
+								</div>
+							`;
+							if (reg.status === 'Pending') {
+								$('#pendingVehicleRegistrations').append(html);
+							} else if (reg.status === 'Approved') {
+								$('#approvedVehicleRegistrations').append(html);
+							}
+						});
+					})
+					.fail(function(xhr) {
+						console.error('Error loading vehicle registrations:', xhr);
+						toastr.error('Failed to load vehicle registrations');
+					});
 			}
-		})
 
-		const switchMode = document.getElementById('switch-mode');
+			// Initialize
+			loadVisitorPasses();
+			loadVehicleRegistrations();
 
-		switchMode.addEventListener('change', function () {
-			if(this.checked) {
-				document.body.classList.add('dark');
-			} else {
-				document.body.classList.remove('dark');
-			}
-		})
+			// Handle sidebar toggle
+			$('#menuBar').on('click', function() {
+				$('#sidebar').toggleClass('hide');
+			});
+
+			// Handle dark mode toggle
+			$('#switch-mode').on('change', function() {
+				$('body').toggleClass('dark', this.checked);
+			});
+		});
 	</script>
 </body>

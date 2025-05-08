@@ -36,6 +36,42 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\admin_login.css'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\admin_security_visitors.css'))">
+      <SourceType>Package</SourceType>
+      <SourceId>SubdivisionManagement</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/SubdivisionManagement</BasePath>
+      <RelativePath>css/admin_security_visitors.css</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>gooz4ou4ad</Fingerprint>
+      <Integrity>UNSVQmjpGw/U5HDNSdW6VbDhOHtk3SRCo7/arsYJ0SA=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\admin_security_visitors.css'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\admin_services.css'))">
+      <SourceType>Package</SourceType>
+      <SourceId>SubdivisionManagement</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/SubdivisionManagement</BasePath>
+      <RelativePath>css/admin_services.css</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>qr6hwuxkor</Fingerprint>
+      <Integrity>elte0ZqzwPmPOBvhvKDWCsNNkfDVYSbyFZOHEMWxXi4=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\admin_services.css'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\announcements.css'))">
       <SourceType>Package</SourceType>
       <SourceId>SubdivisionManagement</SourceId>
@@ -66,8 +102,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>5sga828xyb</Fingerprint>
-      <Integrity>i3x5UXeqtb3wsmEGCkoqogP835JIPci0OLADtIkukr0=</Integrity>
+      <Fingerprint>4pyq6ayl3p</Fingerprint>
+      <Integrity>KMAJ/53bavNYCTDNFK5o5RXQMbi7WM9QjpxnGaotKiw=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\billing.css'))</OriginalItemSpec>
@@ -138,8 +174,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>jds8t0fzfl</Fingerprint>
-      <Integrity>py61QRBrPcduiCbKFStZN7fWJqIkp+aDYIfiLyhagds=</Integrity>
+      <Fingerprint>376br38lae</Fingerprint>
+      <Integrity>4WT+YQltlQm6qLSa9P/YIMAVA4xk9abxcaO07XuJk50=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\facility_reservation.css'))</OriginalItemSpec>
@@ -306,6 +342,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\staff_community_forum.css'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\staff_contact_and_support.css'))">
+      <SourceType>Package</SourceType>
+      <SourceId>SubdivisionManagement</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/SubdivisionManagement</BasePath>
+      <RelativePath>css/staff_contact_and_support.css</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>c7q5hylizo</Fingerprint>
+      <Integrity>6FxRQSxYpuc5QrxCzHqGRt7uSYNu7SbF4Gm9gB7lJ4w=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\staff_contact_and_support.css'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\staff_facility_reservation.css'))">
       <SourceType>Package</SourceType>
       <SourceId>SubdivisionManagement</SourceId>
@@ -354,8 +408,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>536a4yvysb</Fingerprint>
-      <Integrity>UflmnjCrZFomX4/O+f419YiAU96btIULMJ/ReH+T7mE=</Integrity>
+      <Fingerprint>0n4bcujoj4</Fingerprint>
+      <Integrity>xB9On00e2QHBJK9NPogPtvogj5kZ8ybzOfWpXHS8jKM=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\staff_security_visitors.css'))</OriginalItemSpec>
@@ -372,8 +426,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>oimb4q30l0</Fingerprint>
-      <Integrity>wKKFO3XUwP9/iroRSbaZlWwwMoN6s3JJfmhOfcxC13s=</Integrity>
+      <Fingerprint>sv7d8bf3x2</Fingerprint>
+      <Integrity>2NJO0N7HxLGQ5BnnI8SWpC7Xmmi2BFJPrBYsHbWhlk8=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\staff_services.css'))</OriginalItemSpec>
@@ -1997,6 +2051,132 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\announcements\fb0954a3-a1c0-4f26-8450-a0a1783998aa_event2.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\13f2d4ae-c6d6-4916-9e1c-26a2b7862c8c_delivery.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>SubdivisionManagement</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/SubdivisionManagement</BasePath>
+      <RelativePath>uploads/receipts/13f2d4ae-c6d6-4916-9e1c-26a2b7862c8c_delivery.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>xgcqrhtrx5</Fingerprint>
+      <Integrity>oTBGrE9jNJB+rKsMlt6pwNJXb8rJWCcHabTeugfdeqU=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\13f2d4ae-c6d6-4916-9e1c-26a2b7862c8c_delivery.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\992e7f73-77e8-4b68-a493-9d16f3dd52ce_ACT11.pdf'))">
+      <SourceType>Package</SourceType>
+      <SourceId>SubdivisionManagement</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/SubdivisionManagement</BasePath>
+      <RelativePath>uploads/receipts/992e7f73-77e8-4b68-a493-9d16f3dd52ce_ACT11.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>dkvrk7jbsy</Fingerprint>
+      <Integrity>cyfy2Tuj6SSlXGXKaqVmR+SLK+uO1GrY7LDPi8InSuo=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\992e7f73-77e8-4b68-a493-9d16f3dd52ce_ACT11.pdf'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\a6b0623f-ab63-48e0-9eba-81d3d0309ed4_laboratory_schedule_2025-05-05.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>SubdivisionManagement</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/SubdivisionManagement</BasePath>
+      <RelativePath>uploads/receipts/a6b0623f-ab63-48e0-9eba-81d3d0309ed4_laboratory_schedule_2025-05-05.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>lzgju91nav</Fingerprint>
+      <Integrity>wU4rNTsJZ8hLS9kN5jnCQs6CprHKdSTYb/Rxm2g6qzo=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\a6b0623f-ab63-48e0-9eba-81d3d0309ed4_laboratory_schedule_2025-05-05.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\ae3c4ce2-2dbb-47ea-bf0f-1fd71d6e6cdc_sit_in_reports (8).pdf'))">
+      <SourceType>Package</SourceType>
+      <SourceId>SubdivisionManagement</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/SubdivisionManagement</BasePath>
+      <RelativePath>uploads/receipts/ae3c4ce2-2dbb-47ea-bf0f-1fd71d6e6cdc_sit_in_reports (8).pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>2tlrei204n</Fingerprint>
+      <Integrity>Jh0YVuy258JTYMdFxqT3vEaRhM2207YPKxt3veMoxSA=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\ae3c4ce2-2dbb-47ea-bf0f-1fd71d6e6cdc_sit_in_reports (8).pdf'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\c0501ea0-f9ec-4847-8f3d-0e1f431060ec_laboratory_schedule_2025-05-05.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>SubdivisionManagement</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/SubdivisionManagement</BasePath>
+      <RelativePath>uploads/receipts/c0501ea0-f9ec-4847-8f3d-0e1f431060ec_laboratory_schedule_2025-05-05.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>lzgju91nav</Fingerprint>
+      <Integrity>wU4rNTsJZ8hLS9kN5jnCQs6CprHKdSTYb/Rxm2g6qzo=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\c0501ea0-f9ec-4847-8f3d-0e1f431060ec_laboratory_schedule_2025-05-05.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\c138aa15-aeba-4907-968e-c264ce91ad82_laundry header.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>SubdivisionManagement</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/SubdivisionManagement</BasePath>
+      <RelativePath>uploads/receipts/c138aa15-aeba-4907-968e-c264ce91ad82_laundry header.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>8z7c6b814d</Fingerprint>
+      <Integrity>nLoJqEFBsOGbz0Jb6BBGhvSmiDA3dG8TWiIpTPOr6cA=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\c138aa15-aeba-4907-968e-c264ce91ad82_laundry header.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\fd25a3f7-3411-46eb-a78e-1d42ff6280c7_laboratory_schedule_2025-05-05.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>SubdivisionManagement</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/SubdivisionManagement</BasePath>
+      <RelativePath>uploads/receipts/fd25a3f7-3411-46eb-a78e-1d42ff6280c7_laboratory_schedule_2025-05-05.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>lzgju91nav</Fingerprint>
+      <Integrity>wU4rNTsJZ8hLS9kN5jnCQs6CprHKdSTYb/Rxm2g6qzo=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\fd25a3f7-3411-46eb-a78e-1d42ff6280c7_laboratory_schedule_2025-05-05.png'))</OriginalItemSpec>
     </StaticWebAsset>
   </ItemGroup>
 </Project>

@@ -333,6 +333,94 @@ namespace SubdivisionManagement.Migrations
                     b.ToTable("Homeowners");
                 });
 
+            modelBuilder.Entity("SubdivisionManagement.Model.SecurityPolicy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AdvanceNoticeRequired")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("EnableAutoApprovalForRegularVisitors")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MaxActivePassesPerHomeowner")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxVisitDuration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("RequirePhotoId")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("VehicleRegistrationValidityMonths")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SecurityPolicies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AdvanceNoticeRequired = 2,
+                            EnableAutoApprovalForRegularVisitors = false,
+                            LastModified = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MaxActivePassesPerHomeowner = 5,
+                            MaxVisitDuration = 24,
+                            ModifiedBy = "System",
+                            RequirePhotoId = true,
+                            VehicleRegistrationValidityMonths = 12
+                        });
+                });
+
+            modelBuilder.Entity("SubdivisionManagement.Model.ServiceCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ServiceCategories");
+                });
+
             modelBuilder.Entity("SubdivisionManagement.Model.ServiceRequest", b =>
                 {
                     b.Property<int>("Id")
@@ -428,6 +516,20 @@ namespace SubdivisionManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Specialization")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -435,6 +537,91 @@ namespace SubdivisionManagement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Staffs");
+                });
+
+            modelBuilder.Entity("SubdivisionManagement.Model.VehicleRegistration", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ApprovalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HomeownerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlateNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleMake")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HomeownerId");
+
+                    b.ToTable("VehicleRegistrations");
+                });
+
+            modelBuilder.Entity("SubdivisionManagement.Model.VisitorPass", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ApprovalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EntryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ExitTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HomeownerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Purpose")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RequestDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("VisitDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("VisitorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HomeownerId");
+
+                    b.ToTable("VisitorPasses");
                 });
 
             modelBuilder.Entity("SubdivisionManagement.Model.Announcement", b =>
@@ -514,6 +701,28 @@ namespace SubdivisionManagement.Migrations
                     b.Navigation("Homeowner");
 
                     b.Navigation("Staff");
+                });
+
+            modelBuilder.Entity("SubdivisionManagement.Model.VehicleRegistration", b =>
+                {
+                    b.HasOne("SubdivisionManagement.Model.Homeowner", "Homeowner")
+                        .WithMany()
+                        .HasForeignKey("HomeownerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Homeowner");
+                });
+
+            modelBuilder.Entity("SubdivisionManagement.Model.VisitorPass", b =>
+                {
+                    b.HasOne("SubdivisionManagement.Model.Homeowner", "Homeowner")
+                        .WithMany()
+                        .HasForeignKey("HomeownerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Homeowner");
                 });
 #pragma warning restore 612, 618
         }

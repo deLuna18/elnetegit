@@ -1,448 +1,488 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\SubdivisionManagement.bundle.scp.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\SubdivisionManagement.bundle.scp.css",
       "PackagePath": "staticwebassets\\SubdivisionManagement.dtfmbmr46z.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\admin_dashboard.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_dashboard.css",
       "PackagePath": "staticwebassets\\css\\admin_dashboard.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\admin_login.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_login.css",
       "PackagePath": "staticwebassets\\css\\admin_login.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\announcements.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_security_visitors.css",
+      "PackagePath": "staticwebassets\\css\\admin_security_visitors.css"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_services.css",
+      "PackagePath": "staticwebassets\\css\\admin_services.css"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\announcements.css",
       "PackagePath": "staticwebassets\\css\\announcements.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\billing.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\billing.css",
       "PackagePath": "staticwebassets\\css\\billing.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\community_forum.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\community_forum.css",
       "PackagePath": "staticwebassets\\css\\community_forum.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\contact.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\contact.css",
       "PackagePath": "staticwebassets\\css\\contact.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\dashboard.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\dashboard.css",
       "PackagePath": "staticwebassets\\css\\dashboard.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\facility_reservation.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\facility_reservation.css",
       "PackagePath": "staticwebassets\\css\\facility_reservation.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\index.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\index.css",
       "PackagePath": "staticwebassets\\css\\index.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\profile.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\profile.css",
       "PackagePath": "staticwebassets\\css\\profile.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\register.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\register.css",
       "PackagePath": "staticwebassets\\css\\register.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\security_visitors.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\security_visitors.css",
       "PackagePath": "staticwebassets\\css\\security_visitors.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\services.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\services.css",
       "PackagePath": "staticwebassets\\css\\services.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\site.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\staff_announcement.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\staff_announcement.css",
       "PackagePath": "staticwebassets\\css\\staff_announcement.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\staff_community_forum.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\staff_community_forum.css",
       "PackagePath": "staticwebassets\\css\\staff_community_forum.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\staff_facility_reservation.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\staff_contact_and_support.css",
+      "PackagePath": "staticwebassets\\css\\staff_contact_and_support.css"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\staff_facility_reservation.css",
       "PackagePath": "staticwebassets\\css\\staff_facility_reservation.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\staff_login.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\staff_login.css",
       "PackagePath": "staticwebassets\\css\\staff_login.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\staff_security_visitors.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\staff_security_visitors.css",
       "PackagePath": "staticwebassets\\css\\staff_security_visitors.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\staff_services.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\staff_services.css",
       "PackagePath": "staticwebassets\\css\\staff_services.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\css\\staffdashboard.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\staffdashboard.css",
       "PackagePath": "staticwebassets\\css\\staffdashboard.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\favicon.ico",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\announcement.png",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\announcement.png",
       "PackagePath": "staticwebassets\\images\\announcement.png"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\basketball-court.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\basketball-court.jpg",
       "PackagePath": "staticwebassets\\images\\basketball-court.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\event1.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\event1.jpg",
       "PackagePath": "staticwebassets\\images\\event1.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\event2.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\event2.jpg",
       "PackagePath": "staticwebassets\\images\\event2.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\event3.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\event3.jpg",
       "PackagePath": "staticwebassets\\images\\event3.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\function-hall.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\function-hall.jpg",
       "PackagePath": "staticwebassets\\images\\function-hall.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\functions.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\functions.jpg",
       "PackagePath": "staticwebassets\\images\\functions.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\house.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\house.jpg",
       "PackagePath": "staticwebassets\\images\\house.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\logo.png",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\logo.png",
       "PackagePath": "staticwebassets\\images\\logo.png"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\maintenance1.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\maintenance1.jpg",
       "PackagePath": "staticwebassets\\images\\maintenance1.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\maintenance2.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\maintenance2.jpg",
       "PackagePath": "staticwebassets\\images\\maintenance2.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\maintenance3.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\maintenance3.jpg",
       "PackagePath": "staticwebassets\\images\\maintenance3.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\news1.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\news1.jpg",
       "PackagePath": "staticwebassets\\images\\news1.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\news2.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\news2.jpg",
       "PackagePath": "staticwebassets\\images\\news2.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\news3.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\news3.jpg",
       "PackagePath": "staticwebassets\\images\\news3.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\profile.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\profile.jpg",
       "PackagePath": "staticwebassets\\images\\profile.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\swim.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\swim.jpg",
       "PackagePath": "staticwebassets\\images\\swim.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\swimming-pool.png",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\swimming-pool.png",
       "PackagePath": "staticwebassets\\images\\swimming-pool.png"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\tenten",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\tenten",
       "PackagePath": "staticwebassets\\images"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\images\\tenten.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\tenten.jpg",
       "PackagePath": "staticwebassets\\images\\tenten.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\js\\site.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\bootstrap"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\uploads\\announcements\\05e0d338-1eef-4440-97f3-b7f50d4b22f0_NSTP POSTER.png",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\05e0d338-1eef-4440-97f3-b7f50d4b22f0_NSTP POSTER.png",
       "PackagePath": "staticwebassets\\uploads\\announcements\\05e0d338-1eef-4440-97f3-b7f50d4b22f0_NSTP POSTER.png"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\uploads\\announcements\\1fd17691-8a0c-48f8-bbef-44a16bc5dddc_Twitter header.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\1fd17691-8a0c-48f8-bbef-44a16bc5dddc_Twitter header.jpg",
       "PackagePath": "staticwebassets\\uploads\\announcements\\1fd17691-8a0c-48f8-bbef-44a16bc5dddc_Twitter header.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\uploads\\announcements\\64d4f9cd-66a3-4e99-b3dc-083e74d5bd84_maintenance1.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\64d4f9cd-66a3-4e99-b3dc-083e74d5bd84_maintenance1.jpg",
       "PackagePath": "staticwebassets\\uploads\\announcements\\64d4f9cd-66a3-4e99-b3dc-083e74d5bd84_maintenance1.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\uploads\\announcements\\6834df1a-1944-4b17-bafb-5015f530673e_news1.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\6834df1a-1944-4b17-bafb-5015f530673e_news1.jpg",
       "PackagePath": "staticwebassets\\uploads\\announcements\\6834df1a-1944-4b17-bafb-5015f530673e_news1.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\uploads\\announcements\\99504f98-a092-43d3-800b-1b90b351726b_ChatGPT Image Apr 8, 2025, 10_54_00 AM.png",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\99504f98-a092-43d3-800b-1b90b351726b_ChatGPT Image Apr 8, 2025, 10_54_00 AM.png",
       "PackagePath": "staticwebassets\\uploads\\announcements\\99504f98-a092-43d3-800b-1b90b351726b_ChatGPT Image Apr 8, 2025, 10_54_00 AM.png"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\uploads\\announcements\\a9bfae4e-053a-47a8-9ce4-34c16c371639_Twitter header.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\a9bfae4e-053a-47a8-9ce4-34c16c371639_Twitter header.jpg",
       "PackagePath": "staticwebassets\\uploads\\announcements\\a9bfae4e-053a-47a8-9ce4-34c16c371639_Twitter header.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\uploads\\announcements\\aba2d68d-d925-41e8-96eb-3635934b77e6_news2.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\aba2d68d-d925-41e8-96eb-3635934b77e6_news2.jpg",
       "PackagePath": "staticwebassets\\uploads\\announcements\\aba2d68d-d925-41e8-96eb-3635934b77e6_news2.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\uploads\\announcements\\b4df4e7e-e1a7-4297-b112-b879e02bfa03_Newjeans.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\b4df4e7e-e1a7-4297-b112-b879e02bfa03_Newjeans.jpg",
       "PackagePath": "staticwebassets\\uploads\\announcements\\b4df4e7e-e1a7-4297-b112-b879e02bfa03_Newjeans.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\uploads\\announcements\\f41ddd5b-4bb9-4d6f-8942-94036e768ef9_SUNGHOON Weverse Update.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\f41ddd5b-4bb9-4d6f-8942-94036e768ef9_SUNGHOON Weverse Update.jpg",
       "PackagePath": "staticwebassets\\uploads\\announcements\\f41ddd5b-4bb9-4d6f-8942-94036e768ef9_SUNGHOON Weverse Update.jpg"
     },
     {
-      "Id": "C:\\Users\\Cedric\\OneDrive\\Desktop\\Cedyy\\random\\elnet\\wwwroot\\uploads\\announcements\\fb0954a3-a1c0-4f26-8450-a0a1783998aa_event2.jpg",
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\fb0954a3-a1c0-4f26-8450-a0a1783998aa_event2.jpg",
       "PackagePath": "staticwebassets\\uploads\\announcements\\fb0954a3-a1c0-4f26-8450-a0a1783998aa_event2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\receipts\\13f2d4ae-c6d6-4916-9e1c-26a2b7862c8c_delivery.png",
+      "PackagePath": "staticwebassets\\uploads\\receipts\\13f2d4ae-c6d6-4916-9e1c-26a2b7862c8c_delivery.png"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\receipts\\992e7f73-77e8-4b68-a493-9d16f3dd52ce_ACT11.pdf",
+      "PackagePath": "staticwebassets\\uploads\\receipts\\992e7f73-77e8-4b68-a493-9d16f3dd52ce_ACT11.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\receipts\\a6b0623f-ab63-48e0-9eba-81d3d0309ed4_laboratory_schedule_2025-05-05.png",
+      "PackagePath": "staticwebassets\\uploads\\receipts\\a6b0623f-ab63-48e0-9eba-81d3d0309ed4_laboratory_schedule_2025-05-05.png"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\receipts\\ae3c4ce2-2dbb-47ea-bf0f-1fd71d6e6cdc_sit_in_reports (8).pdf",
+      "PackagePath": "staticwebassets\\uploads\\receipts\\ae3c4ce2-2dbb-47ea-bf0f-1fd71d6e6cdc_sit_in_reports (8).pdf"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\receipts\\c0501ea0-f9ec-4847-8f3d-0e1f431060ec_laboratory_schedule_2025-05-05.png",
+      "PackagePath": "staticwebassets\\uploads\\receipts\\c0501ea0-f9ec-4847-8f3d-0e1f431060ec_laboratory_schedule_2025-05-05.png"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\receipts\\c138aa15-aeba-4907-968e-c264ce91ad82_laundry header.jpg",
+      "PackagePath": "staticwebassets\\uploads\\receipts\\c138aa15-aeba-4907-968e-c264ce91ad82_laundry header.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\receipts\\fd25a3f7-3411-46eb-a78e-1d42ff6280c7_laboratory_schedule_2025-05-05.png",
+      "PackagePath": "staticwebassets\\uploads\\receipts\\fd25a3f7-3411-46eb-a78e-1d42ff6280c7_laboratory_schedule_2025-05-05.png"
     },
     {
       "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.SubdivisionManagement.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
