@@ -28,7 +28,7 @@
             </a>
         </li>
         <li>
-            <a> <!-- kani mga a replace lang sa route -->
+            <a>
                 <i class='bx bxs-user'></i>
                 <span class="text">Profile</span>
             </a>
@@ -58,7 +58,7 @@
             </a>
         </li>
         <li>
-            <a >
+            <a>
                 <i class='bx bxs-shield-alt-2'></i>
                 <span class="text">Security and Visitors</span>
             </a>
@@ -102,43 +102,51 @@
     <div class="container">
         <main>
             <div class="dashboard-header">
-                <h1>Dashboard</h1>
-                <button class="btn btn-add-employee" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                <h1>Welcome Back, @ViewBag.AdminName!</h1>
+                <button class="btn btn-add-employee" data-bs-toggle="modal" data-bs-target="#addEmployeeModal" style>
                     <i class='bx bxs-user-plus'></i> Add Employee
                 </button>
             </div>
 
             <div class="stats-container">
                 <div class="stat-card">
-                    <div class="stat-icon home">🏠</div>
+                    <div class="stat-icon home">
+                        <i class='bx bxs-home'></i>
+                    </div>
                     <div class="stat-info">
                         <h3>Total Houses</h3>
                         <p class="stat-number">102</p>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon visitors">👥</div>
+                    <div class="stat-icon visitors">
+                        <i class='bx bxs-user-detail'></i>
+                    </div>
                     <div class="stat-info">
                         <h3>Total Residence</h3>
                         <p class="stat-number">345</p>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon facility">💰</div>
+                    <div class="stat-icon facility">
+                        <i class='bx bxs-wallet'></i>
+                    </div>
                     <div class="stat-info">
                         <h3>Total Income</h3>
                         <p class="stat-number">₱1,123,589.00</p>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon employees">👔</div>
+                    <div class="stat-icon employees">
+                        <i class='bx bxs-user-voice'></i>
+                    </div>
                     <div class="stat-info">
                         <h3>Total Employees</h3>
                         <p class="stat-number" id="totalEmployees">58</p>
                     </div>
                 </div>
             </div>
-            <!-- Add this chart container -->
+
             <div class="chart-container">
                 <canvas id="salesChart"></canvas>
             </div>
@@ -151,7 +159,9 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addEmployeeModalLabel"><i class="fas fa-user-plus"></i> Register Staff</h5>
+                <h5 class="modal-title" id="addEmployeeModalLabel">
+                    <i class='bx bxs-user-plus'></i> Register Staff
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -192,7 +202,7 @@
                         <label class="form-label">Confirm Password</label>
                         <input type="password" class="form-control" id="employeeConfirmPassword" required>
                     </div>
-                    <button type="submit" class="btn btn-success">Register</button>
+                    <button type="submit" class="btn btn-success w-100">Register</button>
                 </form>
             </div>
         </div>
@@ -261,7 +271,7 @@
         sidebar.classList.toggle('hide');
     });
 
-     // SALES CHART
+    // SALES CHART
     document.addEventListener('DOMContentLoaded', function() {
         var ctx = document.getElementById('salesChart').getContext('2d');
         var salesChart = new Chart(ctx, {
@@ -271,17 +281,39 @@
                 datasets: [{
                     label: 'Overall Sales',
                     data: [12, 19, 3, 5, 2, 3, 10, 12, 15, 9, 6, 7],
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    tension: 0.1,
-                    fill: false
+                    borderColor: 'rgba(60, 145, 230, 1)',
+                    backgroundColor: 'rgba(60, 145, 230, 0.1)',
+                    tension: 0.4,
+                    fill: true
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Monthly Sales Overview',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+                },
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
                     }
                 }
             }
