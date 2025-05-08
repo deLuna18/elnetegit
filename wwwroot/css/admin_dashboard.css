@@ -260,15 +260,26 @@ header {
 
 /*CHART*/
 .chart-container {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: white;
-    border-radius: 15px;
-    height: 400px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    border: 1px solid rgba(0,0,0,0.05);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 24px;
 }
-/*CHART*/
+
+.chart-card {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    height: 400px;
+}
+
+.chart-card h3 {
+    margin: 0 0 20px 0;
+    color: var(--dark);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
 
 /* MAIN */
 /* CONTENT */
@@ -347,6 +358,16 @@ header {
     .btn-add-employee {
         width: 100%;
         justify-content: center;
+    }
+}
+
+@media (max-width: 1024px) {
+    .chart-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-card {
+        height: 350px;
     }
 }
 
@@ -496,7 +517,6 @@ header {
 }
 
 .modal-body .btn-success {
-    background: linear-gradient(135deg, #4CAF50 0%, #3d9e41 100%);
     border: none;
     padding: 0.75rem;
     font-weight: 500;

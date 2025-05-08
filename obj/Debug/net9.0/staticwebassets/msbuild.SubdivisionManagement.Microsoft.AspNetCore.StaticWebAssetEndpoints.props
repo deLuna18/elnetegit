@@ -1,16 +1,16 @@
 ﻿<Project>
   <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/SubdivisionManagement/css/admin_dashboard.cgsjospytf.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\admin_dashboard.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"cgsjospytf"},{"Name":"integrity","Value":"sha256-zC41NuAl5DoCBizC79Rfz3VPw4uXXh\u002BDFhf42v06SLk="},{"Name":"label","Value":"_content/SubdivisionManagement/css/admin_dashboard.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"10980"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022zC41NuAl5DoCBizC79Rfz3VPw4uXXh\u002BDFhf42v06SLk=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 20:36:23 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SubdivisionManagement/css/admin_dashboard.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\admin_dashboard.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-TE6JpBobm9bu58EfehD8kZsgyVZs70Pb\u002BnRJhSns1YY="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"7243"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022TE6JpBobm9bu58EfehD8kZsgyVZs70Pb\u002BnRJhSns1YY=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 19:51:10 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/SubdivisionManagement/css/admin_dashboard.k4dd2b2vxf.css">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\admin_dashboard.css'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"k4dd2b2vxf"},{"Name":"integrity","Value":"sha256-TE6JpBobm9bu58EfehD8kZsgyVZs70Pb\u002BnRJhSns1YY="},{"Name":"label","Value":"_content/SubdivisionManagement/css/admin_dashboard.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"7243"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022TE6JpBobm9bu58EfehD8kZsgyVZs70Pb\u002BnRJhSns1YY=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 19:51:10 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-zC41NuAl5DoCBizC79Rfz3VPw4uXXh\u002BDFhf42v06SLk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"10980"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022zC41NuAl5DoCBizC79Rfz3VPw4uXXh\u002BDFhf42v06SLk=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 20:36:23 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SubdivisionManagement/css/admin_login.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\admin_login.css'))</AssetFile>

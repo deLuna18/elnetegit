@@ -51,6 +51,43 @@ public class AdminController : Controller
             return RedirectToAction("Login");
         }
 
+        // Get dashboard statistics
+        var totalHouses = _context.Homeowners.Select(h => new { h.Block, h.HouseNumber }).Distinct().Count();
+        var totalResidents = _context.Homeowners.Count();
+        var totalIncome = _context.Billings.Where(b => b.Status == "Paid").Sum(b => b.Amount);
+        var totalEmployees = _context.Staffs.Count();
+
+        // Find the most recent year with paid billings
+        var latestYear = _context.Billings
+            .Where(b => b.Status == "Paid")
+            .OrderByDescending(b => b.Date)
+            .Select(b => b.Date.Year)
+            .FirstOrDefault();
+
+        // Get monthly income data for the latest year
+        var monthlyIncome = _context.Billings
+            .Where(b => b.Status == "Paid" && b.Date.Year == latestYear)
+            .GroupBy(b => b.Date.Month)
+            .Select(g => new { Month = g.Key, Total = g.Sum(b => b.Amount) })
+            .OrderBy(x => x.Month)
+            .ToList();
+
+        // Get house distribution by block
+        var houseDistribution = _context.Homeowners
+            .GroupBy(h => h.Block)
+            .Select(g => new { Block = g.Key, Count = g.Select(h => h.HouseNumber).Distinct().Count() })
+            .OrderBy(x => x.Block)
+            .ToList();
+
+        ViewBag.TotalHouses = totalHouses;
+        ViewBag.TotalResidents = totalResidents;
+        ViewBag.TotalIncome = totalIncome;
+        ViewBag.TotalEmployees = totalEmployees;
+        ViewBag.MonthlyIncome = monthlyIncome;
+        ViewBag.HouseDistribution = houseDistribution;
+        ViewBag.LatestYear = latestYear;
+        ViewBag.AdminName = HttpContext.Session.GetString("AdminUser");
+
         return View("admin_dashboard");
     }
 

@@ -115,7 +115,7 @@
                     </div>
                     <div class="stat-info">
                         <h3>Total Houses</h3>
-                        <p class="stat-number">102</p>
+                        <p class="stat-number">@ViewBag.TotalHouses</p>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -124,7 +124,7 @@
                     </div>
                     <div class="stat-info">
                         <h3>Total Residence</h3>
-                        <p class="stat-number">345</p>
+                        <p class="stat-number">@ViewBag.TotalResidents</p>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -133,7 +133,7 @@
                     </div>
                     <div class="stat-info">
                         <h3>Total Income</h3>
-                        <p class="stat-number">₱1,123,589.00</p>
+                        <p class="stat-number">₱@ViewBag.TotalIncome.ToString("N2")</p>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -142,13 +142,20 @@
                     </div>
                     <div class="stat-info">
                         <h3>Total Employees</h3>
-                        <p class="stat-number" id="totalEmployees">58</p>
+                        <p class="stat-number" id="totalEmployees">@ViewBag.TotalEmployees</p>
                     </div>
                 </div>
             </div>
 
             <div class="chart-container">
-                <canvas id="salesChart"></canvas>
+                <div class="chart-card">
+                    <h3>Monthly Income</h3>
+                    <canvas id="salesChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>House Registrations</h3>
+                    <canvas id="housesChart"></canvas>
+                </div>
             </div>
         </main>
     </div>
@@ -255,36 +262,104 @@
                 }
             });
         });
-    });
 
-    // Dark mode toggle
-    const switchMode = document.getElementById('switch-mode');
-    switchMode.addEventListener('change', function () {
-        document.body.classList.toggle('dark');
-    });
+        // Dark mode toggle
+        const switchMode = document.getElementById('switch-mode');
+        switchMode.addEventListener('change', function () {
+            document.body.classList.toggle('dark');
+        });
 
-    // Sidebar toggle
-    const menuBar = document.querySelector('nav .bx.bx-menu');
-    const sidebar = document.getElementById('sidebar');
+        // Sidebar toggle
+        const menuBar = document.querySelector('nav .bx.bx-menu');
+        const sidebar = document.getElementById('sidebar');
 
-    menuBar.addEventListener('click', function () {
-        sidebar.classList.toggle('hide');
-    });
+        menuBar.addEventListener('click', function () {
+            sidebar.classList.toggle('hide');
+        });
 
-    // SALES CHART
-    document.addEventListener('DOMContentLoaded', function() {
-        var ctx = document.getElementById('salesChart').getContext('2d');
-        var salesChart = new Chart(ctx, {
-            type: 'line',
+        // SALES CHART
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('salesChart').getContext('2d');
+            
+            // Get monthly income data from ViewBag
+            var monthlyData = @Html.Raw(Json.Serialize(ViewBag.MonthlyIncome ?? new List<object>()));
+            console.log("Monthly Income Data:", monthlyData); // Debug log
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var incomeData = new Array(12).fill(0);
+            
+            // Use correct property names (Month, Total)
+            if (monthlyData && Array.isArray(monthlyData)) {
+                monthlyData.forEach(function(item) {
+                    incomeData[item.Month - 1] = item.Total;
+                });
+            }
+
+            var salesChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Monthly Income',
+                        data: incomeData,
+                        borderColor: 'rgba(60, 145, 230, 1)',
+                        backgroundColor: 'rgba(60, 145, 230, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Monthly Income Overview (@ViewBag.LatestYear)',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '₱' + value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // Houses Chart
+        const housesCtx = document.getElementById('housesChart').getContext('2d');
+        const housesData = @Html.Raw(Json.Serialize(ViewBag.HouseDistribution));
+        const housesLabels = housesData.map(item => `Block ${item.block}`);
+        const housesValues = housesData.map(item => item.count);
+
+        new Chart(housesCtx, {
+            type: 'bar',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: housesLabels,
                 datasets: [{
-                    label: 'Overall Sales',
-                    data: [12, 19, 3, 5, 2, 3, 10, 12, 15, 9, 6, 7],
-                    borderColor: 'rgba(60, 145, 230, 1)',
-                    backgroundColor: 'rgba(60, 145, 230, 0.1)',
-                    tension: 0.4,
-                    fill: true
+                    label: 'Houses per Block',
+                    data: housesValues,
+                    backgroundColor: '#1cc88a',
+                    borderRadius: 4
                 }]
             },
             options: {
@@ -292,11 +367,11 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        position: 'top',
+                        display: false
                     },
                     title: {
                         display: true,
-                        text: 'Monthly Sales Overview',
+                        text: 'House Distribution by Block',
                         font: {
                             size: 16,
                             weight: 'bold'
@@ -306,13 +381,18 @@
                 scales: {
                     y: {
                         beginAtZero: true,
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
+                        ticks: {
+                            stepSize: 1
+                        },
+                        title: {
+                            display: true,
+                            text: 'Number of Houses'
                         }
                     },
                     x: {
-                        grid: {
-                            display: false
+                        title: {
+                            display: true,
+                            text: 'Block'
                         }
                     }
                 }
