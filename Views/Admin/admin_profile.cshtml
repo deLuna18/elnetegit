@@ -99,10 +99,175 @@
         </div>
     </nav>
 
-    <div class="container">
-        <main>
-            
-        </main>
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">All Homeowners</h5>
+                        <p class="card-text display-4" id="homeownerCount">@((ViewBag.Homeowners as List<SubdivisionManagement.Model.Homeowner>).Count)</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#manageHomeownersModal">Manage Homeowners</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">All Employees</h5>
+                        <p class="card-text display-4" id="employeeCount">@((ViewBag.Employees as List<SubdivisionManagement.Model.Staff>).Count)</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#manageEmployeesModal">Manage Employees</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <h4>All Homeowners</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Block</th>
+                            <th>House Number</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var h in (ViewBag.Homeowners as List<SubdivisionManagement.Model.Homeowner>) ?? new List<SubdivisionManagement.Model.Homeowner>())
+                        {
+                            <tr>
+                                <td>@h.FirstName @h.LastName</td>
+                                <td>@h.Block</td>
+                                <td>@h.HouseNumber</td>
+                                <td>@h.Email</td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning">Edit</button>
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <h4>All Employees</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Position</th>
+                            <th>Department</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var e in (ViewBag.Employees as List<SubdivisionManagement.Model.Staff>) ?? new List<SubdivisionManagement.Model.Staff>())
+                        {
+                            <tr>
+                                <td>@e.FullName</td>
+                                <td>@e.Email</td>
+                                <td>@e.Position</td>
+                                <td>@e.Department</td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning">Edit</button>
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Homeowners Modal -->
+        <div class="modal fade" id="manageHomeownersModal" tabindex="-1" aria-labelledby="manageHomeownersModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="manageHomeownersModalLabel">Manage Homeowners</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <button class="btn btn-success mb-2" onclick="showAddHomeownerForm()">Add Homeowner</button>
+                        <div id="homeownerFormContainer"></div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Block</th>
+                                    <th>House Number</th>
+                                    <th>Email</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="homeownerTableBody">
+                                @foreach (var h in (List<SubdivisionManagement.Model.Homeowner>)ViewBag.Homeowners)
+                                {
+                                    <tr>
+                                        <td>@h.FirstName @h.LastName</td>
+                                        <td>@h.Block</td>
+                                        <td>@h.HouseNumber</td>
+                                        <td>@h.Email</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning" onclick="showEditHomeownerForm(@h.Id)">Edit</button>
+                                            <button class="btn btn-sm btn-danger" onclick="deleteHomeowner(@h.Id)">Delete</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employees Modal -->
+        <div class="modal fade" id="manageEmployeesModal" tabindex="-1" aria-labelledby="manageEmployeesModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="manageEmployeesModalLabel">Manage Employees</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <button class="btn btn-success mb-2" onclick="showAddEmployeeForm()">Add Employee</button>
+                        <div id="employeeFormContainer"></div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Position</th>
+                                    <th>Department</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employeeTableBody">
+                                @foreach (var e in (List<SubdivisionManagement.Model.Staff>)ViewBag.Employees)
+                                {
+                                    <tr>
+                                        <td>@e.FullName</td>
+                                        <td>@e.Email</td>
+                                        <td>@e.Position</td>
+                                        <td>@e.Department</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning" onclick="showEditEmployeeForm(@e.Id)">Edit</button>
+                                            <button class="btn btn-sm btn-danger" onclick="deleteEmployee(@e.Id)">Delete</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 

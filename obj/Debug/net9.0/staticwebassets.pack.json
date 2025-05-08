@@ -13,12 +13,20 @@
       "PackagePath": "staticwebassets\\css\\admin_login.css"
     },
     {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_profile.css",
+      "PackagePath": "staticwebassets\\css\\admin_profile.css"
+    },
+    {
       "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_security_visitors.css",
       "PackagePath": "staticwebassets\\css\\admin_security_visitors.css"
     },
     {
       "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_services.css",
       "PackagePath": "staticwebassets\\css\\admin_services.css"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_sidebar_nav.css",
+      "PackagePath": "staticwebassets\\css\\admin_sidebar_nav.css"
     },
     {
       "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\announcements.css",

@@ -881,4 +881,16 @@ public class AdminController : Controller
         await _context.SaveChangesAsync();
         return Json(new { success = true });
     }
+
+    public IActionResult Profile()
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+        {
+            return RedirectToAction("Login");
+        }
+        ViewBag.AdminName = HttpContext.Session.GetString("AdminUser");
+        ViewBag.Homeowners = _context.Homeowners.ToList();
+        ViewBag.Employees = _context.Staffs.ToList();
+        return View("admin_profile");
+    }
 }

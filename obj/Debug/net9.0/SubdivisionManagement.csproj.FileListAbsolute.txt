@@ -499,3 +499,5 @@ C:\Users\Home\Downloads\elnet - Copy (2) - Copy\elnet - Copy (2) - Copy\obj\Debu
 C:\Users\Home\Downloads\elnet - Copy (2) - Copy\elnet - Copy (2) - Copy\obj\Debug\net9.0\SubdivisionManagement.genruntimeconfig.cache
 C:\Users\Home\Downloads\elnet - Copy (2) - Copy\elnet - Copy (2) - Copy\obj\Debug\net9.0\ref\SubdivisionManagement.dll
 C:\Users\Home\Downloads\elnet - Copy (2) - Copy\elnet - Copy (2) - Copy\obj\Debug\net9.0\compressed\invvpa7aok-cgsjospytf.gz
+C:\Users\Home\Downloads\elnet - Copy (2) - Copy\elnet - Copy (2) - Copy\obj\Debug\net9.0\compressed\hqx0gc4gsq-5ipweew5fc.gz
+C:\Users\Home\Downloads\elnet - Copy (2) - Copy\elnet - Copy (2) - Copy\obj\Debug\net9.0\compressed\2ggsiocow7-toqmp5mwdw.gz
