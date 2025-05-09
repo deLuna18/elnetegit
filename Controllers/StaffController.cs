@@ -1525,6 +1525,80 @@ namespace SubdivisionManagement.Controllers
         public int BookingId { get; set; }
         public string Status { get; set; } = string.Empty;
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetContactRequests()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var requests = await _context.ContactRequests
+                .Include(c => c.Homeowner)
+                .OrderByDescending(c => c.DateSubmitted)
+                .Select(c => new
+                {
+                    c.Id,
+                    homeowner = c.Homeowner != null ? new
+                    {
+                        c.Homeowner.FirstName,
+                        c.Homeowner.LastName
+                    } : null,
+                    c.Email,
+                    c.QueryType,
+                    c.Message,
+                    c.DateSubmitted,
+                    c.Status,
+                    c.StaffNotes
+                })
+                .ToListAsync();
+
+            return Json(requests);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching contact requests");
+            return StatusCode(500, new { message = "Error fetching contact requests" });
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateContactRequestStatus([FromBody] UpdateContactRequestStatusDto model)
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var request = await _context.ContactRequests.FindAsync(model.RequestId);
+            if (request == null)
+                return NotFound(new { success = false, message = "Contact request not found" });
+
+            request.Status = model.NewStatus;
+            request.StaffNotes = model.StaffNotes;
+
+            await _context.SaveChangesAsync();
+
+            return Json(new { 
+                success = true, 
+                message = $"Request status updated to {model.NewStatus}" 
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating contact request status");
+            return StatusCode(500, new { success = false, message = "Error updating contact request status" });
+        }
+    }
+
+    public class UpdateContactRequestStatusDto
+    {
+        public int RequestId { get; set; }
+        public string NewStatus { get; set; } = string.Empty;
+        public string? StaffNotes { get; set; }
+    }
 }
 
 }

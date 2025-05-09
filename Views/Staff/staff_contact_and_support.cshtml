@@ -9,6 +9,9 @@
     <title>Staff Contact Support Management</title>
 </head>
 
+@* Add hidden anti-forgery token *@
+@Html.AntiForgeryToken()
+
     <!-- SIDEBAR -->
     <section id="sidebar">
 		<a href="#" class="brand">
@@ -274,120 +277,155 @@
                             document.querySelector('.card.bg-secondary .h3').textContent = totalRequests;
                         }
 
-                        // Function to handle status updates
-                        async function updateRequestStatus(requestId, newStatus, staffNotes) {
-                            try {
-                                const response = await fetch('/Staff/UpdateContactRequestStatus', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        requestId,
-                                        newStatus,
-                                        staffNotes
-                                    })
-                                });
+                        // Function to populate the requests table
+                        function populateRequestsTable(requests) {
+                            const tbody = document.getElementById('requestsTable');
+                            if (!tbody) return;
+                            
+                            tbody.innerHTML = '';
 
-                                if (response.ok) {
-                                    Swal.fire({
-                                        title: 'Success!',
-                                        text: 'Request status updated successfully',
-                                        icon: 'success'
-                                    });
-                                    loadContactRequests();
-                                } else {
-                                    throw new Error('Failed to update status');
-                                }
-                            } catch (error) {
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: error.message,
-                                    icon: 'error'
+                            requests.forEach(request => {
+                                const tr = document.createElement('tr');
+                                tr.innerHTML = `
+                                    <td>${request.id}</td>
+                                    <td>${request.homeowner ? `${request.homeowner.firstName} ${request.homeowner.lastName}` : 'N/A'}</td>
+                                    <td>${request.queryType}</td>
+                                    <td>${request.message.length > 50 ? request.message.substring(0, 50) + '...' : request.message}</td>
+                                    <td>${new Date(request.dateSubmitted).toLocaleString()}</td>
+                                    <td><span class="badge bg-${getStatusClass(request.status)}">${request.status}</span></td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary view-request" 
+                                                data-id="${request.id}"
+                                                data-firstname="${request.homeowner?.firstName || ''}"
+                                                data-lastname="${request.homeowner?.lastName || ''}"
+                                                data-email="${request.email}"
+                                                data-querytype="${request.queryType}"
+                                                data-message="${request.message}"
+                                                data-date="${new Date(request.dateSubmitted).toLocaleString()}"
+                                                data-status="${request.status}"
+                                                data-staffnotes="${request.staffNotes || ''}">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </td>
+                                `;
+                                tbody.appendChild(tr);
+                            });
+
+                            // Add click handlers for the view buttons
+                            document.querySelectorAll('.view-request').forEach(button => {
+                                button.addEventListener('click', function() {
+                                    const data = this.dataset;
+                                    showRequestDetails(data);
                                 });
-                            }
+                            });
                         }
 
-                        // Function to handle note updates
-                        async function updateStaffNotes(requestId, notes) {
-                            try {
-                                const response = await fetch('/Staff/UpdateStaffNotes', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        requestId,
-                                        notes
-                                    })
-                                });
-
-                                if (response.ok) {
-                                    Swal.fire({
-                                        title: 'Success!',
-                                        text: 'Notes updated successfully',
-                                        icon: 'success'
-                                    });
-                                    loadContactRequests();
-                                } else {
-                                    throw new Error('Failed to update notes');
-                                }
-                            } catch (error) {
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: error.message,
-                                    icon: 'error'
-                                });
-                            }
-                        }
-
-                        // Function to show request details
-                        function showRequestDetails(request) {
+                        // Function to show request details in modal
+                        function showRequestDetails(data) {
                             const modal = document.getElementById('requestDetailsModal');
-                            document.getElementById('requestId').textContent = request.id;
-                            document.getElementById('homeownerName').textContent = `${request.homeowner.firstName} ${request.homeowner.lastName}`;
-                            document.getElementById('email').textContent = request.email;
-                            document.getElementById('queryType').textContent = request.queryType;
-                            document.getElementById('dateSubmitted').textContent = new Date(request.dateSubmitted).toLocaleString();
-                            document.getElementById('currentStatus').textContent = request.status;
-                            document.getElementById('messageContent').textContent = request.message;
-                            document.getElementById('requestIdInput').value = request.id;
-                            document.getElementById('newStatus').value = request.status;
-                            document.getElementById('staffNotes').value = request.staffNotes || '';
+                            if (!modal) return;
+
+                            // Update modal content
+                            document.getElementById('requestId').textContent = data.id;
+                            document.getElementById('requestIdInput').value = data.id;
+                            document.getElementById('homeownerName').textContent = `${data.firstname} ${data.lastname}`;
+                            document.getElementById('email').textContent = data.email;
+                            document.getElementById('queryType').textContent = data.querytype;
+                            document.getElementById('dateSubmitted').textContent = data.date;
+                            document.getElementById('currentStatus').textContent = data.status;
+                            document.getElementById('messageContent').textContent = data.message;
+                            document.getElementById('newStatus').value = data.status;
+                            document.getElementById('staffNotes').value = data.staffnotes || '';
+
+                            // Show modal
+                            modal.style.display = 'block';
+                            document.body.classList.add('modal-open');
+                        }
+
+                        // Function to close the modal
+                        function closeRequestModal() {
+                            const modal = document.getElementById('requestDetailsModal');
+                            if (!modal) return;
+
+                            modal.style.display = 'none';
+                            document.body.classList.remove('modal-open');
+                        }
+
+                        // Helper function for status class
+                        function getStatusClass(status) {
+                            return status?.toLowerCase() === 'new' ? 'primary' :
+                                   status?.toLowerCase() === 'pending' ? 'warning' :
+                                   status?.toLowerCase() === 'resolved' ? 'success' : 'secondary';
+                        }
+
+                        // Function to get anti-forgery token
+                        function getAntiForgeryToken() {
+                            const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
+                            return tokenElement ? tokenElement.value : '';
                         }
 
                         // Initialize when page loads
                         document.addEventListener('DOMContentLoaded', () => {
+                            // Set up modal close buttons
+                            const closeButtons = document.querySelectorAll('#closeRequestModal, #closeRequestModalFooter');
+                            closeButtons.forEach(button => {
+                                if (button) {
+                                    button.addEventListener('click', closeRequestModal);
+                                }
+                            });
+
+                            // Close modal when clicking outside
+                            const modal = document.getElementById('requestDetailsModal');
+                            if (modal) {
+                                modal.addEventListener('click', function(e) {
+                                    if (e.target === this) {
+                                        closeRequestModal();
+                                    }
+                                });
+                            }
+
+                            // Set up update button
+                            const updateBtn = document.getElementById('updateStatusBtn');
+                            if (updateBtn) {
+                                updateBtn.addEventListener('click', function() {
+                                    const requestId = document.getElementById('requestIdInput').value;
+                                    const newStatus = document.getElementById('newStatus').value;
+                                    const staffNotes = document.getElementById('staffNotes').value;
+                                    const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+                                    $.ajax({
+                                        url: '/Staff/UpdateContactRequestStatus',
+                                        type: 'POST',
+                                        headers: {
+                                            'RequestVerificationToken': token
+                                        },
+                                        contentType: 'application/json',
+                                        data: JSON.stringify({
+                                            requestId: parseInt(requestId),
+                                            newStatus: newStatus,
+                                            staffNotes: staffNotes || ''
+                                        }),
+                                        success: function(response) {
+                                            if (response.success) {
+                                                closeRequestModal();
+                                                loadContactRequests();
+                                            } else {
+                                                alert('Error: ' + (response.message || 'Unknown error occurred'));
+                                            }
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.error('Error:', error);
+                                            alert('An error occurred while processing your request.');
+                                        }
+                                    });
+                                });
+                            }
+
+                            // Initial load
                             loadContactRequests();
                             // Set up periodic refresh
-                            setInterval(loadContactRequests, 30000); // Refresh every 30 seconds
+                            setInterval(loadContactRequests, 30000);
                         });
-
-                        // Handle status filter changes
-                        document.querySelectorAll('.btn-group .btn').forEach(btn => {
-                            btn.addEventListener('click', (e) => {
-                                e.preventDefault();
-                                const filter = e.target.getAttribute('asp-route-filter');
-                                filterRequests(filter);
-                            });
-                        });
-
-                        // Function to filter requests
-                        function filterRequests(filter) {
-                            let filteredRequests = [...contactRequests];
-                            switch(filter) {
-                                case 'new':
-                                    filteredRequests = contactRequests.filter(r => r.status === 'New');
-                                    break;
-                                case 'pending':
-                                    filteredRequests = contactRequests.filter(r => r.status === 'Pending');
-                                    break;
-                                case 'resolved':
-                                    filteredRequests = contactRequests.filter(r => r.status === 'Resolved');
-                                    break;
-                            }
-                            populateRequestsTable(filteredRequests);
-                        }
                     </script>
                 </table>
             </div>
@@ -486,17 +524,28 @@
             });
             // Handle update button click (unchanged)
             $('#updateStatusBtn').click(function() {
-                var requestId = $('#requestIdInput').val();
+                var requestId = parseInt($('#requestIdInput').val());
                 var newStatus = $('#newStatus').val();
-                var staffNotes = $('#staffNotes').val();
+                var staffNotes = $('#staffNotes').val() || '';
+                var token = $('input[name="__RequestVerificationToken"]').val();
+                
+                if (isNaN(requestId) || !newStatus) {
+                    alert('Invalid request data');
+                    return;
+                }
+                
                 $.ajax({
                     url: '@Url.Action("UpdateContactRequestStatus", "Staff")',
                     type: 'POST',
-                    data: {
+                    headers: {
+                        'RequestVerificationToken': token
+                    },
+                    contentType: 'application/json',
+                    data: JSON.stringify({
                         requestId: requestId,
                         newStatus: newStatus,
                         staffNotes: staffNotes
-                    },
+                    }),
                     success: function(response) {
                         if (response.success) {
                             closeRequestModal();
