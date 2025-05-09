@@ -2,229 +2,450 @@
     ViewData["Title"] = "Contact and Support";
 }
 
-<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-<link rel="stylesheet" href="~/css/staff_contact_and_support.css" asp-append-version="true">
-<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+<head>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="~/css/staff_contact_and_support.css" asp-append-version="true">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Staff Contact Support Management</title>
+</head>
 
 <!-- SIDEBAR -->
-	<section id="sidebar">
-		<a href="#" class="brand">
-			<i class='bx bxs-smile'></i>
-			<span class="text">Staff</span>
-		</a>
-		<ul class="side-menu top">
-			<li>
-				<a asp-area="" asp-controller="Staff" asp-action="Dashboard">
-					<i class='bx bxs-dashboard'></i>
-					<span class="text">Dashboard</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<i class='bx bxs-user'></i>
-					<span class="text">Profile</span>
-				</a>
-			</li>
-			<li>
-				<a asp-action="Announcements" asp-controller="Staff">
-					<i class='bx bxs-megaphone'></i>
-					<span class="text">Announcement</span>
-				</a>
-			</li>
-			<li>
-				<a asp-area="" asp-controller="Staff" asp-action="StaffBilling">
-					<i class='bx bxs-credit-card-front'></i>
-					<span class="text">Payment and Billing</span>
-				</a>
-			</li>
+<section id="sidebar">
+    <a href="#" class="brand">
+        <i class='bx bxs-smile'></i>
+        <span class="text">Staff</span>
+    </a>
+    <ul class="side-menu top">
+        <li>
+            <a asp-area="" asp-controller="Staff" asp-action="Dashboard">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-user'></i>
+                <span class="text">Profile</span>
+            </a>
+        </li>
+        <li>
+            <a asp-action="Announcements" asp-controller="Staff">
+                <i class='bx bxs-megaphone'></i>
+                <span class="text">Announcement</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-credit-card-front'></i>
+                <span class="text">Payment and Billing</span>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Staff" asp-action="staff_services">
+                <i class='bx bxs-briefcase'></i>
+                <span class="text">Services</span>
+            </a>
+        </li>
             <li>
-				<a asp-area="" asp-controller="Staff" asp-action="StaffFacilityReservation">
-					<i class='bx bxs-credit-card-front'></i>
-					<span class="text">Facility Reservation</span>
-				</a>
-			</li>
-			<li>
-				<a asp-area="" asp-controller="Staff" asp-action="staff_services">
-					<i class='bx bxs-briefcase'></i>
-					<span class="text">Services</span>
-				</a>
-			</li>
+                <a asp-area="" asp-controller="Staff" asp-action="staff_community_forum">
+                    <i class='bx bxs-message-square-dots'></i>
+                    <span class="text">Community Forum</span>
+                </a>
+            </li>
             <li>
-				<a asp-area="" asp-controller="Staff" asp-action="staff_community_forum">
-					<i class='bx bxs-message-square-dots'></i>
-					<span class="text">Community Forum</span>
-				</a>
-			</li>
-			<li>
-				<a asp-area="" asp-controller="Staff" asp-action="staff_security_visitors">
-					<i class='bx bxs-shield-alt-2'></i>
-					<span class="text">Security and Visitors</span>
-				</a>
-			</li>
-			<li class="active">
+                <a asp-area="" asp-controller="Staff" asp-action="staff_security_visitors">
+                    <i class='bx bxs-shield-alt-2'></i>
+                    <span class="text">Security and Visitors</span>
+                </a>
+            </li>
+            <li class="active">
                 <a asp-area="" asp-controller="Staff" asp-action="staff_contact_and_support">
                     <i class='bx bx-support'></i>
                     <span class="text">Contact and Support</span>
                 </a>
             </li>
-		</ul>
-		<ul class="side-menu">
-			<li>
-				<a href="#">
-					<i class='bx bxs-cog'></i>
-					<span class="text">Settings</span>
-				</a>
-			</li>
-			<li>
-				<a asp-action="logout" class="logout">
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="#">
+                    <i class='bx bxs-cog'></i>
+                    <span class="text">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a asp-action="logout" class="logout">
                     <i class='bx bxs-log-out-circle'></i>
                     <span class="text">Logout</span>
                 </a>
-			</li>
-		</ul>
-	</section>
-<section id="content">
-    <nav>
-        <i class='bx bx-menu'></i>
-        <a href="#" class="nav-link">Categories</a>
-        <form action="#">
-            <div class="form-input">
-                <input type="search" placeholder="Search...">
-                <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
-            </div>
-        </form>
-        <input type="checkbox" id="switch-mode" hidden>
-        <label for="switch-mode" class="switch-mode"></label>
-        <a href="#" class="notification"><i class='bx bxs-bell'></i><span class="num">8</span></a>
-        <a asp-area="" asp-controller="Staff" asp-action="profile">
-            <img src="~/images/profile.jpg" class="profile-img">
-        </a>
-    </nav>
-    <main>
-        <div class="head-title">
-            <div class="left">
-                <h1>Contact & Support Management</h1>
-                <ul class="breadcrumb">
-                    <li>
-                        <a asp-area="" asp-controller="Staff" asp-action="Dashboard">Home</a>
-                    </li>
-                    <li><i class='bx bx-chevron-right'></i></li>
-                    <li>
-                        <a class="active" asp-area="" asp-controller="Staff" asp-action="staff_contact_and_support">Contact and Support</a>
-                    </li>
-                </ul>
-            </div>
-            <br>
-            <div class="btn-group">
-                <a href="#" class="btn-download">
-                    <i class='bx bxs-file-export'></i>
-                    <span class="text">Export Report</span>
-                </a>
-            </div>
-        </div>
-
-        <div class="contact-stats">
-            <div class="box">
-                <i class='bx bxs-envelope'></i>
-                <span class="text">
-                    <h3>25</h3>
-                    <p>New Requests</p>
-                </span>
-            </div>
-            <div class="box">
-                <i class='bx bxs-message-rounded-check'></i>
-                <span class="text">
-                    <h3>156</h3>
-                    <p>Resolved</p>
-                </span>
-            </div>
-            <div class="box">
-                <i class='bx bxs-time-five'></i>
-                <span class="text">
-                    <h3>12</h3>
-                    <p>Pending</p>
-                </span>
-            </div>
-        </div>
-
-        <div class="table-data">
-            <div class="order">
-                <div class="head">
-                    <h3>Recent Contact Requests</h3>
-                    <div class="filter">
-                        <i class='bx bx-filter'></i>
-                        <select>
-                            <option value="all">All</option>
-                            <option value="pending">Pending</option>
-                            <option value="resolved">Resolved</option>
-                        </select>
+            </li>
+        </ul>
+    </section>
+    
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu' ></i>
+            <a href="#" class="nav-link">Categories</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="switch-mode" hidden>
+            <label for="switch-mode" class="switch-mode"></label>
+            <a href="#" class="notification">
+                <i class='bx bxs-bell' ></i>
+                <span class="num">8</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="~/img/people.png">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+    
+        <!-- MAIN -->
+        <main>
+<div class="container-fluid">
+    <h1 class="mt-4">Contact Support Management</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-controller="Staff" asp-action="Dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item active">Contact Support</li>
+    </ol>
+    
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>New Requests</div>
+                        <div class="h3 mb-0">@ViewBag.NewRequestsCount</div>
                     </div>
                 </div>
-                <table>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" asp-action="staff_contact_and_support" asp-route-filter="new">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>Pending Requests</div>
+                        <div class="h3 mb-0">@ViewBag.PendingCount</div>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" asp-action="staff_contact_and_support" asp-route-filter="pending">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>Resolved Requests</div>
+                        <div class="h3 mb-0">@ViewBag.ResolvedCount</div>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" asp-action="staff_contact_and_support" asp-route-filter="resolved">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-secondary text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>All Requests</div>
+                        <div class="h3 mb-0">@Model.Count</div>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" asp-action="staff_contact_and_support" asp-route-filter="all">View All</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Contact Requests
+            <div class="float-end">
+                <div class="btn-group">
+                    <a asp-action="staff_contact_and_support" asp-route-filter="all" class="btn btn-sm @(ViewBag.CurrentFilter == "all" || string.IsNullOrEmpty(ViewBag.CurrentFilter) ? "btn-primary" : "btn-outline-primary")">All</a>
+                    <a asp-action="staff_contact_and_support" asp-route-filter="new" class="btn btn-sm @(ViewBag.CurrentFilter == "new" ? "btn-primary" : "btn-outline-primary")">New</a>
+                    <a asp-action="staff_contact_and_support" asp-route-filter="pending" class="btn btn-sm @(ViewBag.CurrentFilter == "pending" ? "btn-primary" : "btn-outline-primary")">Pending</a>
+                    <a asp-action="staff_contact_and_support" asp-route-filter="resolved" class="btn btn-sm @(ViewBag.CurrentFilter == "resolved" ? "btn-primary" : "btn-outline-primary")">Resolved</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+            }
+            
+            <div class="table-responsive">
+                <table class="table table-bordered" id="contactRequestsTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>User</th>
+                            <th>ID</th>
+                            <th>Homeowner</th>
                             <th>Query Type</th>
-                            <th>Subject</th>
-                            <th>Date</th>
+                            <th>Message</th>
+                            <th>Date Submitted</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+
+                    <tbody id="requestsTable">
                         @foreach (var request in Model)
                         {
                             <tr>
-                                <td>@request.FirstName @request.LastName</td>
-                                <td>@request.QueryType</td>
-                                <td>@request.Message</td>
-                                <td>@request.DateSubmitted.ToShortDateString()</td>
-                                <td><span class="status @request.Status.ToLower()">@request.Status</span></td>
+                                <td>@request.Id</td>
                                 <td>
-                                    <div class="action-buttons">
-                                        <button class="view-btn" data-id="@request.Id"><i class='bx bx-show'></i></button>
-                                        <button class="reply-btn" data-id="@request.Id"><i class='bx bx-reply'></i></button>
-                                    </div>
+                                    @if (request.Homeowner != null)
+                                    {
+                                        @($"{request.Homeowner.FirstName} {request.Homeowner.LastName}")
+                                    }
+                                    else
+                                    {
+                                        <span>N/A</span>
+                                    }
+                                </td>
+                                <td>@request.QueryType</td>
+                                <td>@(request.Message.Length > 50 ? request.Message.Substring(0, 50) + "..." : request.Message)</td>
+                                <td>@request.DateSubmitted.ToString("MMM dd, yyyy HH:mm")</td>
+                                <td>
+                                    <span class="badge bg-@GetStatusClass(request.Status)">@request.Status</span>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary view-request" 
+                                            data-bs-toggle="modal" data-bs-target="#requestDetailsModal" 
+                                            data-id="@request.Id"
+                                            data-firstname="@(request.Homeowner?.FirstName ?? "")"
+                                            data-lastname="@(request.Homeowner?.LastName ?? "")"
+                                            data-email="@request.Email"
+                                            data-querytype="@request.QueryType"
+                                            data-message="@request.Message"
+                                            data-date="@request.DateSubmitted.ToString("MMM dd, yyyy HH:mm")"
+                                            data-status="@request.Status"
+                                            data-staffnotes="@request.StaffNotes">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
                                 </td>
                             </tr>
                         }
                     </tbody>
+                    
+                    <!-- Add this script at the bottom -->
+                    <script>
+                        async function loadRequests() {
+                            const response = await fetch('/Staff/GetContactRequests');
+                            const requests = await response.json();
+                            updateTable(requests);
+                        }
+                    
+                        function updateTable(requests) {
+                            const tbody = document.getElementById('requestsTable');
+                            tbody.innerHTML = requests.map(request => `
+                                <tr>
+                                    <td>${new Date(request.dateSubmitted).toLocaleDateString()}</td>
+                                    <td>${request.queryType}</td>
+                                    <td>${request.message}</td>
+                                    <td>
+                                        <select class="form-select status-select" onchange="updateStatus(${request.id}, this.value)">
+                                            <option value="Pending" ${request.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                                            <option value="In Progress" ${request.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                                            <option value="Resolved" ${request.status === 'Resolved' ? 'selected' : ''}>Resolved</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm" onclick="addNote(${request.id})">Add Note</button>
+                                    </td>
+                                </tr>
+                            `).join('');
+                        }
+                    
+                        async function updateStatus(id, status) {
+                            try {
+                                const response = await fetch('/Staff/UpdateContactRequest', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({ id, status })
+                                });
+                                if (response.ok) {
+                                    Swal.fire('Success', 'Status updated successfully', 'success');
+                                    loadRequests();
+                                }
+                            } catch (error) {
+                                Swal.fire('Error', 'Failed to update status', 'error');
+                            }
+                        }
+                    
+                        async function addNote(id) {
+                            const { value: note } = await Swal.fire({
+                                title: 'Add Staff Note',
+                                input: 'textarea',
+                                showCancelButton: true
+                            });
+                    
+                            if (note) {
+                                try {
+                                    const response = await fetch('/Staff/UpdateContactRequest', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({ id, staffNotes: note })
+                                    });
+                                    if (response.ok) {
+                                        Swal.fire('Success', 'Note added successfully', 'success');
+                                        loadRequests();
+                                    }
+                                } catch (error) {
+                                    Swal.fire('Error', 'Failed to add note', 'error');
+                                }
+                            }
+                        }
+                    
+                        // Load requests when page loads
+                        document.addEventListener('DOMContentLoaded', loadRequests);
+                    </script>
                 </table>
             </div>
         </div>
-    </main>
-    
-</section>
-<script>
-    const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+    </div>
+</div>
 
-		allSideMenu.forEach(item=> {
-			const li = item.parentElement;
+<!-- Request Details Modal -->
+<div class="modal fade" id="requestDetailsModal" tabindex="-1" aria-labelledby="requestDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="requestDetailsModalLabel">Request Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p><strong>Request ID:</strong> <span id="requestId"></span></p>
+                        <p><strong>Homeowner:</strong> <span id="homeownerName"></span></p>
+                        <p><strong>Email:</strong> <span id="email"></span></p>
+                        <p><strong>Query Type:</strong> <span id="queryType"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Date Submitted:</strong> <span id="dateSubmitted"></span></p>
+                        <p><strong>Current Status:</strong> <span id="currentStatus"></span></p>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <h6>Message:</h6>
+                    <div class="p-3 bg-light rounded" id="messageContent"></div>
+                </div>
+                <form id="updateStatusForm">
+                    <input type="hidden" id="requestIdInput" name="requestId">
+                    <div class="mb-3">
+                        <label for="newStatus" class="form-label">Update Status</label>
+                        <select class="form-select" id="newStatus" name="newStatus">
+                            <option value="New">New</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Resolved">Resolved</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="staffNotes" class="form-label">Staff Notes</label>
+                        <textarea class="form-control" id="staffNotes" name="staffNotes" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="updateStatusBtn">Update Status</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-			item.addEventListener('click', function () {
-				allSideMenu.forEach(i=> {
-					i.parentElement.classList.remove('active');
-				})
-				li.classList.add('active');
-			})
-		});
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Handle view request button click
+            $('.view-request').click(function() {
+                var id = $(this).data('id');
+                var firstName = $(this).data('firstname');
+                var lastName = $(this).data('lastname');
+                var email = $(this).data('email');
+                var queryType = $(this).data('querytype');
+                var message = $(this).data('message');
+                var date = $(this).data('date');
+                var status = $(this).data('status');
+                var staffNotes = $(this).data('staffnotes');
+                
+                // Populate modal fields
+                $('#requestId').text(id);
+                $('#requestIdInput').val(id);
+                $('#homeownerName').text(firstName + ' ' + lastName);
+                $('#email').text(email);
+                $('#queryType').text(queryType);
+                $('#dateSubmitted').text(date);
+                $('#currentStatus').text(status);
+                $('#messageContent').text(message);
+                $('#newStatus').val(status);
+                $('#staffNotes').val(staffNotes || '');
+            });
+            
+            // Handle update button click
+            $('#updateStatusBtn').click(function() {
+                var requestId = $('#requestIdInput').val();
+                var newStatus = $('#newStatus').val();
+                var staffNotes = $('#staffNotes').val();
+                
+                $.ajax({
+                    url: '@Url.Action("UpdateContactRequestStatus", "Staff")',
+                    type: 'POST',
+                    data: {
+                        requestId: requestId,
+                        newStatus: newStatus,
+                        staffNotes: staffNotes
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#requestDetailsModal').modal('hide');
+                            // Reload the page to show updated data
+                            location.reload();
+                        } else {
+                            alert('Error: ' + response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('An error occurred while processing your request.');
+                    }
+                });
+            });
+        });
+    </script>
+}
 
-
-		// TOGGLE SIDEBAR
-		const menuBar = document.querySelector('#content nav .bx.bx-menu');
-		const sidebar = document.getElementById('sidebar');
-
-		menuBar.addEventListener('click', function () {
-			sidebar.classList.toggle('hide');
-		})
-
-        const switchMode = document.getElementById('switch-mode');
-
-		switchMode.addEventListener('change', function () {
-			if(this.checked) {
-				document.body.classList.add('dark');
-			} else {
-				document.body.classList.remove('dark');
-			}
-		})
-</script>
+@functions {
+    public string GetStatusClass(string status)
+    {
+        return status?.ToLower() switch
+        {
+            "new" => "primary",
+            "pending" => "warning",
+            "resolved" => "success",
+            _ => "secondary"
+        };
+    }
+}

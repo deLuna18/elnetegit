@@ -124,13 +124,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\dashboard.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-qmG0j3ZzguQucxH4wXMUOgmjcY23F/sqm\u002BS2pnv30Pw="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"20012"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022qmG0j3ZzguQucxH4wXMUOgmjcY23F/sqm\u002BS2pnv30Pw=\u0022"},{"Name":"Last-Modified","Value":"Fri, 09 May 2025 09:03:48 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"20012"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022qmG0j3ZzguQucxH4wXMUOgmjcY23F/sqm\u002BS2pnv30Pw=\u0022"},{"Name":"Last-Modified","Value":"Fri, 09 May 2025 09:14:38 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SubdivisionManagement/css/dashboard.uzun5083oi.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\dashboard.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"uzun5083oi"},{"Name":"integrity","Value":"sha256-qmG0j3ZzguQucxH4wXMUOgmjcY23F/sqm\u002BS2pnv30Pw="},{"Name":"label","Value":"_content/SubdivisionManagement/css/dashboard.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"20012"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022qmG0j3ZzguQucxH4wXMUOgmjcY23F/sqm\u002BS2pnv30Pw=\u0022"},{"Name":"Last-Modified","Value":"Fri, 09 May 2025 09:03:48 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"20012"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022qmG0j3ZzguQucxH4wXMUOgmjcY23F/sqm\u002BS2pnv30Pw=\u0022"},{"Name":"Last-Modified","Value":"Fri, 09 May 2025 09:14:38 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SubdivisionManagement/css/facility_reservation.376br38lae.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\facility_reservation.css'))</AssetFile>
