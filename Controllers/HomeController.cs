@@ -574,4 +574,29 @@ public class HomeController : Controller
     
         return Ok();
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetServiceCategories()
+    {
+        try
+        {
+            var categories = await _context.ServiceCategories
+                .OrderBy(c => c.Name)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Name,
+                    c.Description,
+                    c.Icon
+                })
+                .ToListAsync();
+
+            return Json(categories);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching service categories");
+            return StatusCode(500, new { message = "Error fetching service categories" });
+        }
+    }
 }

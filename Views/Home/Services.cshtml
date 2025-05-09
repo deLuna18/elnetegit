@@ -156,6 +156,57 @@
                 gap: 5px;
             }
         }
+
+        .todo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .todo-list li {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .todo-list li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .todo-list li p:first-child {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .todo-list li p:last-child {
+            color: var(--grey);
+            font-size: 0.9rem;
+        }
+
+        .todo-list li i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        /* Dark mode styles */
+        body.dark .todo-list li {
+            background: var(--dark);
+        }
+
+        body.dark .todo-list li p:first-child {
+            color: var(--light);
+        }
+
+        body.dark .todo-list li p:last-child {
+            color: var(--grey);
+        }
     </style>
 </head>
 
@@ -327,27 +378,8 @@
                     <div class="head">
                         <h3>Service Categories</h3>
                     </div>
-                    <ul class="todo-list">
-                        <li class="completed">
-                            <p>Maintenance Services</p>
-                            <p>Plumbing, Electrical, HVAC</p>
-                            <i class='bx bx-wrench'></i>
-                        </li>
-                        <li class="completed">
-                            <p>Security Services</p>
-                            <p>Emergency, Patrol, Access Control</p>
-                            <i class='bx bx-shield-alt-2'></i>
-                        </li>
-                        <li class="completed">
-                            <p>Landscaping</p>
-                            <p>Garden, Lawn, Tree Maintenance</p>
-                            <i class='bx bx-leaf'></i>
-                        </li>
-                        <li class="completed">
-                            <p>Facility Booking</p>
-                            <p>Clubhouse, Pool, Gym</p>
-                            <i class='bx bx-calendar'></i>
-                        </li>
+                    <ul class="todo-list" id="serviceCategoriesList" style="gap: 20px;">
+                        <!-- Categories will be loaded dynamically -->
                     </ul>
                 </div>
             </div>
@@ -891,8 +923,53 @@
             }
         });
 
+        // Add this function to fetch service categories
+        async function fetchServiceCategories() {
+            try {
+                const response = await fetch('/Home/GetServiceCategories');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch service categories');
+                }
+                const categories = await response.json();
+                updateServiceCategories(categories);
+            } catch (error) {
+                console.error('Error fetching service categories:', error);
+                showNotification('Failed to load service categories', 'error');
+            }
+        }
+
+        function updateServiceCategories(categories) {
+            const categoriesList = document.getElementById('serviceCategoriesList');
+            if (!categoriesList) return;
+
+            if (categories.length === 0) {
+                categoriesList.innerHTML = `
+                    <li class="completed">
+                        <p>No service categories available</p>
+                        <p>Please check back later</p>
+                        <i class='bx bx-package'></i>
+                    </li>
+                `;
+                return;
+            }
+
+            categoriesList.innerHTML = categories.map(category => `
+                <li class="completed service-category-item">
+                    <div class="service-category-icon">
+                        <i class='bx ${category.icon}'></i>
+                    </div>
+                    <div class="service-category-content">
+                        <div class="service-category-name">${category.name}</div>
+                        <div class="service-category-description">${category.description}</div>
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        // Update the document ready function to include fetching categories
         document.addEventListener('DOMContentLoaded', () => {
-            fetchServiceRequests(); 
+            fetchServiceRequests();
+            fetchServiceCategories();
             
             document.getElementById('searchInput')?.addEventListener('keyup', filterActiveRequests);
             document.getElementById('completedSearchInput')?.addEventListener('keyup', filterCompletedServices);
