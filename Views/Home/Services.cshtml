@@ -220,7 +220,7 @@
 			<span class="text">Welcome</span>
 		</a>
 		<ul class="side-menu top">
-			<li class="active">
+			<li >
 				<a asp-area="" asp-controller="Home" asp-action="dashboard">
 					<i class='bx bxs-dashboard'></i>
 					<span class="text">Dashboard</span>
@@ -250,7 +250,7 @@
 					<span class="text">Facility Reservation</span>
 				</a>
 			</li>
-			<li>
+			<li class="active">
 				<a asp-area="" asp-controller="Home" asp-action="Services">
                     <i class='bx bxs-briefcase'></i>
                     <span class="text">Services</span>
@@ -337,7 +337,7 @@
                 </button>
             </div>
 
-            <div class="table-data">
+            <div class="table-data">    
                 <div class="order">
                     <div class="head">
                         <h3>Active Requests</h3>
@@ -990,6 +990,13 @@
                 closeViewRequestModal();
             }
         }
+
+        const now = new Date();
+        const month = now.toLocaleString('default', { month: 'short' });
+        const year = now.getFullYear();
+        const logs = JSON.parse(localStorage.getItem('homeownerLogs') || '[]');
+        logs.push({ month, year, status: 'Approved' });
+        localStorage.setItem('homeownerLogs', JSON.stringify(logs));
 
     </script>
 </body>

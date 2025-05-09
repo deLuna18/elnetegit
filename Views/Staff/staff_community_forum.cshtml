@@ -19,14 +19,14 @@
 			<span class="text">Staff</span>
 		</a>
 		<ul class="side-menu top">
-			<li>
+			<li class="active">
 				<a asp-area="" asp-controller="Staff" asp-action="Dashboard">
 					<i class='bx bxs-dashboard'></i>
 					<span class="text">Dashboard</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a asp-area="" asp-controller="Staff" asp-action="Profile">
 					<i class='bx bxs-user'></i>
 					<span class="text">Profile</span>
 				</a>
@@ -44,11 +44,11 @@
 				</a>
 			</li>
             <li>
-				<a asp-area="" asp-controller="Staff" asp-action="StaffFacilityReservation">
-					<i class='bx bxs-credit-card-front'></i>
-					<span class="text">Facility Reservation</span>
-				</a>
-			</li>
+                <a asp-area="" asp-controller="Staff" asp-action="StaffFacilityReservation">
+                    <i class='bx bxs-calendar'></i>
+                    <span class="text">Facility Reservation</span>
+                </a>
+            </li>
 			<li>
 				<a asp-area="" asp-controller="Staff" asp-action="staff_services">
 					<i class='bx bxs-briefcase'></i>
@@ -75,12 +75,6 @@
             </li>
 		</ul>
 		<ul class="side-menu">
-			<li>
-				<a href="#">
-					<i class='bx bxs-cog'></i>
-					<span class="text">Settings</span>
-				</a>
-			</li>
 			<li>
 				<a asp-action="logout" class="logout">
                     <i class='bx bxs-log-out-circle'></i>

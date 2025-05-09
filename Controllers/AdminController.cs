@@ -894,6 +894,16 @@ public class AdminController : Controller
         return View("admin_profile");
     }
 
+    public IActionResult ContactAndSupport()
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+        {
+            return RedirectToAction("Login");
+        }
+        ViewBag.AdminName = HttpContext.Session.GetString("AdminUser");
+        return View("admin_contact_and_support");
+    }
+
     [HttpPost]
     public async Task<IActionResult> EditHomeowner([FromBody] Homeowner homeowner)
     {
@@ -990,5 +1000,98 @@ public class AdminController : Controller
         {
             return Json(new { success = false, message = "Error deleting employee: " + ex.Message });
         }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetHomeownerLogs()
+    {
+        try
+        {
+            var logs = await _context.HomeownerLogs
+                .OrderByDescending(l => l.Date)
+                .ToListAsync();
+
+            return Json(logs);
+        }
+        catch (Exception ex)
+        {
+            return Json(new { error = ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetSupportRequests(string status = "all")
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            var query = _context.ContactRequests
+                .Include(c => c.Homeowner)
+                .AsQueryable();
+
+            // Filter by status if specified
+            if (!string.IsNullOrEmpty(status) && status.ToLower() != "all")
+            {
+                query = query.Where(c => c.Status.ToLower() == status.ToLower());
+            }
+
+            var requests = await query
+                .OrderByDescending(c => c.DateSubmitted)
+                .Select(c => new
+                {
+                    id = c.Id,
+                    homeowner = c.Homeowner != null ? $"{c.Homeowner.FirstName} {c.Homeowner.LastName}" : $"{c.FirstName} {c.LastName}",
+                    queryType = c.QueryType,
+                    message = c.Message,
+                    dateSubmitted = c.DateSubmitted,
+                    status = c.Status,
+                    staffNotes = c.StaffNotes,
+                    email = c.Email,
+                    resolvedDate = c.Status == "Resolved" ? (DateTime?)c.DateSubmitted.AddDays(1) : null // Placeholder
+                })
+                .ToListAsync();
+
+            return Json(requests);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching support requests");
+            return StatusCode(500, new { message = "Error fetching support requests" });
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateRequestStatus([FromBody] UpdateRequestStatusDto model)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Unauthorized();
+
+        try
+        {
+            var request = await _context.ContactRequests.FindAsync(model.RequestId);
+            if (request == null)
+                return NotFound(new { success = false, message = "Request not found" });
+
+            request.Status = model.Status;
+            request.StaffNotes = model.Response;
+
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating request status");
+            return StatusCode(500, new { success = false, message = "Error updating request status" });
+        }
+    }
+
+    public class UpdateRequestStatusDto
+    {
+        public int RequestId { get; set; }
+        public string Status { get; set; } = string.Empty;
+        public string Response { get; set; } = string.Empty;
     }
 }

@@ -114,6 +114,77 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SubmitRequest([FromBody] ContactRequestDto request)
+    {
+        try
+        {
+            var loggedInUserId = GetLoggedInUserId();
+            if (loggedInUserId == null)
+            {
+                return Json(new { success = false, message = "Please log in to submit a request." });
+            }
+
+            var contactRequest = new ContactRequest
+            {
+                HomeownerId = loggedInUserId.Value,
+                QueryType = request.QueryType,
+                Message = request.Message,
+                Status = "Pending",
+                DateSubmitted = DateTime.UtcNow
+            };
+
+            _context.ContactRequests.Add(contactRequest);
+            await _context.SaveChangesAsync();
+
+            return Json(new { 
+                success = true, 
+                message = "Your request has been submitted successfully."
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error submitting contact request");
+            return Json(new { success = false, message = "An error occurred while submitting your request." });
+        }
+    }
+
+    public class ContactRequestDto
+    {
+        [Required]
+        public string QueryType { get; set; } = string.Empty;
+        
+        [Required]
+        public string Message { get; set; } = string.Empty;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetRequestHistory()
+    {
+        var loggedInUserId = GetLoggedInUserId();
+        if (loggedInUserId == null)
+        {
+            return Json(new List<object>());
+        }
+
+        var requests = await _context.ContactRequests
+            .Where(r => r.HomeownerId == loggedInUserId.Value)
+            .OrderByDescending(r => r.DateSubmitted)
+            .Select(r => new
+            {
+                r.Id,
+                r.QueryType,
+                r.Message,
+                r.Status,
+                DateSubmitted = r.DateSubmitted.ToString("yyyy-MM-dd"),
+                r.StaffNotes
+            })
+            .ToListAsync();
+
+        return Json(requests);
+    }
+
     public IActionResult Announcements()
     {
         if (!IsUserLoggedIn()) return RedirectToAction("Index");

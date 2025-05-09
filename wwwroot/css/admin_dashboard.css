@@ -281,6 +281,12 @@ header {
     font-weight: 600;
 }
 
+.chart-card canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
 /* MAIN */
 /* CONTENT */
 @media (min-width: 768px) and (max-width: 1024px) {

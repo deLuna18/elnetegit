@@ -16,19 +16,19 @@
 <body>
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="#" class="brand">
-            <i class='bx bxs-smile'></i>
-            <span class="text">Staff Panel</span>
-        </a>
-        <ul class="side-menu top">
-            <li>
-                <a asp-area="" asp-controller="Staff" asp-action="Dashboard">
-                    <i class='bx bxs-dashboard'></i>
-                    <span class="text">Dashboard</span>
-                </a>
-            </li>
-            <li>
-				<a href="#">
+		<a href="#" class="brand">
+			<i class='bx bxs-smile'></i>
+			<span class="text">Staff</span>
+		</a>
+		<ul class="side-menu top">
+			<li>
+				<a asp-area="" asp-controller="Staff" asp-action="Dashboard">
+					<i class='bx bxs-dashboard'></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a asp-area="" asp-controller="Staff" asp-action="Profile">
 					<i class='bx bxs-user'></i>
 					<span class="text">Profile</span>
 				</a>
@@ -51,7 +51,7 @@
                     <span class="text">Facility Reservation</span>
                 </a>
             </li>
-            <li>
+			<li>
 				<a asp-area="" asp-controller="Staff" asp-action="staff_services">
 					<i class='bx bxs-briefcase'></i>
 					<span class="text">Services</span>
@@ -78,21 +78,13 @@
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="#">
-					<i class='bx bxs-cog'></i>
-					<span class="text">Settings</span>
-				</a>
-			</li>
-        </ul>
-        <ul class="side-menu">
-            <li>
-                <a asp-action="Logout" class="logout">
+				<a asp-action="logout" class="logout">
                     <i class='bx bxs-log-out-circle'></i>
                     <span class="text">Logout</span>
                 </a>
-            </li>
-        </ul>
-    </section>
+			</li>
+		</ul>
+	</section>
     <!-- SIDEBAR -->
 
     <!-- CONTENT -->

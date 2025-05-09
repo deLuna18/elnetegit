@@ -16,12 +16,12 @@
 
 <!-- SIDEBAR -->
 <section id="sidebar">
-    <a class="brand">
+    <a class="brand" style="text-decoration: none;">
         <i class='bx bxs-smile'></i>
         <span class="text">Admin</span>
     </a>
     <ul class="side-menu top">
-        <li >
+        <li class="active">
             <a asp-area="" asp-controller="Admin" asp-action="Dashboard">
                 <i class='bx bxs-dashboard'></i>
                 <span class="text">Dashboard</span>
@@ -57,20 +57,20 @@
                 <span class="text">Facility Reservation</span>
             </a>
         </li>
-        <li>
-            <a>
+        <li >
+            <a asp-area="" asp-controller="Admin" asp-action="SecurityVisitors">
                 <i class='bx bxs-shield-alt-2'></i>
                 <span class="text">Security and Visitors</span>
             </a>
         </li>
-    </ul>
-    <ul class="side-menu">
         <li>
-            <a>
-                <i class='bx bxs-cog'></i>
-                <span class="text">Settings</span>
+            <a asp-area="" asp-controller="Admin" asp-action="ContactAndSupport">
+                <i class='bx bxs-shield-alt-2'></i>
+                <span class="text">Contact and Support</span>
             </a>
         </li>
+    </ul>
+    <ul class="side-menu">
         <li>
             <a asp-action="logout" class="logout">
                 <i class='bx bxs-log-out-circle'></i>
@@ -149,8 +149,21 @@
 
             <div class="chart-container">
                 <div class="chart-card">
-                    <h3>Monthly Income</h3>
-                    <canvas id="salesChart"></canvas>
+                    <h3>Homeowner Registration Logs</h3>
+                    <div style="overflow:hidden; border-radius:10px; box-shadow: 0 2px 8px rgba(60,145,230,0.08); height:100%; max-height:320px; overflow-y:auto;">
+                        <table id="homeownerLogsTable" class="table table-striped" style="width:100%;">
+                            <thead style="background: linear-gradient(90deg, #3C91E6 0%, #1cc88a 100%); color: #fff;">
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Approved</th>
+                                    <th>Disapproved</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- JS will populate rows here -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="chart-card">
                     <h3>House Registrations</h3>
@@ -277,74 +290,6 @@
             sidebar.classList.toggle('hide');
         });
 
-        // SALES CHART
-        document.addEventListener('DOMContentLoaded', function() {
-            var ctx = document.getElementById('salesChart').getContext('2d');
-            
-            // Get monthly income data from ViewBag
-            var monthlyData = @Html.Raw(Json.Serialize(ViewBag.MonthlyIncome ?? new List<object>()));
-            console.log("Monthly Income Data:", monthlyData); // Debug log
-            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            var incomeData = new Array(12).fill(0);
-            
-            // Use correct property names (Month, Total)
-            if (monthlyData && Array.isArray(monthlyData)) {
-                monthlyData.forEach(function(item) {
-                    incomeData[item.Month - 1] = item.Total;
-                });
-            }
-
-            var salesChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: months,
-                    datasets: [{
-                        label: 'Monthly Income',
-                        data: incomeData,
-                        borderColor: 'rgba(60, 145, 230, 1)',
-                        backgroundColor: 'rgba(60, 145, 230, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Monthly Income Overview (@ViewBag.LatestYear)',
-                            font: {
-                                size: 16,
-                                weight: 'bold'
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            },
-                            ticks: {
-                                callback: function(value) {
-                                    return '₱' + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            });
-        });
-
         // Houses Chart
         const housesCtx = document.getElementById('housesChart').getContext('2d');
         const housesData = @Html.Raw(Json.Serialize(ViewBag.HouseDistribution));
@@ -398,5 +343,44 @@
                 }
             }
         });
+
+        // Render Homeowner Registration Logs Table dynamically from server
+        function renderHomeownerLogsTable() {
+            fetch('/Admin/GetHomeownerLogs')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.querySelector('#homeownerLogsTable tbody');
+                    if (!tbody) return;
+
+                    // Group logs by month
+                    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                    const stats = {};
+                    months.forEach(m => stats[m] = { Approved: 0, Disapproved: 0 });
+
+                    data.forEach(log => {
+                        const date = new Date(log.date);
+                        const month = months[date.getMonth()];
+                        if (stats[month]) {
+                            stats[month][log.status] = (stats[month][log.status] || 0) + 1;
+                        }
+                    });
+
+                    // Build table rows
+                    tbody.innerHTML = months.map(m => `
+                        <tr>
+                            <td>${m}</td>
+                            <td style="color:#155724; background:#d4edda; font-weight:bold;">${stats[m].Approved}</td>
+                            <td style="color:#721c24; background:#f8d7da; font-weight:bold;">${stats[m].Disapproved}</td>
+                        </tr>
+                    `).join('');
+                })
+                .catch(error => console.error('Error fetching homeowner logs:', error));
+        }
+
+        // Initial render
+        document.addEventListener('DOMContentLoaded', renderHomeownerLogsTable);
+
+        // Refresh logs every 30 seconds
+        setInterval(renderHomeownerLogsTable, 30000);
     });
 </script>

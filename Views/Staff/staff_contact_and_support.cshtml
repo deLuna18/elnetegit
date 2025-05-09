@@ -2,12 +2,18 @@
     ViewData["Title"] = "Contact and Support";
 }
 
-<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-<link rel="stylesheet" href="~/css/staff_contact_and_support.css" asp-append-version="true">
-<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+<head>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="~/css/staff_contact_and_support.css" asp-append-version="true">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Staff Contact Support Management</title>
+</head>
 
-<!-- SIDEBAR -->
-	<section id="sidebar">
+@* Add hidden anti-forgery token *@
+@Html.AntiForgeryToken()
+
+    <!-- SIDEBAR -->
+    <section id="sidebar">
 		<a href="#" class="brand">
 			<i class='bx bxs-smile'></i>
 			<span class="text">Staff</span>
@@ -20,7 +26,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a asp-area="" asp-controller="Staff" asp-action="Profile">
 					<i class='bx bxs-user'></i>
 					<span class="text">Profile</span>
 				</a>
@@ -38,11 +44,11 @@
 				</a>
 			</li>
             <li>
-				<a asp-area="" asp-controller="Staff" asp-action="StaffFacilityReservation">
-					<i class='bx bxs-credit-card-front'></i>
-					<span class="text">Facility Reservation</span>
-				</a>
-			</li>
+                <a asp-area="" asp-controller="Staff" asp-action="StaffFacilityReservation">
+                    <i class='bx bxs-calendar'></i>
+                    <span class="text">Facility Reservation</span>
+                </a>
+            </li>
 			<li>
 				<a asp-area="" asp-controller="Staff" asp-action="staff_services">
 					<i class='bx bxs-briefcase'></i>
@@ -70,12 +76,6 @@
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="#">
-					<i class='bx bxs-cog'></i>
-					<span class="text">Settings</span>
-				</a>
-			</li>
-			<li>
 				<a asp-action="logout" class="logout">
                     <i class='bx bxs-log-out-circle'></i>
                     <span class="text">Logout</span>
@@ -83,148 +83,495 @@
 			</li>
 		</ul>
 	</section>
-<section id="content">
-    <nav>
-        <i class='bx bx-menu'></i>
-        <a href="#" class="nav-link">Categories</a>
-        <form action="#">
-            <div class="form-input">
-                <input type="search" placeholder="Search...">
-                <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
-            </div>
-        </form>
-        <input type="checkbox" id="switch-mode" hidden>
-        <label for="switch-mode" class="switch-mode"></label>
-        <a href="#" class="notification"><i class='bx bxs-bell'></i><span class="num">8</span></a>
-        <a asp-area="" asp-controller="Staff" asp-action="profile">
-            <img src="~/images/profile.jpg" class="profile-img">
-        </a>
-    </nav>
-    <main>
-        <div class="head-title">
-            <div class="left">
-                <h1>Contact & Support Management</h1>
-                <ul class="breadcrumb">
-                    <li>
-                        <a asp-area="" asp-controller="Staff" asp-action="Dashboard">Home</a>
-                    </li>
-                    <li><i class='bx bx-chevron-right'></i></li>
-                    <li>
-                        <a class="active" asp-area="" asp-controller="Staff" asp-action="staff_contact_and_support">Contact and Support</a>
-                    </li>
-                </ul>
-            </div>
-            <br>
-            <div class="btn-group">
-                <a href="#" class="btn-download">
-                    <i class='bx bxs-file-export'></i>
-                    <span class="text">Export Report</span>
-                </a>
-            </div>
-        </div>
-
-        <div class="contact-stats">
-            <div class="box">
-                <i class='bx bxs-envelope'></i>
-                <span class="text">
-                    <h3>25</h3>
-                    <p>New Requests</p>
-                </span>
-            </div>
-            <div class="box">
-                <i class='bx bxs-message-rounded-check'></i>
-                <span class="text">
-                    <h3>156</h3>
-                    <p>Resolved</p>
-                </span>
-            </div>
-            <div class="box">
-                <i class='bx bxs-time-five'></i>
-                <span class="text">
-                    <h3>12</h3>
-                    <p>Pending</p>
-                </span>
-            </div>
-        </div>
-
-        <div class="table-data">
-            <div class="order">
-                <div class="head">
-                    <h3>Recent Contact Requests</h3>
-                    <div class="filter">
-                        <i class='bx bx-filter'></i>
-                        <select>
-                            <option value="all">All</option>
-                            <option value="pending">Pending</option>
-                            <option value="resolved">Resolved</option>
-                        </select>
+    
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu' ></i>
+            <a href="#" class="nav-link">Categories</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="switch-mode" hidden>
+            <label for="switch-mode" class="switch-mode"></label>
+            <a href="#" class="notification">
+                <i class='bx bxs-bell' ></i>
+                <span class="num">8</span>
+            </a>
+            <!-- Removed profile image to avoid missing image error -->
+        </nav>
+        <!-- NAVBAR -->
+    
+        <!-- MAIN -->
+        <main>
+<div class="container-fluid">
+    <h1 class="mt-4">Contact Support Management</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-controller="Staff" asp-action="Dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item active">Contact Support</li>
+    </ol>
+    
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>New Requests</div>
+                        <div class="h3 mb-0">@ViewBag.NewRequestsCount</div>
                     </div>
                 </div>
-                <table>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" asp-action="staff_contact_and_support" asp-route-filter="new">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>Pending Requests</div>
+                        <div class="h3 mb-0">@ViewBag.PendingCount</div>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" asp-action="staff_contact_and_support" asp-route-filter="pending">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>Resolved Requests</div>
+                        <div class="h3 mb-0">@ViewBag.ResolvedCount</div>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" asp-action="staff_contact_and_support" asp-route-filter="resolved">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-secondary text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>All Requests</div>
+                        <div class="h3 mb-0">@Model.Count</div>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" asp-action="staff_contact_and_support" asp-route-filter="all">View All</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Contact Requests
+            <div class="float-end">
+                <div class="btn-group">
+                    <a asp-action="staff_contact_and_support" asp-route-filter="all" class="btn btn-sm @(ViewBag.CurrentFilter == "all" || string.IsNullOrEmpty(ViewBag.CurrentFilter) ? "btn-primary" : "btn-outline-primary")">All</a>
+                    <a asp-action="staff_contact_and_support" asp-route-filter="new" class="btn btn-sm @(ViewBag.CurrentFilter == "new" ? "btn-primary" : "btn-outline-primary")">New</a>
+                    <a asp-action="staff_contact_and_support" asp-route-filter="pending" class="btn btn-sm @(ViewBag.CurrentFilter == "pending" ? "btn-primary" : "btn-outline-primary")">Pending</a>
+                    <a asp-action="staff_contact_and_support" asp-route-filter="resolved" class="btn btn-sm @(ViewBag.CurrentFilter == "resolved" ? "btn-primary" : "btn-outline-primary")">Resolved</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+            }
+            
+            <div class="table-responsive">
+                <table class="table table-bordered" id="contactRequestsTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>User</th>
+                            <th>ID</th>
+                            <th>Homeowner</th>
                             <th>Query Type</th>
-                            <th>Subject</th>
-                            <th>Date</th>
+                            <th>Message</th>
+                            <th>Date Submitted</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+
+                    <tbody id="requestsTable">
                         @foreach (var request in Model)
                         {
                             <tr>
-                                <td>@request.FirstName @request.LastName</td>
-                                <td>@request.QueryType</td>
-                                <td>@request.Message</td>
-                                <td>@request.DateSubmitted.ToShortDateString()</td>
-                                <td><span class="status @request.Status.ToLower()">@request.Status</span></td>
+                                <td>@request.Id</td>
                                 <td>
-                                    <div class="action-buttons">
-                                        <button class="view-btn" data-id="@request.Id"><i class='bx bx-show'></i></button>
-                                        <button class="reply-btn" data-id="@request.Id"><i class='bx bx-reply'></i></button>
-                                    </div>
+                                    @if (request.Homeowner != null)
+                                    {
+                                        @($"{request.Homeowner.FirstName} {request.Homeowner.LastName}")
+                                    }
+                                    else
+                                    {
+                                        <span>N/A</span>
+                                    }
+                                </td>
+                                <td>@request.QueryType</td>
+                                <td>@(request.Message.Length > 50 ? request.Message.Substring(0, 50) + "..." : request.Message)</td>
+                                <td>@request.DateSubmitted.ToString("MMM dd, yyyy HH:mm")</td>
+                                <td>
+                                    <span class="badge bg-@GetStatusClass(request.Status)">@request.Status</span>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary view-request" 
+                                            data-bs-toggle="modal" data-bs-target="#requestDetailsModal" 
+                                            data-id="@request.Id"
+                                            data-firstname="@(request.Homeowner?.FirstName ?? "")"
+                                            data-lastname="@(request.Homeowner?.LastName ?? "")"
+                                            data-email="@request.Email"
+                                            data-querytype="@request.QueryType"
+                                            data-message="@request.Message"
+                                            data-date="@request.DateSubmitted.ToString("MMM dd, yyyy HH:mm")"
+                                            data-status="@request.Status"
+                                            data-staffnotes="@request.StaffNotes">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
                                 </td>
                             </tr>
                         }
                     </tbody>
+                    
+                    <!-- Add this script at the bottom -->
+                    <script>
+                        let contactRequests = [];
+
+                        // Function to load contact requests
+                        async function loadContactRequests() {
+                            try {
+                                const response = await fetch('/Staff/GetContactRequests');
+                                const data = await response.json();
+                                contactRequests = data;
+                                updateDashboardStats(data);
+                                populateRequestsTable(data);
+                            } catch (error) {
+                                console.error('Error loading contact requests:', error);
+                            }
+                        }
+
+                        // Function to update dashboard statistics
+                        function updateDashboardStats(data) {
+                            const newRequests = data.filter(r => r.status === 'New').length;
+                            const pendingRequests = data.filter(r => r.status === 'Pending').length;
+                            const resolvedRequests = data.filter(r => r.status === 'Resolved').length;
+                            const totalRequests = data.length;
+
+                            document.querySelector('.card.bg-primary .h3').textContent = newRequests;
+                            document.querySelector('.card.bg-warning .h3').textContent = pendingRequests;
+                            document.querySelector('.card.bg-success .h3').textContent = resolvedRequests;
+                            document.querySelector('.card.bg-secondary .h3').textContent = totalRequests;
+                        }
+
+                        // Function to populate the requests table
+                        function populateRequestsTable(requests) {
+                            const tbody = document.getElementById('requestsTable');
+                            if (!tbody) return;
+                            
+                            tbody.innerHTML = '';
+
+                            requests.forEach(request => {
+                                const tr = document.createElement('tr');
+                                tr.innerHTML = `
+                                    <td>${request.id}</td>
+                                    <td>${request.homeowner ? `${request.homeowner.firstName} ${request.homeowner.lastName}` : 'N/A'}</td>
+                                    <td>${request.queryType}</td>
+                                    <td>${request.message.length > 50 ? request.message.substring(0, 50) + '...' : request.message}</td>
+                                    <td>${new Date(request.dateSubmitted).toLocaleString()}</td>
+                                    <td><span class="badge bg-${getStatusClass(request.status)}">${request.status}</span></td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary view-request" 
+                                                data-id="${request.id}"
+                                                data-firstname="${request.homeowner?.firstName || ''}"
+                                                data-lastname="${request.homeowner?.lastName || ''}"
+                                                data-email="${request.email}"
+                                                data-querytype="${request.queryType}"
+                                                data-message="${request.message}"
+                                                data-date="${new Date(request.dateSubmitted).toLocaleString()}"
+                                                data-status="${request.status}"
+                                                data-staffnotes="${request.staffNotes || ''}">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </td>
+                                `;
+                                tbody.appendChild(tr);
+                            });
+
+                            // Add click handlers for the view buttons
+                            document.querySelectorAll('.view-request').forEach(button => {
+                                button.addEventListener('click', function() {
+                                    const data = this.dataset;
+                                    showRequestDetails(data);
+                                });
+                            });
+                        }
+
+                        // Function to show request details in modal
+                        function showRequestDetails(data) {
+                            const modal = document.getElementById('requestDetailsModal');
+                            if (!modal) return;
+
+                            // Update modal content
+                            document.getElementById('requestId').textContent = data.id;
+                            document.getElementById('requestIdInput').value = data.id;
+                            document.getElementById('homeownerName').textContent = `${data.firstname} ${data.lastname}`;
+                            document.getElementById('email').textContent = data.email;
+                            document.getElementById('queryType').textContent = data.querytype;
+                            document.getElementById('dateSubmitted').textContent = data.date;
+                            document.getElementById('currentStatus').textContent = data.status;
+                            document.getElementById('messageContent').textContent = data.message;
+                            document.getElementById('newStatus').value = data.status;
+                            document.getElementById('staffNotes').value = data.staffnotes || '';
+
+                            // Show modal
+                            modal.style.display = 'block';
+                            document.body.classList.add('modal-open');
+                        }
+
+                        // Function to close the modal
+                        function closeRequestModal() {
+                            const modal = document.getElementById('requestDetailsModal');
+                            if (!modal) return;
+
+                            modal.style.display = 'none';
+                            document.body.classList.remove('modal-open');
+                        }
+
+                        // Helper function for status class
+                        function getStatusClass(status) {
+                            return status?.toLowerCase() === 'new' ? 'primary' :
+                                   status?.toLowerCase() === 'pending' ? 'warning' :
+                                   status?.toLowerCase() === 'resolved' ? 'success' : 'secondary';
+                        }
+
+                        // Function to get anti-forgery token
+                        function getAntiForgeryToken() {
+                            const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
+                            return tokenElement ? tokenElement.value : '';
+                        }
+
+                        // Initialize when page loads
+                        document.addEventListener('DOMContentLoaded', () => {
+                            // Set up modal close buttons
+                            const closeButtons = document.querySelectorAll('#closeRequestModal, #closeRequestModalFooter');
+                            closeButtons.forEach(button => {
+                                if (button) {
+                                    button.addEventListener('click', closeRequestModal);
+                                }
+                            });
+
+                            // Close modal when clicking outside
+                            const modal = document.getElementById('requestDetailsModal');
+                            if (modal) {
+                                modal.addEventListener('click', function(e) {
+                                    if (e.target === this) {
+                                        closeRequestModal();
+                                    }
+                                });
+                            }
+
+                            // Set up update button
+                            const updateBtn = document.getElementById('updateStatusBtn');
+                            if (updateBtn) {
+                                updateBtn.addEventListener('click', function() {
+                                    const requestId = document.getElementById('requestIdInput').value;
+                                    const newStatus = document.getElementById('newStatus').value;
+                                    const staffNotes = document.getElementById('staffNotes').value;
+                                    const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+                                    $.ajax({
+                                        url: '/Staff/UpdateContactRequestStatus',
+                                        type: 'POST',
+                                        headers: {
+                                            'RequestVerificationToken': token
+                                        },
+                                        contentType: 'application/json',
+                                        data: JSON.stringify({
+                                            requestId: parseInt(requestId),
+                                            newStatus: newStatus,
+                                            staffNotes: staffNotes || ''
+                                        }),
+                                        success: function(response) {
+                                            if (response.success) {
+                                                closeRequestModal();
+                                                loadContactRequests();
+                                            } else {
+                                                alert('Error: ' + (response.message || 'Unknown error occurred'));
+                                            }
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.error('Error:', error);
+                                            alert('An error occurred while processing your request.');
+                                        }
+                                    });
+                                });
+                            }
+
+                            // Initial load
+                            loadContactRequests();
+                            // Set up periodic refresh
+                            setInterval(loadContactRequests, 30000);
+                        });
+                    </script>
                 </table>
             </div>
         </div>
-    </main>
-    
-</section>
-<script>
-    const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+    </div>
+</div>
 
-		allSideMenu.forEach(item=> {
-			const li = item.parentElement;
+<!-- Request Details Modal -->
+<div class="custom-modal" id="requestDetailsModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="requestDetailsModalLabel">Request Details</h5>
+            <button type="button" class="btn-close" id="closeRequestModal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Request ID:</strong> <span id="requestId"></span></p>
+                    <p><strong>Homeowner:</strong> <span id="homeownerName"></span></p>
+                    <p><strong>Email:</strong> <span id="email"></span></p>
+                    <p><strong>Query Type:</strong> <span id="queryType"></span></p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Date Submitted:</strong> <span id="dateSubmitted"></span></p>
+                    <p><strong>Current Status:</strong> <span id="currentStatus"></span></p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <h6>Message:</h6>
+                <div class="p-3 bg-light rounded" id="messageContent"></div>
+            </div>
+            <form id="updateStatusForm">
+                <input type="hidden" id="requestIdInput" name="requestId">
+                <div class="mb-3">
+                    <label for="newStatus" class="form-label">Update Status</label>
+                    <select class="form-select" id="newStatus" name="newStatus">
+                        <option value="New">New</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Resolved">Resolved</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="staffNotes" class="form-label">Staff Notes</label>
+                    <textarea class="form-control" id="staffNotes" name="staffNotes" rows="3"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closeRequestModalFooter">Close</button>
+            <button type="button" class="btn btn-primary" id="updateStatusBtn">Update Status</button>
+        </div>
+    </div>
+</div>
 
-			item.addEventListener('click', function () {
-				allSideMenu.forEach(i=> {
-					i.parentElement.classList.remove('active');
-				})
-				li.classList.add('active');
-			})
-		});
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Custom modal open/close logic
+            function openRequestModal() {
+                $('#requestDetailsModal').addClass('open');
+            }
+            function closeRequestModal() {
+                $('#requestDetailsModal').removeClass('open');
+            }
+            // Open modal on view-request click
+            $('.view-request').click(function() {
+                var id = $(this).data('id');
+                var firstName = $(this).data('firstname');
+                var lastName = $(this).data('lastname');
+                var email = $(this).data('email');
+                var queryType = $(this).data('querytype');
+                var message = $(this).data('message');
+                var date = $(this).data('date');
+                var status = $(this).data('status');
+                var staffNotes = $(this).data('staffnotes');
+                // Populate modal fields
+                $('#requestId').text(id);
+                $('#requestIdInput').val(id);
+                $('#homeownerName').text(firstName + ' ' + lastName);
+                $('#email').text(email);
+                $('#queryType').text(queryType);
+                $('#dateSubmitted').text(date);
+                $('#currentStatus').text(status);
+                $('#messageContent').text(message);
+                $('#newStatus').val(status);
+                $('#staffNotes').val(staffNotes || '');
+                openRequestModal();
+            });
+            // Close modal on close button or footer close
+            $('#closeRequestModal, #closeRequestModalFooter').click(function() {
+                closeRequestModal();
+            });
+            // Close modal when clicking outside modal-content
+            $('#requestDetailsModal').on('click', function(e) {
+                if (e.target === this) closeRequestModal();
+            });
+            // Handle update button click (unchanged)
+            $('#updateStatusBtn').click(function() {
+                var requestId = parseInt($('#requestIdInput').val());
+                var newStatus = $('#newStatus').val();
+                var staffNotes = $('#staffNotes').val() || '';
+                var token = $('input[name="__RequestVerificationToken"]').val();
+                
+                if (isNaN(requestId) || !newStatus) {
+                    alert('Invalid request data');
+                    return;
+                }
+                
+                $.ajax({
+                    url: '@Url.Action("UpdateContactRequestStatus", "Staff")',
+                    type: 'POST',
+                    headers: {
+                        'RequestVerificationToken': token
+                    },
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        requestId: requestId,
+                        newStatus: newStatus,
+                        staffNotes: staffNotes
+                    }),
+                    success: function(response) {
+                        if (response.success) {
+                            closeRequestModal();
+                            location.reload();
+                        } else {
+                            alert('Error: ' + response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('An error occurred while processing your request.');
+                    }
+                });
+            });
+        });
+    </script>
+}
 
-
-		// TOGGLE SIDEBAR
-		const menuBar = document.querySelector('#content nav .bx.bx-menu');
-		const sidebar = document.getElementById('sidebar');
-
-		menuBar.addEventListener('click', function () {
-			sidebar.classList.toggle('hide');
-		})
-
-        const switchMode = document.getElementById('switch-mode');
-
-		switchMode.addEventListener('change', function () {
-			if(this.checked) {
-				document.body.classList.add('dark');
-			} else {
-				document.body.classList.remove('dark');
-			}
-		})
-</script>
+@functions {
+    public string GetStatusClass(string status)
+    {
+        return status?.ToLower() switch
+        {
+            "new" => "primary",
+            "pending" => "warning",
+            "resolved" => "success",
+            _ => "secondary"
+        };
+    }
+}
