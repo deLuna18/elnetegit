@@ -130,7 +130,7 @@
                                     <img src="~/images/@Model.Profile" alt="Profile Picture">
                                     <h2>@Model.LastName, @Model.FirstName @Model.MiddleName</h2>
                                     <a class="edit-btn" asp-area="" asp-controller="Home" asp-action="EditProfile">Edit Profile</a>
-                                    <button type="submit">Change Password</button>
+                                    <button type="button" onclick="openPasswordModal()">Change Password</button>
                                 </div>
                             </div>
                             <div class="row">
@@ -141,15 +141,19 @@
                                     <input type="text" value="@Model.Email" readonly>
                                     <p>Phone Number</p>
                                     <input type="text" value="@Model.PhoneNumber" readonly>
+                                    <p>Phase</p>
+                                    <input type="text" value="@Model.Phase" readonly>
                                     <p>Block Number</p>
                                     <input type="text" value="@Model.Block" readonly>
                                 </div>
                                 <div class="column">
                                     <p>House/Lot Number</p>
                                     <input type="text" value="@Model.HouseNumber" readonly>
-                                    <p>Street/Phase</p>
+                                    <p>Street</p>
                                     <input type="text" value="@Model.Street" readonly>
-                                    <p>Emergency Contact Information</p>
+                                    <p>Emergency Contact Name</p>
+                                    <input type="text" value="@Model.EmergencyContactName" readonly>
+                                    <p>Emergency Contact Number</p>
                                     <input type="text" value="@Model.EmergencyContactNumber" readonly>
                                 </div>
                             </div>
@@ -228,4 +232,63 @@
 			}
 		})
 	</script>
+
+    <!-- Password Change Modal -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePasswordModal()">&times;</span>
+            <h2>Change Password</h2>
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+            <form asp-action="ChangePassword" asp-controller="Home" method="post" id="changePasswordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <div class="password-actions">
+                    <button type="submit">Save Changes</button>
+                    <button type="button" onclick="closePasswordModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Password modal functionality
+        function openPasswordModal() {
+            document.getElementById('passwordModal').style.display = 'block';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            // Clear form fields
+            document.getElementById('changePasswordForm').reset();
+        }
+
+        // Close modal if clicked outside
+        window.onclick = function(event) {
+            var modal = document.getElementById('passwordModal');
+            if (event.target == modal) {
+                closePasswordModal();
+            }
+        }
+    </script>
 </body>

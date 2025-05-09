@@ -308,7 +308,87 @@ namespace SubdivisionManagement.Controllers
             return RedirectToAction("Login");
         }
 
-        // Password verification logic
+        // GET: Staff/Profile
+        public IActionResult Profile()
+        {
+            if (!IsStaffLoggedIn(out var username))
+            {
+                return RedirectToAction("Login");
+            }
+
+            var staff = GetLoggedInStaffUser(username);
+            if (staff == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            return View("staff_profile", staff);
+        }
+        
+        // POST: Staff/ChangeStaffPassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeStaffPassword(string currentPassword, string newPassword, string confirmPassword)
+        {
+            if (!IsStaffLoggedIn(out var username))
+            {
+                return RedirectToAction("Login");
+            }
+
+            if (string.IsNullOrEmpty(currentPassword) || string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(confirmPassword))
+            {
+                TempData["ErrorMessage"] = "All fields are required.";
+                return RedirectToAction("Profile");
+            }
+
+            if (newPassword != confirmPassword)
+            {
+                TempData["ErrorMessage"] = "New password and confirmation do not match.";
+                return RedirectToAction("Profile");
+            }
+
+            var staff = await _context.Staffs.FirstOrDefaultAsync(s => s.Username == username);
+            if (staff == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            // Verify current password
+            if (!VerifyPassword(currentPassword, staff.PasswordHash, staff.PasswordSalt))
+            {
+                TempData["ErrorMessage"] = "Current password is incorrect.";
+                return RedirectToAction("Profile");
+            }
+
+            // Generate a new salt for the password
+            var salt = new byte[16];
+            using (var rng = System.Security.Cryptography.RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
+            
+            // Convert salt to string for storage
+            string saltString = Convert.ToBase64String(salt);
+            
+            // Hash the new password
+            string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: newPassword,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8));
+
+            // Update the staff's password and salt
+            staff.PasswordHash = hashedPassword;
+            staff.PasswordSalt = saltString;
+            
+            _context.Update(staff);
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Password changed successfully!";
+            return RedirectToAction("Profile");
+        }
+
         private bool VerifyPassword(string password, string storedHash, string? storedSalt)
         {
             // Check if the storedSalt is null before proceeding

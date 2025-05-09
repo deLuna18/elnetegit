@@ -256,14 +256,14 @@ public class HomeController : Controller
                userId.Value.ToString() == userSession;
     }
 
-    [HttpGet]
     public IActionResult Profile()
     {
+        if (!IsUserLoggedIn()) return RedirectToAction("Index");
+
         var loggedInUserId = GetLoggedInUserId();
         if (loggedInUserId == null) return RedirectToAction("Index");
-        
-        var homeowner = _context.Homeowners.FirstOrDefault(h => h.Id == loggedInUserId.Value);
 
+        var homeowner = _context.Homeowners.FirstOrDefault(h => h.Id == loggedInUserId.Value);
         if (homeowner == null)
         {
             return RedirectToAction("Index");
@@ -272,9 +272,107 @@ public class HomeController : Controller
         return View(homeowner);
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ChangePassword(string currentPassword, string newPassword, string confirmPassword)
+    {
+        if (!IsUserLoggedIn()) return RedirectToAction("Index");
+
+        if (string.IsNullOrEmpty(currentPassword) || string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(confirmPassword))
+        {
+            TempData["ErrorMessage"] = "All fields are required.";
+            return RedirectToAction("Profile");
+        }
+
+        if (newPassword != confirmPassword)
+        {
+            TempData["ErrorMessage"] = "New password and confirmation do not match.";
+            return RedirectToAction("Profile");
+        }
+
+        var loggedInUserId = GetLoggedInUserId();
+        var homeowner = await _context.Homeowners.FirstOrDefaultAsync(h => h.Id == loggedInUserId);
+
+        if (homeowner == null)
+        {
+            return RedirectToAction("Index");
+        }
+
+        // Verify current password
+        if (!VerifyPassword(currentPassword, homeowner.PasswordHash))
+        {
+            TempData["ErrorMessage"] = "Current password is incorrect.";
+            return RedirectToAction("Profile");
+        }
+
+        // Update password
+        homeowner.PasswordHash = HashPassword(newPassword);
+        _context.Update(homeowner);
+        await _context.SaveChangesAsync();
+
+        TempData["SuccessMessage"] = "Password changed successfully!";
+        return RedirectToAction("Profile");
+    }
+
     public IActionResult EditProfile()
     {
-        return View("edit_profile");
+        if (!IsUserLoggedIn()) return RedirectToAction("Index");
+        
+        var loggedInUserId = GetLoggedInUserId();
+        if (loggedInUserId == null) return RedirectToAction("Index");
+        
+        var homeowner = _context.Homeowners.FirstOrDefault(h => h.Id == loggedInUserId.Value);
+        if (homeowner == null)
+        {
+            return RedirectToAction("Index");
+        }
+        
+        return View("edit_profile", homeowner);
+    }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateProfile(Homeowner model)
+    {
+        if (!IsUserLoggedIn()) return RedirectToAction("Index");
+        
+        var loggedInUserId = GetLoggedInUserId();
+        if (loggedInUserId == null) return RedirectToAction("Index");
+        
+        var homeowner = await _context.Homeowners.FirstOrDefaultAsync(h => h.Id == loggedInUserId.Value);
+        if (homeowner == null)
+        {
+            return RedirectToAction("Index");
+        }
+        
+        // Only update specific fields, not the entire homeowner object
+        homeowner.FirstName = model.FirstName;
+        homeowner.MiddleName = model.MiddleName;
+        homeowner.LastName = model.LastName;
+        homeowner.Email = model.Email;
+        homeowner.PhoneNumber = model.PhoneNumber;
+        homeowner.Phase = model.Phase;
+        homeowner.Block = model.Block;
+        homeowner.HouseNumber = model.HouseNumber;
+        homeowner.Street = model.Street;
+        homeowner.EmergencyContactName = model.EmergencyContactName;
+        homeowner.EmergencyContactNumber = model.EmergencyContactNumber;
+        
+        // Don't update critical fields like PasswordHash and Status
+        
+        try
+        {
+            _context.Update(homeowner);
+            await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Profile updated successfully!";
+            return RedirectToAction("Profile");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating profile");
+            TempData["ErrorMessage"] = "An error occurred while updating your profile. Please try again.";
+            return View("edit_profile", model);
+        }
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

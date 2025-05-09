@@ -1,0 +1,473 @@
+@model SubdivisionManagement.Model.Staff
+
+@{
+    ViewData["Title"] = "Staff Profile";
+    Layout = "_Layout";
+    var antiforgeryToken = Html.AntiForgeryToken();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="~/css/staffdashboard.css" asp-append-version="true">
+	<style>
+		.profile-container {
+			background: var(--light);
+			padding: 30px;
+			border-radius: 10px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+			width: 100%;
+			max-width: 100%;
+			text-align: center;
+			margin-top: 20px;
+		}
+
+		.profile-card {
+			padding: 30px;
+			background: var(--light);
+			border-radius: 8px;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+		}
+
+		.profile-image {
+			margin-bottom: 20px;
+			text-align: center;
+			padding-top: 15px;
+		}
+
+		.profile-image h2 {
+			font-size: 24px;
+			font-weight: bold;
+			margin: 5px 0;
+			color: var(--dark);
+		}
+
+		.row {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 20px;
+		}
+
+		.column {
+			flex: 1;
+			margin: 0 10px;
+		}
+
+		.profile-container p {
+			font-size: 16px;
+			font-weight: 800;
+			text-align: left;
+			color: var(--dark);
+			margin-top: 15px;
+			margin-bottom: 5px;
+		}
+
+		.profile-container input {
+			padding: 10px;
+			margin: 3px 0;
+			border: 1px solid var(--dark-grey);
+			border-radius: 5px;
+			outline: none;
+			font-size: 14px;
+			width: 100%;
+			background-color: var(--grey);
+			color: var(--dark);
+			cursor: default;
+		}
+
+		.edit-btn {
+			background: var(--blue);
+			color: white;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 14px;
+			margin-top: 20px;
+			display: inline-block;
+			text-decoration: none;
+		}
+
+		.edit-btn:hover {
+			background: #2a7dd1;
+		}
+
+		.profile-actions {
+			margin-top: 20px;
+			display: flex;
+			justify-content: center;
+		}
+
+		/* Modal styles */
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 3000;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.modal-content {
+			background-color: var(--light);
+			margin: 10% auto;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+			width: 400px;
+			position: relative;
+		}
+
+		.close {
+			color: var(--dark-grey);
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+			cursor: pointer;
+			position: absolute;
+			right: 15px;
+			top: 10px;
+		}
+
+		.close:hover {
+			color: var(--blue);
+		}
+
+		.form-group {
+			margin-bottom: 15px;
+		}
+
+		.form-group label {
+			display: block;
+			margin-bottom: 5px;
+			color: var(--dark);
+			font-weight: 500;
+		}
+
+		.form-group input {
+			width: 100%;
+			padding: 8px 12px;
+			border-radius: 4px;
+			border: 1px solid var(--grey);
+			background-color: white;
+			color: var(--dark);
+			font-size: 14px;
+			cursor: text;
+		}
+
+		.password-actions {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 20px;
+		}
+
+		.password-actions button {
+			padding: 8px 15px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			font-weight: 600;
+			transition: all 0.3s ease;
+		}
+
+		.password-actions button[type="submit"] {
+			background-color: var(--blue);
+			color: white;
+		}
+
+		.password-actions button[type="submit"]:hover {
+			background-color: #2a7dd1;
+		}
+
+		.password-actions button[type="button"] {
+			background-color: var(--grey);
+			color: var(--dark);
+		}
+
+		.password-actions button[type="button"]:hover {
+			background-color: #d8d8d8;
+		}
+
+		.alert {
+			padding: 10px 15px;
+			border-radius: 4px;
+			margin-bottom: 15px;
+		}
+
+		.alert-danger {
+			background-color: rgba(219, 80, 74, 0.1);
+			border: 1px solid var(--red);
+			color: var(--red);
+		}
+
+		.alert-success {
+			background-color: rgba(76, 175, 80, 0.1);
+			border: 1px solid var(--green);
+			color: var(--green);
+		}
+	</style>
+</head>
+<body>
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<i class='bx bxs-smile'></i>
+			<span class="text">Staff</span>
+		</a>
+		<ul class="side-menu top">
+			<li>
+				<a asp-area="" asp-controller="Staff" asp-action="Dashboard">
+					<i class='bx bxs-dashboard'></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li class="active">
+				<a asp-area="" asp-controller="Staff" asp-action="Profile">
+					<i class='bx bxs-user'></i>
+					<span class="text">Profile</span>
+				</a>
+			</li>
+			<li>
+				<a asp-action="Announcements" asp-controller="Staff">
+					<i class='bx bxs-megaphone'></i>
+					<span class="text">Announcement</span>
+				</a>
+			</li>
+			<li>
+				<a asp-area="" asp-controller="Staff" asp-action="StaffBilling">
+					<i class='bx bxs-credit-card-front'></i>
+					<span class="text">Payment and Billing</span>
+				</a>
+			</li>
+            <li>
+                <a asp-area="" asp-controller="Staff" asp-action="StaffFacilityReservation">
+                    <i class='bx bxs-calendar'></i>
+                    <span class="text">Facility Reservation</span>
+                </a>
+            </li>
+			<li>
+				<a asp-area="" asp-controller="Staff" asp-action="staff_services">
+					<i class='bx bxs-briefcase'></i>
+					<span class="text">Services</span>
+				</a>
+			</li>
+            <li>
+				<a asp-area="" asp-controller="Staff" asp-action="staff_community_forum">
+					<i class='bx bxs-message-square-dots'></i>
+					<span class="text">Community Forum</span>
+				</a>
+			</li>
+			<li>
+				<a asp-area="" asp-controller="Staff" asp-action="staff_security_visitors">
+					<i class='bx bxs-shield-alt-2'></i>
+					<span class="text">Security and Visitors</span>
+				</a>
+			</li>
+			<li>
+                <a asp-area="" asp-controller="Staff" asp-action="staff_contact_and_support">
+                    <i class='bx bx-support'></i>
+                    <span class="text">Contact and Support</span>
+                </a>
+            </li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a asp-action="logout" class="logout">
+                    <i class='bx bxs-log-out-circle'></i>
+                    <span class="text">Logout</span>
+                </a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu'></i>
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+		</nav>
+		<!-- NAVBAR -->
+        <div class="container">
+            <main>
+                <div class="dashboard-header">
+                    <h1>Staff Profile</h1>
+                </div>
+
+                <div class="profile-container">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+                    
+                    <div class="profile-card">
+                        <div class="profile-image">
+                            <h2>@Model.FullName</h2>
+                            <p style="text-align: center; font-weight: 400; margin-top: 0;">@Model.Position</p>
+                        </div>
+                        <div class="row">
+                            <div class="column">
+                                <p>Full Name</p>
+                                <input type="text" value="@Model.FullName" readonly>
+                                <p>Username</p>
+                                <input type="text" value="@Model.Username" readonly>
+                                <p>Email Address</p>
+                                <input type="text" value="@Model.Email" readonly>
+                                <p>Contact Number</p>
+                                <input type="text" value="@Model.ContactNumber" readonly>
+                            </div>
+                            <div class="column">
+                                <p>Department</p>
+                                <input type="text" value="@Model.Department" readonly>
+                                <p>Position</p>
+                                <input type="text" value="@Model.Position" readonly>
+                                <p>Date Hired</p>
+                                <input type="text" value="@Model.Date_Hired.ToString("MMMM dd, yyyy")" readonly>
+                                <p>Status</p>
+                                <input type="text" value="@Model.Status" readonly>
+                                @if (!string.IsNullOrEmpty(Model.Specialization))
+                                {
+                                    <p>Specialization</p>
+                                    <input type="text" value="@Model.Specialization" readonly>
+                                }
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button type="button" class="edit-btn" onclick="openPasswordModal()">Change Password</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </section>
+
+    <!-- Password Change Modal -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePasswordModal()">&times;</span>
+            <h2>Change Password</h2>
+            <form asp-action="ChangeStaffPassword" asp-controller="Staff" method="post" id="changePasswordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <div class="password-actions">
+                    <button type="submit">Save Changes</button>
+                    <button type="button" onclick="closePasswordModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+        allSideMenu.forEach(item=> {
+            const li = item.parentElement;
+
+            item.addEventListener('click', function () {
+                allSideMenu.forEach(i=> {
+                    i.parentElement.classList.remove('active');
+                })
+                li.classList.add('active');
+            })
+        });
+
+        // TOGGLE SIDEBAR
+        const menuBar = document.querySelector('#content nav .bx.bx-menu');
+        const sidebar = document.getElementById('sidebar');
+
+        menuBar.addEventListener('click', function () {
+            sidebar.classList.toggle('hide');
+        })
+
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
+
+        searchButton.addEventListener('click', function (e) {
+            if(window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if(searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
+            }
+        })
+
+        if(window.innerWidth < 768) {
+            sidebar.classList.add('hide');
+        } else if(window.innerWidth > 576) {
+            searchButtonIcon.classList.replace('bx-x', 'bx-search');
+            searchForm.classList.remove('show');
+        }
+
+        window.addEventListener('resize', function () {
+            if(this.innerWidth > 576) {
+                searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                searchForm.classList.remove('show');
+            }
+        })
+
+        const switchMode = document.getElementById('switch-mode');
+
+        switchMode.addEventListener('change', function () {
+            if(this.checked) {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+        })
+
+        // Password modal functionality
+        function openPasswordModal() {
+            document.getElementById('passwordModal').style.display = 'block';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            // Clear form fields
+            document.getElementById('changePasswordForm').reset();
+        }
+
+        // Close modal if clicked outside
+        window.onclick = function(event) {
+            var modal = document.getElementById('passwordModal');
+            if (event.target == modal) {
+                closePasswordModal();
+            }
+        }
+    </script>
+</body>
+</html>
