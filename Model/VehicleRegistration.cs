@@ -24,8 +24,7 @@ namespace SubdivisionManagement.Model
         public DateTime? ApprovalDate { get; set; }
 
         [ForeignKey("Homeowner")]
-        // Add these properties
         public int HomeownerId { get; set; }
-        public Homeowner Homeowner { get; set; }
+        public virtual Homeowner? Homeowner { get; set; }
     }
 }

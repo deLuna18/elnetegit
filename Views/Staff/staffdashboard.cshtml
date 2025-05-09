@@ -158,17 +158,17 @@
 				</a>
 			</li>
 			<li>
-				<a asp-area="" asp-controller="Staff" asp-action="StaffBilling">
+				<a href="#">
 					<i class='bx bxs-credit-card-front'></i>
 					<span class="text">Payment and Billing</span>
 				</a>
 			</li>
             <li>
-				<a asp-area="" asp-controller="Staff" asp-action="StaffFacilityReservation">
-					<i class='bx bxs-credit-card-front'></i>
-					<span class="text">Facility Reservation</span>
-				</a>
-			</li>
+                <a asp-area="" asp-controller="Staff" asp-action="StaffFacilityReservation">
+                    <i class='bx bxs-calendar'></i>
+                    <span class="text">Facility Reservation</span>
+                </a>
+            </li>
 			<li>
 				<a asp-area="" asp-controller="Staff" asp-action="staff_services">
 					<i class='bx bxs-briefcase'></i>
@@ -195,12 +195,6 @@
             </li>
 		</ul>
 		<ul class="side-menu">
-			<li>
-				<a href="#">
-					<i class='bx bxs-cog'></i>
-					<span class="text">Settings</span>
-				</a>
-			</li>
 			<li>
 				<a asp-action="logout" class="logout">
                     <i class='bx bxs-log-out-circle'></i>
@@ -238,7 +232,7 @@
                     <div class="stat-icon home">🏠</div>
                     <div class="stat-info">
                         <h3>Homeowner Requests</h3>
-                        <p class="stat-number">10</p>
+                        <p class="stat-number" id="homeownerCount">Loading...</p>
                         <p class="stat-label">New requests</p>
                     </div>
                 </div>
@@ -246,7 +240,7 @@
                     <div class="stat-icon visitors">👥</div>
                     <div class="stat-info">
                         <h3>Visitors Requests</h3>
-                        <p class="stat-number">10</p>
+                        <p class="stat-number" id="visitorCount">Loading...</p>
                         <p class="stat-label">Total requests</p>
                     </div>
                 </div>
@@ -254,7 +248,7 @@
                     <div class="stat-icon facility">❄️</div>
                     <div class="stat-info">
                         <h3>Facility Booking</h3>
-                        <p class="stat-number">5</p>
+                        <p class="stat-number" id="facilityCount">Loading...</p>
                         <p class="stat-label">New requests</p>
                     </div>
                 </div>
@@ -306,36 +300,14 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Gymnasium</td>
-                                    <td>John Doe</td>
-                                    <td>General Meeting</td>
-                                    <td>01/03/2024</td>
-                                    <td>
-                                        <button class="action-btn approve">✓</button>
-                                        <button class="action-btn reject">✕</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Mass Hall</td>
-                                    <td>Emily Rose</td>
-                                    <td>HOA Meeting</td>
-                                    <td>02/07/2024</td>
-                                    <td>
-                                        <button class="action-btn approve">✓</button>
-                                        <button class="action-btn reject">✕</button>
-                                    </td>
-                                </tr>
-                                <!-- ari lang uban if ganahan pa pun an -->
+                            <tbody id="visitorTableBody">
+                                <!-- Dynamic content will be loaded here -->
                             </tbody>
                         </table>
                         <div class="pagination">
-                            <span>Showing 1 out of 5...</span>
-                            <div class="page-numbers">
-                                <a href="#" class="active">1</a>
-                                <a href="#">2</a>
-                                <a href="#">5</a>
+                            <span id="visitorPaginationInfo">Loading...</span>
+                            <div class="page-numbers" id="visitorPagination">
+                                <!-- Dynamic pagination will be loaded here -->
                             </div>
                         </div>
                     </div>
@@ -370,8 +342,8 @@
                                         <td>Phase @homeowner.Phase, Block @homeowner.Block, @homeowner.HouseNumber</td>
                                         <td class="status-cell">@homeowner.Status</td>
                                         <td>
-                                            <button class="action-btn approve" onclick="updateStatus(@homeowner.Id, 'approved')">✓</button>
-                                            <button class="action-btn reject" onclick="updateStatus(@homeowner.Id, 'disapproved')">✕</button>
+                                            <button class="action-btn approve" onclick="updateHomeownerStatus(@homeowner.Id, 'approved')">✓</button>
+                                            <button class="action-btn reject" onclick="updateHomeownerStatus(@homeowner.Id, 'disapproved')">✕</button>
                                         </td>
                                     </tr>
                                 }
@@ -404,71 +376,58 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Gymnasium</td>
-                                    <td>01/01/2024</td>
-                                    <td>General Meeting</td>
-                                    <td>John Doe</td>
-                                    <td>
-                                        <button class="action-btn approve">✓</button>
-                                        <button class="action-btn reject">✕</button>
-                                    </td>
-                                </tr>
-                                <!-- hehehehehhe -->
+                            <tbody id="facilityTableBody">
+                                <!-- Dynamic content will be loaded here -->
                             </tbody>
                         </table>
                         <div class="pagination">
-                            <span>Showing 1 out of 5...</span>
-                            <div class="page-numbers">
-                                <a href="#" class="active">1</a>
-                                <a href="#">2</a>
-                                <a href="#">5</a>
+                            <span id="facilityPaginationInfo">Loading...</span>
+                            <div class="page-numbers" id="facilityPagination">
+                                <!-- Dynamic pagination will be loaded here -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="table-container">
-                <table>
+                <table id="homeownerRegistrationTable">
+
+                    Homeowner Registration  
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>House Number</th>
-                            <th>Bills</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <div class="user-info">
-                                    <img src="~/images/profile.jpg" alt="Maria Alexa de Luna" class="user-avatar">
-                                    <span>Maria Alexa de Luna</span>
-                                </div>
-                            </td>
-                            <td>Block 3, Building 5</td>
-                            <td class="paid">Paid</td>
-                            <td>
-                                <button class="action-btn approve">✓</button>
-                                <button class="action-btn reject">✕</button>
-                            </td>
-                        </tr>
-						<tr>
-                            <td>
-                                <div class="user-info">
-								
-                                    <img src="~/images/profile.jpg" alt="Maria Alexa de Luna" class="user-avatar">
-                                    <span>Maria Alexa de Luna</span>
-                                </div>
-                            </td>
-                            <td>Block 3, Building 5</td>
-                            <td class="paid">Paid</td>
-                            <td>
-                                <button class="action-btn approve">✓</button>
-                                <button class="action-btn reject">✕</button>
-                            </td>
-                        </tr>
+                        @{
+                            var pendingHomeowners = ViewBag.Homeowners as IEnumerable<SubdivisionManagement.Model.Homeowner>;
+                            if (pendingHomeowners != null)
+                            {
+                                foreach (var homeowner in pendingHomeowners)
+                                {
+                                    if (homeowner.Status?.ToLower() == "pending")
+                                    {
+                                        <tr id="homeowner-@homeowner.Id">
+                                            <td>
+                                                <div class="user-info">
+                                                    <img src="~/images/profile.jpg" alt="@homeowner.FirstName @homeowner.LastName" class="user-avatar">
+                                                    <span>@homeowner.FirstName @(homeowner.MiddleName != null ? homeowner.MiddleName + " " : "")@homeowner.LastName</span>
+                                                </div>
+                                            </td>
+                                            <td>Phase @homeowner.Phase, Block @homeowner.Block, @homeowner.HouseNumber</td>
+                                            <td class="status-cell">@homeowner.Status</td>
+                                            <td>
+                                                <button class="action-btn approve" onclick="updateHomeownerStatus(@homeowner.Id, 'approved')">✓</button>
+                                                <button class="action-btn reject" onclick="updateHomeownerStatus(@homeowner.Id, 'disapproved')">✕</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        }
                     </tbody>
                 </table>
             </div>
@@ -585,12 +544,26 @@
                     }
                 }
 
-                function updateStatus(homeownerId, newStatus) {
+                function updateHomeownerStatus(homeownerId, newStatus) {
                     if (!confirm(`Are you sure you want to ${newStatus} this homeowner?`)) {
                         return;
                     }
 
                     const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+                    const row = document.getElementById(`homeowner-${homeownerId}`);
+                    
+                    if (!row) {
+                        console.error('Row not found');
+                        return;
+                    }
+
+                    // Disable buttons immediately to prevent double-clicks
+                    const buttons = row.querySelectorAll('.action-btn');
+                    buttons.forEach(btn => btn.disabled = true);
+                    
+                    // Start fade out animation immediately
+                    row.style.transition = 'opacity 0.5s ease-out';
+                    row.style.opacity = '0';
                     
                     fetch('/Staff/UpdateHomeownerStatus', {
                         method: 'POST',
@@ -603,22 +576,70 @@
                             newStatus: newStatus
                         })
                     })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         if (data.success) {
-                            // Update the status in the table
-                            const row = document.getElementById(`homeowner-${homeownerId}`);
-                            if (row) {
-                                row.cells[2].textContent = newStatus;
-                                if (newStatus === 'approved') {
-                                    row.cells[2].className = 'status-cell approved';
-                                } else {
-                                    row.cells[2].className = 'status-cell disapproved';
+                            // Remove row after animation completes
+                            setTimeout(() => {
+                                row.remove();
+                                
+                                // Check if table is empty
+                                const tbody = document.querySelector('#homeownerRegistrationTable tbody');
+                                if (tbody && tbody.children.length === 0) {
+                                    tbody.innerHTML = '<tr><td colspan="4" class="no-records">No pending homeowner registrations</td></tr>';
                                 }
-                            }
+                            }, 500);
+
+                            // Send log to server
+                            fetch('/Staff/AddHomeownerLog', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'RequestVerificationToken': token
+                                },
+                                body: JSON.stringify({
+                                    status: newStatus.toLowerCase() === 'approved' ? 'Approved' : 'Disapproved',
+                                    date: new Date().toISOString()
+                                })
+                            }).catch(error => console.error('Error saving log:', error));
+                        } else {
+                            // If update failed, revert the fade out
+                            row.style.opacity = '1';
+                            buttons.forEach(btn => btn.disabled = false);
+                            alert('Error: ' + (data.message || 'Failed to update status'));
                         }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // If error occurred, revert the fade out
+                        row.style.opacity = '1';
+                        buttons.forEach(btn => btn.disabled = false);
+                        alert('An error occurred while updating the status. Please try again.');
                     });
                 }
+
+    // Add this function to handle real-time updates
+    function refreshHomeownerTable() {
+        const tbody = document.querySelector('#homeownerRegistrationTable tbody');
+        if (!tbody) return;
+
+        fetch('/Staff/GetPendingHomeowners')
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="no-records">No pending homeowner registrations</td></tr>';
+                }
+            })
+            .catch(error => console.error('Error refreshing table:', error));
+    }
+
+    // Refresh table every 30 seconds
+    setInterval(refreshHomeownerTable, 30000);
 
     // Add Announcement Modal Functions
     document.querySelector('.add-announcement').addEventListener('click', function() {
@@ -671,6 +692,249 @@
             event.target.style.display = "none";
         }
     };
+
+    // Global variables for pagination
+    let currentVisitorPage = 1;
+    let currentFacilityPage = 1;
+    const itemsPerPage = 5;
+
+    // Function to fetch and update counts
+    async function updateDashboardCounts() {
+        try {
+            // Fetch homeowner requests count
+            const homeownerResponse = await fetch('/Staff/GetPendingHomeownerCount');
+            if (!homeownerResponse.ok) throw new Error('Failed to fetch homeowner count');
+            const homeownerData = await homeownerResponse.json();
+            document.getElementById('homeownerCount').textContent = homeownerData.count;
+
+            // Fetch visitor requests count
+            const visitorResponse = await fetch('/Staff/GetPendingVisitorCount');
+            if (!visitorResponse.ok) throw new Error('Failed to fetch visitor count');
+            const visitorData = await visitorResponse.json();
+            document.getElementById('visitorCount').textContent = visitorData.count;
+
+            // Fetch facility booking count
+            const facilityResponse = await fetch('/Staff/GetPendingFacilityCount');
+            if (!facilityResponse.ok) throw new Error('Failed to fetch facility count');
+            const facilityData = await facilityResponse.json();
+            document.getElementById('facilityCount').textContent = facilityData.count;
+        } catch (error) {
+            console.error('Error fetching dashboard counts:', error);
+            // Show error state in the UI
+            document.getElementById('homeownerCount').textContent = 'Error';
+            document.getElementById('visitorCount').textContent = 'Error';
+            document.getElementById('facilityCount').textContent = 'Error';
+        }
+    }
+
+    // Function to load visitor requests
+    async function loadVisitorRequests(page = 1) {
+        try {
+            const response = await fetch(`/Staff/GetPendingVisitors?page=${page}&pageSize=${itemsPerPage}`);
+            if (!response.ok) throw new Error('Failed to fetch visitor requests');
+            const data = await response.json();
+
+            const tableBody = document.getElementById('visitorTableBody');
+            const paginationInfo = document.getElementById('visitorPaginationInfo');
+            const pagination = document.getElementById('visitorPagination');
+
+            // Update table content
+            tableBody.innerHTML = data.visitors.map(visitor => `
+                <tr data-visitor-id="${visitor.id}">
+                    <td>${visitor.name}</td>
+                    <td>${visitor.guestOf}</td>
+                    <td>${visitor.purpose}</td>
+                    <td>${new Date(visitor.date).toLocaleDateString()}</td>
+                    <td>
+                        <button class="action-btn approve" onclick="handleVisitorAction(${visitor.id}, 'approved')">✓</button>
+                        <button class="action-btn reject" onclick="handleVisitorAction(${visitor.id}, 'rejected')">✕</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Update pagination
+            paginationInfo.textContent = `Showing ${data.startIndex + 1}-${data.endIndex} of ${data.totalCount}`;
+            updatePagination(pagination, data.totalPages, page, 'loadVisitorRequests');
+        } catch (error) {
+            console.error('Error loading visitor requests:', error);
+            document.getElementById('visitorTableBody').innerHTML = '<tr><td colspan="5">Error loading visitor requests</td></tr>';
+        }
+    }
+
+    // Function to load facility bookings
+    async function loadFacilityBookings(page = 1) {
+        try {
+            const response = await fetch(`/Staff/GetPendingFacilityBookings?page=${page}&pageSize=${itemsPerPage}`);
+            if (!response.ok) throw new Error('Failed to fetch facility bookings');
+            const data = await response.json();
+
+            const tableBody = document.getElementById('facilityTableBody');
+            const paginationInfo = document.getElementById('facilityPaginationInfo');
+            const pagination = document.getElementById('facilityPagination');
+
+            // Update table content
+            tableBody.innerHTML = data.bookings.map(booking => `
+                <tr data-booking-id="${booking.id}">
+                    <td>${booking.place}</td>
+                    <td>${new Date(booking.dateOfUsage).toLocaleDateString()}</td>
+                    <td>${booking.purpose}</td>
+                    <td>${booking.reservedBy}</td>
+                    <td>
+                        <button class="action-btn approve" onclick="handleFacilityAction(${booking.id}, 'approved')">✓</button>
+                        <button class="action-btn reject" onclick="handleFacilityAction(${booking.id}, 'rejected')">✕</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Update pagination
+            paginationInfo.textContent = `Showing ${data.startIndex + 1}-${data.endIndex} of ${data.totalCount}`;
+            updatePagination(pagination, data.totalPages, page, 'loadFacilityBookings');
+        } catch (error) {
+            console.error('Error loading facility bookings:', error);
+            document.getElementById('facilityTableBody').innerHTML = '<tr><td colspan="5">Error loading facility bookings</td></tr>';
+        }
+    }
+
+    // Function to update pagination controls
+    function updatePagination(element, totalPages, currentPage, loadFunction) {
+        element.innerHTML = '';
+        
+        // Previous button
+        if (currentPage > 1) {
+            element.innerHTML += `<a href="#" onclick="event.preventDefault(); ${loadFunction}(${currentPage - 1})">Previous</a>`;
+        }
+
+        // Page numbers
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === currentPage) {
+                element.innerHTML += `<a href="#" class="active">${i}</a>`;
+            } else {
+                element.innerHTML += `<a href="#" onclick="event.preventDefault(); ${loadFunction}(${i})">${i}</a>`;
+            }
+        }
+
+        // Next button
+        if (currentPage < totalPages) {
+            element.innerHTML += `<a href="#" onclick="event.preventDefault(); ${loadFunction}(${currentPage + 1})">Next</a>`;
+        }
+    }
+
+    // Function to handle visitor request actions
+    async function handleVisitorAction(visitorId, action) {
+        if (!confirm(`Are you sure you want to ${action} this visitor request?`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch('/Staff/UpdateVisitorStatus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({
+                    visitorId: visitorId,
+                    status: action
+                })
+            });
+
+            if (!response.ok) throw new Error('Failed to update visitor status');
+            const result = await response.json();
+
+            if (result.success) {
+                // Remove the row from the table
+                const row = document.querySelector(`tr[data-visitor-id="${visitorId}"]`);
+                if (row) {
+                    row.remove();
+                }
+                // Update the count and reload the table if empty
+                updateDashboardCounts();
+                if (document.getElementById('visitorTableBody').children.length === 0) {
+                    loadVisitorRequests(currentVisitorPage);
+                }
+            } else {
+                throw new Error(result.message || 'Failed to update status');
+            }
+        } catch (error) {
+            console.error('Error updating visitor status:', error);
+            alert('An error occurred while updating the status. Please try again.');
+        }
+    }
+
+    // Function to handle facility booking actions
+    async function handleFacilityAction(bookingId, action) {
+        if (!confirm(`Are you sure you want to ${action} this facility booking?`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch('/Staff/UpdateFacilityBookingStatus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({
+                    bookingId: bookingId,
+                    status: action
+                })
+            });
+
+            if (!response.ok) throw new Error('Failed to update facility booking status');
+            const result = await response.json();
+
+            if (result.success) {
+                // Remove the row from the table
+                const row = document.querySelector(`tr[data-booking-id="${bookingId}"]`);
+                if (row) {
+                    row.remove();
+                }
+                // Update the count and reload the table if empty
+                updateDashboardCounts();
+                if (document.getElementById('facilityTableBody').children.length === 0) {
+                    loadFacilityBookings(currentFacilityPage);
+                }
+            } else {
+                throw new Error(result.message || 'Failed to update status');
+            }
+        } catch (error) {
+            console.error('Error updating facility booking status:', error);
+            alert('An error occurred while updating the status. Please try again.');
+        }
+    }
+
+    // Initialize the dashboard
+    document.addEventListener('DOMContentLoaded', () => {
+        // Update counts
+        updateDashboardCounts();
+        // Update counts every 30 seconds
+        setInterval(updateDashboardCounts, 30000);
+
+        // Add modal open/close handlers
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const modalId = card.getAttribute('onclick').match(/'([^']+)'/)[1];
+                if (modalId === 'visitorModal') {
+                    loadVisitorRequests(1);
+                } else if (modalId === 'facilityModal') {
+                    loadFacilityBookings(1);
+                }
+            });
+        });
+    });
+
+    // Add hover effect to stat cards
+    document.querySelectorAll('.stat-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px)';
+            card.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+            card.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.08)';
+        });
+    });
 </script>
 </body>
 </html>

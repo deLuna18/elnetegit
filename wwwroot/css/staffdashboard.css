@@ -692,6 +692,7 @@ body {
     height: 35px;
     border-radius: 50%;
     object-fit: cover;
+}
 
 /* MAIN */
 /* CONTENT */
@@ -759,8 +760,51 @@ body {
 }
 
 .add-announcement:hover {
-    background-color: #2980b9; /* Darker shade of blue */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-    transform: translateY(-2px); /* Slightly lift the button */
-    transition: all 0.3s ease; /* Smooth transition */
+    background-color: #2980b9; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transform: translateY(-2px);
+    transition: all 0.3s ease; 
+}
+
+.status-cell {
+    font-weight: 500;
+}
+
+.status-cell.approved {
+    color: #2ecc71;
+}
+
+.status-cell.disapproved {
+    color: #e74c3c;
+}
+
+.status-cell.pending {
+    color: #f39c12;
+}
+
+.no-records {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-style: italic;
+}
+
+#homeownerRegistrationTable tbody tr {
+    transition: opacity 0.5s ease-out;
+}
+
+.action-btn {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+}
+
+.action-btn.approve:hover {
+    background-color: #27ae60;
+}
+
+.action-btn.reject:hover {
+    background-color: #c0392b;
 }

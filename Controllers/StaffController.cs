@@ -1256,6 +1256,275 @@ namespace SubdivisionManagement.Controllers
     {
         public int PassId { get; set; }
     }
+
+    [HttpGet]
+    public IActionResult GetPendingHomeowners()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var pendingHomeowners = _context.Homeowners
+                .Where(h => h.Status.ToLower() == "pending")
+                .Select(h => new
+                {
+                    h.Id,
+                    h.FirstName,
+                    h.MiddleName,
+                    h.LastName,
+                    h.Phase,
+                    h.Block,
+                    h.HouseNumber,
+                    h.Status
+                })
+                .ToList();
+
+            return Json(pendingHomeowners);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching pending homeowners");
+            return StatusCode(500, new { message = "Error fetching pending homeowners" });
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddHomeownerLog([FromBody] HomeownerLog log)
+    {
+        try
+        {
+            if (log == null)
+            {
+                return Json(new { success = false, message = "Invalid log data" });
+            }
+
+            // Set the current date if not provided
+            if (log.Date == default)
+            {
+                log.Date = DateTime.Now;
+            }
+
+            _context.HomeownerLogs.Add(log);
+            await _context.SaveChangesAsync();
+            
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetPendingHomeownerCount()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var count = await _context.Homeowners
+                .CountAsync(h => h.Status == "Pending");
+            return Json(new { count });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching pending homeowner count");
+            return StatusCode(500, new { message = "Error fetching pending homeowner count" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetPendingVisitorCount()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var count = await _context.VisitorPasses
+                .CountAsync(v => v.Status == "Pending");
+            return Json(new { count });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching pending visitor count");
+            return StatusCode(500, new { message = "Error fetching pending visitor count" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetPendingFacilityCount()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var count = await _context.FacilityReservations
+                .CountAsync(f => f.Status == "Pending");
+            return Json(new { count });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching pending facility count");
+            return StatusCode(500, new { message = "Error fetching pending facility count" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetPendingVisitors(int page = 1, int pageSize = 5)
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var totalCount = await _context.VisitorPasses
+                .CountAsync(v => v.Status == "Pending");
+
+            var visitors = await _context.VisitorPasses
+                .Include(v => v.Homeowner)
+                .Where(v => v.Status == "Pending")
+                .OrderByDescending(v => v.RequestDate)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(v => new
+                {
+                    v.Id,
+                    name = v.VisitorName,
+                    guestOf = v.Homeowner != null ? $"{v.Homeowner.FirstName} {v.Homeowner.LastName}" : "N/A",
+                    purpose = v.Purpose,
+                    date = v.VisitDate
+                })
+                .ToListAsync();
+
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+            return Json(new
+            {
+                visitors,
+                totalCount,
+                totalPages,
+                startIndex = (page - 1) * pageSize,
+                endIndex = Math.Min(page * pageSize, totalCount)
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching pending visitors");
+            return StatusCode(500, new { message = "Error fetching pending visitors" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetPendingFacilityBookings(int page = 1, int pageSize = 5)
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var totalCount = await _context.FacilityReservations
+                .CountAsync(f => f.Status == "Pending");
+
+            var bookings = await _context.FacilityReservations
+                .Include(f => f.Facility)
+                .Include(f => f.Homeowner)
+                .Where(f => f.Status == "Pending")
+                .OrderByDescending(f => f.DateSubmitted)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(f => new
+                {
+                    f.Id,
+                    place = f.Facility.Name,
+                    dateOfUsage = f.DateSubmitted,
+                    purpose = f.Purpose,
+                    reservedBy = f.Homeowner != null ? $"{f.Homeowner.FirstName} {f.Homeowner.LastName}" : "N/A"
+                })
+                .ToListAsync();
+
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+            return Json(new
+            {
+                bookings,
+                totalCount,
+                totalPages,
+                startIndex = (page - 1) * pageSize,
+                endIndex = Math.Min(page * pageSize, totalCount)
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching pending facility bookings");
+            return StatusCode(500, new { message = "Error fetching pending facility bookings" });
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateVisitorStatus([FromBody] UpdateVisitorStatusDto model)
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var visitor = await _context.VisitorPasses.FindAsync(model.VisitorId);
+            if (visitor == null)
+                return NotFound(new { success = false, message = "Visitor not found" });
+
+            visitor.Status = model.Status;
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true, message = $"Visitor status updated to {model.Status}" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating visitor status");
+            return StatusCode(500, new { success = false, message = "Error updating visitor status" });
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateFacilityBookingStatus([FromBody] UpdateFacilityBookingStatusDto model)
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var booking = await _context.FacilityReservations.FindAsync(model.BookingId);
+            if (booking == null)
+                return NotFound(new { success = false, message = "Booking not found" });
+
+            booking.Status = model.Status;
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true, message = $"Booking status updated to {model.Status}" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating facility booking status");
+            return StatusCode(500, new { success = false, message = "Error updating facility booking status" });
+        }
+    }
+
+    public class UpdateVisitorStatusDto
+    {
+        public int VisitorId { get; set; }
+        public string Status { get; set; } = string.Empty;
+    }
+
+    public class UpdateFacilityBookingStatusDto
+    {
+        public int BookingId { get; set; }
+        public string Status { get; set; } = string.Empty;
+    }
 }
 
 }

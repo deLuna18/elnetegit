@@ -894,6 +894,16 @@ public class AdminController : Controller
         return View("admin_profile");
     }
 
+    public IActionResult ContactAndSupport()
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+        {
+            return RedirectToAction("Login");
+        }
+        ViewBag.AdminName = HttpContext.Session.GetString("AdminUser");
+        return View("admin_contact_and_support");
+    }
+
     [HttpPost]
     public async Task<IActionResult> EditHomeowner([FromBody] Homeowner homeowner)
     {
@@ -989,6 +999,23 @@ public class AdminController : Controller
         catch (Exception ex)
         {
             return Json(new { success = false, message = "Error deleting employee: " + ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetHomeownerLogs()
+    {
+        try
+        {
+            var logs = await _context.HomeownerLogs
+                .OrderByDescending(l => l.Date)
+                .ToListAsync();
+
+            return Json(logs);
+        }
+        catch (Exception ex)
+        {
+            return Json(new { error = ex.Message });
         }
     }
 }

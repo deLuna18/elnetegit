@@ -20,6 +20,7 @@ namespace SubdivisionManagement.Model
         public DbSet<VehicleRegistration> VehicleRegistrations { get; set; }
         public DbSet<SecurityPolicy> SecurityPolicies { get; set; }
         public DbSet<Todo> Todos { get; set; }
+        public DbSet<HomeownerLog> HomeownerLogs { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

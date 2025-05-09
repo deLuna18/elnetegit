@@ -1,0 +1,69 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace SubdivisionManagement.Migrations
+{
+    /// <inheritdoc />
+    public partial class MakeHomeownerIdRequired : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_HomeownerLogs_Homeowners_HomeownerId",
+                table: "HomeownerLogs");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "HomeownerId",
+                table: "HomeownerLogs",
+                type: "int",
+                nullable: false,
+                defaultValue: 0,
+                oldClrType: typeof(int),
+                oldType: "int",
+                oldNullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Remarks",
+                table: "HomeownerLogs",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_HomeownerLogs_Homeowners_HomeownerId",
+                table: "HomeownerLogs",
+                column: "HomeownerId",
+                principalTable: "Homeowners",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_HomeownerLogs_Homeowners_HomeownerId",
+                table: "HomeownerLogs");
+
+            migrationBuilder.DropColumn(
+                name: "Remarks",
+                table: "HomeownerLogs");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "HomeownerId",
+                table: "HomeownerLogs",
+                type: "int",
+                nullable: true,
+                oldClrType: typeof(int),
+                oldType: "int");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_HomeownerLogs_Homeowners_HomeownerId",
+                table: "HomeownerLogs",
+                column: "HomeownerId",
+                principalTable: "Homeowners",
+                principalColumn: "Id");
+        }
+    }
+}
