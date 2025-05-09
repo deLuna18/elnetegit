@@ -228,8 +228,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>376br38lae</Fingerprint>
-      <Integrity>4WT+YQltlQm6qLSa9P/YIMAVA4xk9abxcaO07XuJk50=</Integrity>
+      <Fingerprint>njvldp3bph</Fingerprint>
+      <Integrity>87MtdwAIIJdxO8C/MKYM3B1PquBwsglOZkomYIqz8zc=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\facility_reservation.css'))</OriginalItemSpec>
@@ -264,8 +264,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>33rp9w06bl</Fingerprint>
-      <Integrity>X/6x01GNMpgA9LiZ0eIinMiK6nE0Exv5bdzY2xmwW8g=</Integrity>
+      <Fingerprint>bos442vpxb</Fingerprint>
+      <Integrity>1ZncbzR+cwS4fh5M+/IpND0M6cPbNm6ER3OM7RTOndI=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\profile.css'))</OriginalItemSpec>

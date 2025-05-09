@@ -23,7 +23,7 @@ builder.Services.AddControllersWithViews()
 
 builder.Services.AddDbContext<HomeContext>(options =>
 {
-    options.UseSqlServer("Server=DESKTOP-EPCAAU1\\SQLEXPRESS;Database=SubdivisionManagement_db;Trusted_Connection=True;TrustServerCertificate=True;");
+    options.UseSqlServer("Server=HEARTSPC\\SQLEXPRESS;Database=SubdivisionManagement_db;Trusted_Connection=True;TrustServerCertificate=True;");
 });
 
 var app = builder.Build();
