@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "RKX1JMAtS0uDyQdP62qeXy4Fc4ZluLPjq7olq/dzBKY=",
+  "Hash": "hc+vW1Qy8x6i12jRjWZWn94rcQC1hGPTCj6Jvh78MpQ=",
   "Source": "SubdivisionManagement",
   "BasePath": "_content/SubdivisionManagement",
   "Mode": "Default",
@@ -143,12 +143,12 @@
       "OriginalItemSpec": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\SubdivisionManagement.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\2ggsiocow7-epfnzob01a.gz",
+      "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\2ggsiocow7-2aqjn4s3vk.gz",
       "SourceId": "SubdivisionManagement",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/SubdivisionManagement",
-      "RelativePath": "css/admin_profile#[.{fingerprint=epfnzob01a}]?.css.gz",
+      "RelativePath": "css/admin_profile#[.{fingerprint=2aqjn4s3vk}]?.css.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -157,8 +157,8 @@
       "RelatedAsset": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_profile.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "x7xg48anqt",
-      "Integrity": "0+9bUFfpDuvOL1dzb8t5zdPJqvxc5u0B5XyABRF3568=",
+      "Fingerprint": "nb0c6r1v0w",
+      "Integrity": "XZFVll5u/U65+kMyk8hROfSIRNi1UqKFe8SJS4E5NR4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_profile.css"
@@ -1921,8 +1921,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "epfnzob01a",
-      "Integrity": "vj3w2yT2k/raO2sqL4Lvv+czEjehL2/AmYsfGUo3D0o=",
+      "Fingerprint": "2aqjn4s3vk",
+      "Integrity": "Nm2K9qCIpUrVdzRcCz+WM/dEzvOnjl1abIsfRoXdQow=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\admin_profile.css"
@@ -5172,13 +5172,13 @@
       ]
     },
     {
-      "Route": "css/admin_profile.css",
-      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\2ggsiocow7-epfnzob01a.gz",
+      "Route": "css/admin_profile.2aqjn4s3vk.css",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\2ggsiocow7-2aqjn4s3vk.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000557103064"
+          "Quality": "0.000462320851"
         }
       ],
       "ResponseHeaders": [
@@ -5188,19 +5188,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1794"
+          "Value": "2162"
         },
         {
           "Name": "ETag",
-          "Value": "\"0+9bUFfpDuvOL1dzb8t5zdPJqvxc5u0B5XyABRF3568=\""
+          "Value": "\"XZFVll5u/U65+kMyk8hROfSIRNi1UqKFe8SJS4E5NR4=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 09 May 2025 03:54:08 GMT"
+          "Value": "Fri, 09 May 2025 08:07:06 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "no-cache"
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Encoding",
@@ -5216,18 +5216,26 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"vj3w2yT2k/raO2sqL4Lvv+czEjehL2/AmYsfGUo3D0o=\""
+          "Value": "W/\"Nm2K9qCIpUrVdzRcCz+WM/dEzvOnjl1abIsfRoXdQow=\""
         }
       ],
       "EndpointProperties": [
         {
+          "Name": "fingerprint",
+          "Value": "2aqjn4s3vk"
+        },
+        {
+          "Name": "label",
+          "Value": "css/admin_profile.css"
+        },
+        {
           "Name": "integrity",
-          "Value": "sha256-vj3w2yT2k/raO2sqL4Lvv+czEjehL2/AmYsfGUo3D0o="
+          "Value": "sha256-Nm2K9qCIpUrVdzRcCz+WM/dEzvOnjl1abIsfRoXdQow="
         }
       ]
     },
     {
-      "Route": "css/admin_profile.css",
+      "Route": "css/admin_profile.2aqjn4s3vk.css",
       "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_profile.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -5237,7 +5245,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "6760"
+          "Value": "8680"
         },
         {
           "Name": "Content-Type",
@@ -5245,121 +5253,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"vj3w2yT2k/raO2sqL4Lvv+czEjehL2/AmYsfGUo3D0o=\""
+          "Value": "\"Nm2K9qCIpUrVdzRcCz+WM/dEzvOnjl1abIsfRoXdQow=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 09 May 2025 03:54:08 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-vj3w2yT2k/raO2sqL4Lvv+czEjehL2/AmYsfGUo3D0o="
-        }
-      ]
-    },
-    {
-      "Route": "css/admin_profile.css.gz",
-      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\2ggsiocow7-epfnzob01a.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1794"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"0+9bUFfpDuvOL1dzb8t5zdPJqvxc5u0B5XyABRF3568=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 09 May 2025 03:54:08 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-0+9bUFfpDuvOL1dzb8t5zdPJqvxc5u0B5XyABRF3568="
-        }
-      ]
-    },
-    {
-      "Route": "css/admin_profile.epfnzob01a.css",
-      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\2ggsiocow7-epfnzob01a.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000557103064"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1794"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"0+9bUFfpDuvOL1dzb8t5zdPJqvxc5u0B5XyABRF3568=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 09 May 2025 03:54:08 GMT"
+          "Value": "Fri, 09 May 2025 08:07:06 GMT"
         },
         {
           "Name": "Cache-Control",
           "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"vj3w2yT2k/raO2sqL4Lvv+czEjehL2/AmYsfGUo3D0o=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "epfnzob01a"
+          "Value": "2aqjn4s3vk"
         },
         {
           "Name": "label",
@@ -5367,13 +5275,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-vj3w2yT2k/raO2sqL4Lvv+czEjehL2/AmYsfGUo3D0o="
+          "Value": "sha256-Nm2K9qCIpUrVdzRcCz+WM/dEzvOnjl1abIsfRoXdQow="
         }
       ]
     },
     {
-      "Route": "css/admin_profile.epfnzob01a.css",
-      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_profile.css",
+      "Route": "css/admin_profile.2aqjn4s3vk.css.gz",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\2ggsiocow7-2aqjn4s3vk.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -5382,7 +5290,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "6760"
+          "Value": "2162"
         },
         {
           "Name": "Content-Type",
@@ -5390,56 +5298,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"vj3w2yT2k/raO2sqL4Lvv+czEjehL2/AmYsfGUo3D0o=\""
+          "Value": "\"XZFVll5u/U65+kMyk8hROfSIRNi1UqKFe8SJS4E5NR4=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 09 May 2025 03:54:08 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "epfnzob01a"
-        },
-        {
-          "Name": "label",
-          "Value": "css/admin_profile.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-vj3w2yT2k/raO2sqL4Lvv+czEjehL2/AmYsfGUo3D0o="
-        }
-      ]
-    },
-    {
-      "Route": "css/admin_profile.epfnzob01a.css.gz",
-      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\2ggsiocow7-epfnzob01a.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1794"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"0+9bUFfpDuvOL1dzb8t5zdPJqvxc5u0B5XyABRF3568=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 09 May 2025 03:54:08 GMT"
+          "Value": "Fri, 09 May 2025 08:07:06 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -5457,7 +5320,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "epfnzob01a"
+          "Value": "2aqjn4s3vk"
         },
         {
           "Name": "label",
@@ -5465,7 +5328,144 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-0+9bUFfpDuvOL1dzb8t5zdPJqvxc5u0B5XyABRF3568="
+          "Value": "sha256-XZFVll5u/U65+kMyk8hROfSIRNi1UqKFe8SJS4E5NR4="
+        }
+      ]
+    },
+    {
+      "Route": "css/admin_profile.css",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\2ggsiocow7-2aqjn4s3vk.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000462320851"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2162"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"XZFVll5u/U65+kMyk8hROfSIRNi1UqKFe8SJS4E5NR4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 09 May 2025 08:07:06 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Nm2K9qCIpUrVdzRcCz+WM/dEzvOnjl1abIsfRoXdQow=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Nm2K9qCIpUrVdzRcCz+WM/dEzvOnjl1abIsfRoXdQow="
+        }
+      ]
+    },
+    {
+      "Route": "css/admin_profile.css",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_profile.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8680"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Nm2K9qCIpUrVdzRcCz+WM/dEzvOnjl1abIsfRoXdQow=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 09 May 2025 08:07:06 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Nm2K9qCIpUrVdzRcCz+WM/dEzvOnjl1abIsfRoXdQow="
+        }
+      ]
+    },
+    {
+      "Route": "css/admin_profile.css.gz",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\2ggsiocow7-2aqjn4s3vk.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2162"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"XZFVll5u/U65+kMyk8hROfSIRNi1UqKFe8SJS4E5NR4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 09 May 2025 08:07:06 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-XZFVll5u/U65+kMyk8hROfSIRNi1UqKFe8SJS4E5NR4="
         }
       ]
     },

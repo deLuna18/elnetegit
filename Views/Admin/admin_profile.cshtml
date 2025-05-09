@@ -20,14 +20,14 @@
         <span class="text">Admin</span>
     </a>
     <ul class="side-menu top">
-        <li class="active">
+        <li >
             <a asp-area="" asp-controller="Admin" asp-action="Dashboard">
                 <i class='bx bxs-dashboard'></i>
                 <span class="text">Dashboard</span>
             </a>
         </li>
         <li>
-            <a>
+            <a asp-area="" asp-controller="Admin" asp-action="Profile">
                 <i class='bx bxs-user'></i>
                 <span class="text">Profile</span>
             </a>
@@ -45,7 +45,7 @@
             </a>
         </li>
         <li>
-            <a>
+            <a asp-area="" asp-controller="Admin" asp-action="Services">
                 <i class='bx bxs-briefcase'></i>
                 <span class="text">Services</span>
             </a>
@@ -102,17 +102,22 @@
     <div class="container">
         <main>
             <div class="dashboard-header">
-                <h1>Profile</h1>
+                <h1>Profile Management</h1>
             </div>
 
-            <!-- Summary Cards Row -->
             <div class="summary-cards-row">
                 <div class="summary-card">
-                    <h5 class="card-title">All Homeowners</h5>
+                    <div class="card-icon">
+                        <i class='bx bxs-user-detail'></i>
+                    </div>
+                    <h5 class="card-title">Total Homeowners</h5>
                     <p class="card-text" id="homeownerCount">@((ViewBag.Homeowners as List<SubdivisionManagement.Model.Homeowner>).Count)</p>
                 </div>
                 <div class="summary-card">
-                    <h5 class="card-title">All Employees</h5>
+                    <div class="card-icon">
+                        <i class='bx bxs-briefcase'></i>
+                    </div>
+                    <h5 class="card-title">Total Employees</h5>
                     <p class="card-text" id="employeeCount">@((ViewBag.Employees as List<SubdivisionManagement.Model.Staff>).Count)</p>
                 </div>
             </div>
@@ -120,70 +125,296 @@
             <div class="table-container">
                 <div class="table-wrapper">
                     <div class="table-header">
-                        <i class='bx bxs-user'></i> All Homeowners
+                        <i class='bx bxs-user'></i>
+                        <span>Homeowners Directory</span>
                     </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Block</th>
-                                <th>House No.</th>
-                                <th>Email</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var h in (ViewBag.Homeowners as List<SubdivisionManagement.Model.Homeowner>) ?? new List<SubdivisionManagement.Model.Homeowner>())
-                            {
+                    <div class="table-responsive" style="padding: 20px;">
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td>@h.FirstName @h.LastName</td>
-                                    <td>@h.Block</td>
-                                    <td>@h.HouseNumber</td>
-                                    <td>@h.Email</td>
-                                    <td class="action-buttons">
-                                        <button class="btn-sm btn-warning"><i class='bx bx-edit'></i> Edit</button>
-                                        <button class="btn-sm btn-danger"><i class='bx bx-trash'></i> Delete</button>
-                                    </td>
+                                    <th>Name</th>
+                                    <th>Block</th>
+                                    <th>House No.</th>
+                                    <th>Email</th>
+                                    <th>Actions</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var h in (ViewBag.Homeowners as List<SubdivisionManagement.Model.Homeowner>) ?? new List<SubdivisionManagement.Model.Homeowner>())
+                                {
+                                    <tr data-id="@h.Id">
+                                        <td>@h.FirstName @h.LastName</td>
+                                        <td>@h.Block</td>
+                                        <td>@h.HouseNumber</td>
+                                        <td>@h.Email</td>
+                                        <td class="action-buttons">
+                                            <button class="btn-sm btn-warning edit-homeowner" title="Edit" data-id="@h.Id">
+                                                <i class='bx bx-edit'></i>
+                                            </button>
+                                            <button class="btn-sm btn-danger delete-homeowner" title="Delete" data-id="@h.Id">
+                                                <i class='bx bx-trash'></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="table-wrapper">
                     <div class="table-header">
-                        <i class='bx bxs-briefcase'></i> All Employees
+                        <i class='bx bxs-briefcase'></i>
+                        <span>Staff Directory</span>
                     </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Position</th>
-                                <th>Department</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var e in (ViewBag.Employees as List<SubdivisionManagement.Model.Staff>) ?? new List<SubdivisionManagement.Model.Staff>())
-                            {
+                    <div class="table-responsive" style="padding: 20px;">
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td>@e.FullName</td>
-                                    <td>@e.Email</td>
-                                    <td>@e.Position</td>
-                                    <td>@e.Department</td>
-                                    <td class="action-buttons">
-                                        <button class="btn-sm btn-warning"><i class='bx bx-edit'></i> Edit</button>
-                                        <button class="btn-sm btn-danger"><i class='bx bx-trash'></i> Delete</button>
-                                    </td>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Position</th>
+                                    <th>Department</th>
+                                    <th>Actions</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var e in (ViewBag.Employees as List<SubdivisionManagement.Model.Staff>) ?? new List<SubdivisionManagement.Model.Staff>())
+                                {
+                                    <tr data-id="@e.Id">
+                                        <td>@e.FullName</td>
+                                        <td>@e.Email</td>
+                                        <td>@e.Position</td>
+                                        <td>@e.Department</td>
+                                        <td class="action-buttons">
+                                            <button class="btn-sm btn-warning edit-employee" title="Edit" data-id="@e.Id">
+                                                <i class='bx bx-edit'></i>
+                                            </button>
+                                            <button class="btn-sm btn-danger delete-employee" title="Delete" data-id="@e.Id">
+                                                <i class='bx bx-trash'></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
 
 </section>
+
+<!-- Edit Homeowner Modal -->
+<div class="modal fade" id="editHomeownerModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Homeowner</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editHomeownerForm">
+                    <input type="hidden" id="homeownerId">
+                    <div class="mb-3">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="homeownerFirstName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="homeownerLastName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="homeownerEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Block</label>
+                        <input type="text" class="form-control" id="homeownerBlock" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">House Number</label>
+                        <input type="text" class="form-control" id="homeownerHouseNumber" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveHomeownerChanges">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Employee Modal -->
+<div class="modal fade" id="editEmployeeModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Employee</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editEmployeeForm">
+                    <input type="hidden" id="employeeId">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="employeeFullName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="employeeEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Contact Number</label>
+                        <input type="text" class="form-control" id="employeeContact" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Position</label>
+                        <input type="text" class="form-control" id="employeePosition" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Department</label>
+                        <input type="text" class="form-control" id="employeeDepartment" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveEmployeeChanges">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    // Edit Homeowner
+    $('.edit-homeowner').click(function() {
+        var id = $(this).data('id');
+        var row = $(this).closest('tr');
+        $('#homeownerId').val(id);
+        $('#homeownerFirstName').val(row.find('td:eq(0)').text().split(' ')[0]);
+        $('#homeownerLastName').val(row.find('td:eq(0)').text().split(' ')[1]);
+        $('#homeownerEmail').val(row.find('td:eq(3)').text());
+        $('#homeownerBlock').val(row.find('td:eq(1)').text());
+        $('#homeownerHouseNumber').val(row.find('td:eq(2)').text());
+        $('#editHomeownerModal').modal('show');
+    });
+
+    // Save Homeowner Changes
+    $('#saveHomeownerChanges').click(function() {
+        var homeowner = {
+            Id: $('#homeownerId').val(),
+            FirstName: $('#homeownerFirstName').val(),
+            LastName: $('#homeownerLastName').val(),
+            Email: $('#homeownerEmail').val(),
+            Block: $('#homeownerBlock').val(),
+            HouseNumber: $('#homeownerHouseNumber').val()
+        };
+
+        $.ajax({
+            url: '/Admin/EditHomeowner',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(homeowner),
+            success: function(response) {
+                if (response.success) {
+                    location.reload();
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Error updating homeowner');
+            }
+        });
+    });
+
+    // Delete Homeowner
+    $('.delete-homeowner').click(function() {
+        if (confirm('Are you sure you want to delete this homeowner?')) {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/Admin/DeleteHomeowner',
+                type: 'POST',
+                data: { id: id },
+                success: function(response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function() {
+                    alert('Error deleting homeowner');
+                }
+            });
+        }
+    });
+
+    // Edit Employee
+    $('.edit-employee').click(function() {
+        var id = $(this).data('id');
+        var row = $(this).closest('tr');
+        $('#employeeId').val(id);
+        $('#employeeFullName').val(row.find('td:eq(0)').text());
+        $('#employeeEmail').val(row.find('td:eq(1)').text());
+        $('#employeePosition').val(row.find('td:eq(2)').text());
+        $('#employeeDepartment').val(row.find('td:eq(3)').text());
+        $('#editEmployeeModal').modal('show');
+    });
+
+    // Save Employee Changes
+    $('#saveEmployeeChanges').click(function() {
+        var employee = {
+            Id: $('#employeeId').val(),
+            FullName: $('#employeeFullName').val(),
+            Email: $('#employeeEmail').val(),
+            Position: $('#employeePosition').val(),
+            Department: $('#employeeDepartment').val()
+        };
+
+        $.ajax({
+            url: '/Admin/EditEmployee',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(employee),
+            success: function(response) {
+                if (response.success) {
+                    location.reload();
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Error updating employee');
+            }
+        });
+    });
+
+    // Delete Employee
+    $('.delete-employee').click(function() {
+        if (confirm('Are you sure you want to delete this employee?')) {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/Admin/DeleteEmployee',
+                type: 'POST',
+                data: { id: id },
+                success: function(response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function() {
+                    alert('Error deleting employee');
+                }
+            });
+        }
+    });
+});
+</script>
 

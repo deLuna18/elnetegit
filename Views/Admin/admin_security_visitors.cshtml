@@ -24,14 +24,14 @@
         <span class="text">Admin</span>
     </a>
     <ul class="side-menu top">
-        <li>
+        <li >
             <a asp-area="" asp-controller="Admin" asp-action="Dashboard">
                 <i class='bx bxs-dashboard'></i>
                 <span class="text">Dashboard</span>
             </a>
         </li>
         <li>
-            <a> 
+            <a asp-area="" asp-controller="Admin" asp-action="Profile">
                 <i class='bx bxs-user'></i>
                 <span class="text">Profile</span>
             </a>
@@ -43,7 +43,7 @@
             </a>
         </li>
         <li>
-            <a>
+            <a asp-area="" asp-controller="Admin" asp-action="AdminBilling">
                 <i class='bx bxs-credit-card-front'></i>
                 <span class="text">Payment and Billing</span>
             </a>
@@ -54,8 +54,14 @@
                 <span class="text">Services</span>
             </a>
         </li>
-        <li class="active">
-            <a asp-area="" asp-controller="Admin" asp-action="SecurityVisitors">
+         <li>
+            <a asp-area="" asp-controller="Admin" asp-action="AdminFacilityReservation">
+                <i class='bx bxs-calendar'></i>
+                <span class="text">Facility Reservation</span>
+            </a>
+        </li>
+        <li>
+            <a>
                 <i class='bx bxs-shield-alt-2'></i>
                 <span class="text">Security and Visitors</span>
             </a>

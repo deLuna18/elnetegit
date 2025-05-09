@@ -48,8 +48,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>epfnzob01a</Fingerprint>
-      <Integrity>vj3w2yT2k/raO2sqL4Lvv+czEjehL2/AmYsfGUo3D0o=</Integrity>
+      <Fingerprint>2aqjn4s3vk</Fingerprint>
+      <Integrity>Nm2K9qCIpUrVdzRcCz+WM/dEzvOnjl1abIsfRoXdQow=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\admin_profile.css'))</OriginalItemSpec>

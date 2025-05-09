@@ -893,4 +893,102 @@ public class AdminController : Controller
         ViewBag.Employees = _context.Staffs.ToList();
         return View("admin_profile");
     }
+
+    [HttpPost]
+    public async Task<IActionResult> EditHomeowner([FromBody] Homeowner homeowner)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Json(new { success = false, message = "Unauthorized" });
+
+        try
+        {
+            var existingHomeowner = await _context.Homeowners.FindAsync(homeowner.Id);
+            if (existingHomeowner == null)
+                return Json(new { success = false, message = "Homeowner not found" });
+
+            existingHomeowner.FirstName = homeowner.FirstName;
+            existingHomeowner.LastName = homeowner.LastName;
+            existingHomeowner.Email = homeowner.Email;
+            existingHomeowner.Block = homeowner.Block;
+            existingHomeowner.HouseNumber = homeowner.HouseNumber;
+
+            await _context.SaveChangesAsync();
+            return Json(new { success = true, message = "Homeowner updated successfully" });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = "Error updating homeowner: " + ex.Message });
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteHomeowner(int id)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Json(new { success = false, message = "Unauthorized" });
+
+        try
+        {
+            var homeowner = await _context.Homeowners.FindAsync(id);
+            if (homeowner == null)
+                return Json(new { success = false, message = "Homeowner not found" });
+
+            _context.Homeowners.Remove(homeowner);
+            await _context.SaveChangesAsync();
+            return Json(new { success = true, message = "Homeowner deleted successfully" });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = "Error deleting homeowner: " + ex.Message });
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> EditEmployee([FromBody] Staff staff)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Json(new { success = false, message = "Unauthorized" });
+
+        try
+        {
+            var existingEmployee = await _context.Staffs.FindAsync(staff.Id);
+            if (existingEmployee == null)
+                return Json(new { success = false, message = "Employee not found" });
+
+            existingEmployee.FullName = staff.FullName;
+            existingEmployee.Email = staff.Email;
+            existingEmployee.ContactNumber = staff.ContactNumber;
+            existingEmployee.Position = staff.Position;
+            existingEmployee.Department = staff.Department;
+
+            await _context.SaveChangesAsync();
+            return Json(new { success = true, message = "Employee updated successfully" });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = "Error updating employee: " + ex.Message });
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteEmployee(int id)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Json(new { success = false, message = "Unauthorized" });
+
+        try
+        {
+            var employee = await _context.Staffs.FindAsync(id);
+            if (employee == null)
+                return Json(new { success = false, message = "Employee not found" });
+
+            _context.Staffs.Remove(employee);
+            await _context.SaveChangesAsync();
+            return Json(new { success = true, message = "Employee deleted successfully" });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = "Error deleting employee: " + ex.Message });
+        }
+    }
 }
