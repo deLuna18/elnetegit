@@ -281,4 +281,49 @@
 
 		// Load request history when modal is opened
 		document.getElementById('requestsModal').addEventListener('show.bs.modal', loadRequestHistory);
+
+		// Shared data structure for contact requests
+		window.contactRequests = window.contactRequests || [];
+
+		// Function to submit a new request
+		async function submitRequest(formData) {
+			const newRequest = {
+				id: Date.now(), // Generate unique ID
+				firstName: formData.FirstName,
+				lastName: formData.LastName,
+				email: formData.Email,
+				queryType: formData.QueryType,
+				message: formData.Message,
+				dateSubmitted: new Date().toISOString(),
+				status: 'New',
+				staffNotes: ''
+			};
+
+			// Add to local storage
+			window.contactRequests.push(newRequest);
+			localStorage.setItem('contactRequests', JSON.stringify(window.contactRequests));
+
+			// Notify other pages
+			window.dispatchEvent(new CustomEvent('newContactRequest', { detail: newRequest }));
+
+			return { success: true, message: 'Request submitted successfully!' };
+		}
+
+		// Function to get request history
+		async function getRequestHistory() {
+			const requests = JSON.parse(localStorage.getItem('contactRequests') || '[]');
+			return requests.filter(req => req.email === document.querySelector('input[name="Email"]').value);
+		}
+
+		// Listen for request updates from admin/staff
+		window.addEventListener('contactRequestUpdated', (event) => {
+			const updatedRequest = event.detail;
+			const requests = JSON.parse(localStorage.getItem('contactRequests') || '[]');
+			const index = requests.findIndex(req => req.id === updatedRequest.id);
+			if (index !== -1) {
+				requests[index] = updatedRequest;
+				localStorage.setItem('contactRequests', JSON.stringify(requests));
+				loadRequestHistory(); // Refresh the display
+			}
+		});
 </script>

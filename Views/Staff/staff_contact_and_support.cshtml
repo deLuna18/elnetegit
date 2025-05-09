@@ -16,14 +16,14 @@
 			<span class="text">Staff</span>
 		</a>
 		<ul class="side-menu top">
-			<li class="active">
+			<li>
 				<a asp-area="" asp-controller="Staff" asp-action="Dashboard">
 					<i class='bx bxs-dashboard'></i>
 					<span class="text">Dashboard</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a asp-area="" asp-controller="Staff" asp-action="Profile">
 					<i class='bx bxs-user'></i>
 					<span class="text">Profile</span>
 				</a>
@@ -35,7 +35,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a asp-area="" asp-controller="Staff" asp-action="StaffBilling">
 					<i class='bx bxs-credit-card-front'></i>
 					<span class="text">Payment and Billing</span>
 				</a>
@@ -449,3 +449,61 @@
         };
     }
 }
+
+<script>
+    // Initialize contact requests from storage
+    window.contactRequests = JSON.parse(localStorage.getItem('contactRequests') || '[]');
+
+    // Function to get all contact requests
+    async function getContactRequests() {
+        return window.contactRequests;
+    }
+
+    // Function to update request status
+    async function updateContactRequestStatus(requestId, newStatus, staffNotes) {
+        const requests = JSON.parse(localStorage.getItem('contactRequests') || '[]');
+        const index = requests.findIndex(req => req.id === requestId);
+        
+        if (index !== -1) {
+            requests[index].status = newStatus;
+            requests[index].staffNotes = staffNotes;
+            requests[index].lastUpdatedBy = 'Staff';
+            requests[index].lastUpdated = new Date().toISOString();
+            
+            localStorage.setItem('contactRequests', JSON.stringify(requests));
+            
+            // Notify other pages
+            window.dispatchEvent(new CustomEvent('contactRequestUpdated', { 
+                detail: requests[index] 
+            }));
+            
+            return { success: true, message: 'Request updated successfully' };
+        }
+        
+        return { success: false, message: 'Request not found' };
+    }
+
+    // Listen for new contact requests
+    window.addEventListener('newContactRequest', (event) => {
+        const newRequest = event.detail;
+        window.contactRequests.push(newRequest);
+        localStorage.setItem('contactRequests', JSON.stringify(window.contactRequests));
+        loadSupportRequests(); // Refresh the display
+    });
+
+    // Update dashboard statistics
+    function updateDashboardStats() {
+        const requests = window.contactRequests;
+        document.getElementById('totalRequests').textContent = requests.length;
+        document.getElementById('pendingRequests').textContent = 
+            requests.filter(r => r.status === 'Pending').length;
+        document.getElementById('resolvedRequests').textContent = 
+            requests.filter(r => r.status === 'Resolved').length;
+    }
+
+    // Load requests when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        loadSupportRequests();
+        updateDashboardStats();
+    });
+</script>

@@ -360,11 +360,83 @@
     // Load requests when page loads
     document.addEventListener('DOMContentLoaded', loadSupportRequests);
 
+    // Initialize contact requests from storage
+    window.contactRequests = JSON.parse(localStorage.getItem('contactRequests') || '[]');
+
+    // Function to get all support requests
+    async function getSupportRequests() {
+        return window.contactRequests;
+    }
+
+    // Function to update request status
+    async function updateRequestStatus(requestId, newStatus, response) {
+        const requests = JSON.parse(localStorage.getItem('contactRequests') || '[]');
+        const index = requests.findIndex(req => req.id === requestId);
+        
+        if (index !== -1) {
+            requests[index].status = newStatus;
+            requests[index].response = response;
+            requests[index].lastUpdatedBy = 'Admin';
+            requests[index].lastUpdated = new Date().toISOString();
+            
+            localStorage.setItem('contactRequests', JSON.stringify(requests));
+            
+            // Notify other pages
+            window.dispatchEvent(new CustomEvent('contactRequestUpdated', { 
+                detail: requests[index] 
+            }));
+            
+            return { success: true, message: 'Request updated successfully' };
+        }
+        
+        return { success: false, message: 'Request not found' };
+    }
+
+    // Listen for new contact requests
+    window.addEventListener('newContactRequest', (event) => {
+        const newRequest = event.detail;
+        window.contactRequests.push(newRequest);
+        localStorage.setItem('contactRequests', JSON.stringify(window.contactRequests));
+        loadSupportRequests(); // Refresh the display
+        updateDashboardStats(); // Update statistics
+    });
+
+    // Update dashboard statistics
+    function updateDashboardStats() {
+        const requests = window.contactRequests;
+        document.getElementById('totalRequests').textContent = requests.length;
+        document.getElementById('pendingRequests').textContent = 
+            requests.filter(r => r.status === 'Pending').length;
+        document.getElementById('resolvedRequests').textContent = 
+            requests.filter(r => r.status === 'Resolved').length;
+        
+        // Calculate average response time
+        const resolvedRequests = requests.filter(r => r.status === 'Resolved');
+        if (resolvedRequests.length > 0) {
+            const totalResponseTime = resolvedRequests.reduce((acc, req) => {
+                const submitted = new Date(req.dateSubmitted);
+                const resolved = new Date(req.lastUpdated);
+                return acc + (resolved - submitted);
+            }, 0);
+            const avgHours = Math.round(totalResponseTime / (resolvedRequests.length * 3600000));
+            document.getElementById('avgResponseTime').textContent = `${avgHours}h`;
+        }
+    }
+
     // Handle status filter
-    document.getElementById('statusFilter').addEventListener('change', async function() {
-        const response = await fetch(`/Admin/GetSupportRequests?status=${this.value}`);
-        const data = await response.json();
-        populateRequestsTable(data);
+    document.getElementById('statusFilter').addEventListener('change', function() {
+        const status = this.value;
+        const requests = window.contactRequests;
+        const filteredRequests = status === 'all' ? 
+            requests : 
+            requests.filter(r => r.status.toLowerCase() === status);
+        populateRequestsTable(filteredRequests);
+    });
+
+    // Load requests when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        loadSupportRequests();
+        updateDashboardStats();
     });
 </script>
 
