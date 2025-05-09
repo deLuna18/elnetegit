@@ -349,36 +349,54 @@
             fetch('/Admin/GetHomeownerLogs')
                 .then(response => response.json())
                 .then(data => {
+                    // Debug: Log the actual data structure from the server
+                    console.log('Homeowner logs data:', data);
+                    
                     const tbody = document.querySelector('#homeownerLogsTable tbody');
                     if (!tbody) return;
 
-                    // Group logs by month
-                    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-                    const stats = {};
-                    months.forEach(m => stats[m] = { Approved: 0, Disapproved: 0 });
+                    // Clear existing rows
+                    tbody.innerHTML = '';
 
-                    data.forEach(log => {
-                        const date = new Date(log.date);
-                        const month = months[date.getMonth()];
-                        if (stats[month]) {
-                            stats[month][log.status] = (stats[month][log.status] || 0) + 1;
-                        }
-                    });
-
-                    // Build table rows
-                    tbody.innerHTML = months.map(m => `
-                        <tr>
-                            <td>${m}</td>
-                            <td style="color:#155724; background:#d4edda; font-weight:bold;">${stats[m].Approved}</td>
-                            <td style="color:#721c24; background:#f8d7da; font-weight:bold;">${stats[m].Disapproved}</td>
-                        </tr>
-                    `).join('');
+                    // No need to transform data, server already sends properly formatted data
+                    if (data && data.length > 0) {
+                        // Fill table with data received from server
+                        data.forEach(monthData => {
+                            // Debug: Log each month data object
+                            console.log('Month data item:', monthData);
+                            
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${monthData.month}</td>
+                                <td style="color:#155724; background:#d4edda; font-weight:bold;">${monthData.approved}</td>
+                                <td style="color:#721c24; background:#f8d7da; font-weight:bold;">${monthData.disapproved}</td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    } else {
+                        // Show message if no data
+                        tbody.innerHTML = `
+                            <tr>
+                                <td colspan="3" class="text-center">No homeowner registration logs found</td>
+                            </tr>
+                        `;
+                    }
                 })
-                .catch(error => console.error('Error fetching homeowner logs:', error));
+                .catch(error => {
+                    console.error('Error fetching homeowner logs:', error);
+                    const tbody = document.querySelector('#homeownerLogsTable tbody');
+                    if (tbody) {
+                        tbody.innerHTML = `
+                            <tr>
+                                <td colspan="3" class="text-center">Error loading data</td>
+                            </tr>
+                        `;
+                    }
+                });
         }
 
         // Initial render
-        document.addEventListener('DOMContentLoaded', renderHomeownerLogsTable);
+        renderHomeownerLogsTable();
 
         // Refresh logs every 30 seconds
         setInterval(renderHomeownerLogsTable, 30000);

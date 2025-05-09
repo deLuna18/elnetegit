@@ -44,12 +44,15 @@ public class AdminController : Controller
         return RedirectToAction("Dashboard");
     }
 
-    public IActionResult Dashboard()
+    public async Task<IActionResult> Dashboard()
     {
         if (HttpContext.Session.GetString("AdminUser") == null)
         {
             return RedirectToAction("Login");
         }
+
+        // Ensure we have homeowner logs data for testing
+        await SeedHomeownerLogsIfEmpty();
 
         // Get dashboard statistics
         var totalHouses = _context.Homeowners.Select(h => new { h.Block, h.HouseNumber }).Distinct().Count();
@@ -1002,19 +1005,96 @@ public class AdminController : Controller
         }
     }
 
+    // Add this method to generate test data for HomeownerLogs if needed
+    private async Task SeedHomeownerLogsIfEmpty()
+    {
+        if (!await _context.HomeownerLogs.AnyAsync())
+        {
+            _logger.LogInformation("Seeding homeowner logs with test data");
+            
+            // Get existing homeowner IDs
+            var homeownerIds = await _context.Homeowners.Select(h => h.Id).ToListAsync();
+            if (!homeownerIds.Any())
+            {
+                _logger.LogWarning("No homeowners found in database to create test logs");
+                return;
+            }
+            
+            var random = new Random();
+            var statuses = new[] { "Approved", "Disapproved" };
+            var currentDate = DateTime.Now;
+            
+            // Create logs for the past 12 months
+            var logs = new List<HomeownerLog>();
+            for (int month = 0; month < 12; month++)
+            {
+                var monthDate = currentDate.AddMonths(-month);
+                
+                // Add between 3-8 logs per month
+                var logsCount = random.Next(3, 9);
+                for (int i = 0; i < logsCount; i++)
+                {
+                    var homeownerId = homeownerIds[random.Next(homeownerIds.Count)];
+                    var status = statuses[random.Next(statuses.Length)];
+                    var day = random.Next(1, 28); // Avoid day-of-month issues
+                    
+                    logs.Add(new HomeownerLog
+                    {
+                        HomeownerId = homeownerId,
+                        Status = status,
+                        Date = new DateTime(monthDate.Year, monthDate.Month, day),
+                        Remarks = status == "Approved" 
+                            ? "Registration approved" 
+                            : "Registration disapproved due to incomplete documentation"
+                    });
+                }
+            }
+            
+            await _context.HomeownerLogs.AddRangeAsync(logs);
+            await _context.SaveChangesAsync();
+            _logger.LogInformation($"Added {logs.Count} test homeowner logs");
+        }
+    }
+
+    // Modify the GetHomeownerLogs method to seed test data if needed
     [HttpGet]
     public async Task<IActionResult> GetHomeownerLogs()
     {
         try
         {
+            // Seed test data if needed
+            await SeedHomeownerLogsIfEmpty();
+            
             var logs = await _context.HomeownerLogs
                 .OrderByDescending(l => l.Date)
+                .Select(l => new {
+                    id = l.Id,
+                    date = l.Date,
+                    status = l.Status,
+                    homeownerId = l.HomeownerId,
+                    remarks = l.Remarks,
+                    month = l.Date.ToString("MMM") // Abbreviated month name
+                })
                 .ToListAsync();
 
-            return Json(logs);
+            // Group logs by month and count approvals/disapprovals
+            var monthlyStats = logs
+                .GroupBy(l => l.month)
+                .Select(g => new {
+                    month = g.Key, // lowercase property name to match JavaScript
+                    approved = g.Count(l => l.status == "Approved"), // lowercase property name
+                    disapproved = g.Count(l => l.status == "Disapproved") // lowercase property name
+                })
+                .OrderBy(m => Array.IndexOf(
+                    new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }, 
+                    m.month))
+                .ToList();
+
+            return Json(monthlyStats);
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Error fetching homeowner logs");
             return Json(new { error = ex.Message });
         }
     }
