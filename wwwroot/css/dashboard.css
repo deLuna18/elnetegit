@@ -817,3 +817,41 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 /*BWISITOR MODAL*/
+
+
+.add-todo-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 100;
+  }
+  
+  .add-todo-btn i {
+    color: #3C91E6; 
+    font-size: 2rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .add-todo-btn:hover i {
+    color: #a777e3; 
+    transform: scale(1.1);
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  
+  .add-todo-btn:active i {
+    animation: pulse 0.3s ease;
+  }

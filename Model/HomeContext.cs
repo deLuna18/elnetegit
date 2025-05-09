@@ -19,6 +19,7 @@ namespace SubdivisionManagement.Model
          public DbSet<VisitorPass> VisitorPasses { get; set; }
         public DbSet<VehicleRegistration> VehicleRegistrations { get; set; }
         public DbSet<SecurityPolicy> SecurityPolicies { get; set; }
+        public DbSet<Todo> Todos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -71,6 +72,13 @@ namespace SubdivisionManagement.Model
                 .HasOne(v => v.Homeowner)
                 .WithMany()
                 .HasForeignKey(v => v.HomeownerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Add Todo configuration
+            modelBuilder.Entity<Todo>()
+                .HasOne(t => t.Homeowner)
+                .WithMany()
+                .HasForeignKey(t => t.HomeownerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
          // Add default security policy if none exists

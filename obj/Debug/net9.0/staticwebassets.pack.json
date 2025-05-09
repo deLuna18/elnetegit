@@ -113,6 +113,14 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\Amoa-basketball-court.jpg",
+      "PackagePath": "staticwebassets\\images\\Amoa-basketball-court.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\Basketball.jpeg",
+      "PackagePath": "staticwebassets\\images\\Basketball.jpeg"
+    },
+    {
       "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\images\\announcement.png",
       "PackagePath": "staticwebassets\\images\\announcement.png"
     },

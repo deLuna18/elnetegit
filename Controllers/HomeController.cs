@@ -48,7 +48,21 @@ public class HomeController : Controller
                 return View("Index");
             }
 
+            // Set session with proper configuration
             HttpContext.Session.SetInt32("UserId", homeowner.Id);
+            HttpContext.Session.SetString("UserEmail", homeowner.Email);
+            HttpContext.Session.SetString("UserName", $"{homeowner.FirstName} {homeowner.LastName}");
+            
+            // Set a session cookie
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.Now.AddHours(24)
+            };
+            Response.Cookies.Append("UserSession", homeowner.Id.ToString(), cookieOptions);
+
             return RedirectToAction("Dashboard");
         }
 
@@ -71,11 +85,26 @@ public class HomeController : Controller
 
     public IActionResult Dashboard()
     {
+        if (!IsUserLoggedIn())
+        {
+            return RedirectToAction("Index");
+        }
+
+        var loggedInUserId = GetLoggedInUserId();
         var announcements = _context.Announcements
             .Include(a => a.Staff)
             .OrderByDescending(a => a.DateCreated)
             .Take(4)
             .ToList();
+
+        // Get user's todos
+        var todos = _context.Todos
+            .Where(t => t.HomeownerId == loggedInUserId)
+            .OrderByDescending(t => t.CreatedAt)
+            .ToList();
+
+        ViewBag.Todos = todos;
+        ViewBag.UserId = loggedInUserId;
             
         return View(announcements);
     }
@@ -133,12 +162,27 @@ public class HomeController : Controller
 
     private int? GetLoggedInUserId()
     {
-        return HttpContext.Session.GetInt32("UserId");
+        var userId = HttpContext.Session.GetInt32("UserId");
+        var userSession = Request.Cookies["UserSession"];
+        
+        // Verify both session and cookie match
+        if (userId.HasValue && !string.IsNullOrEmpty(userSession) && 
+            userId.Value.ToString() == userSession)
+        {
+            return userId;
+        }
+        
+        return null;
     }
 
     private bool IsUserLoggedIn()
     {
-        return GetLoggedInUserId() != null;
+        var userId = HttpContext.Session.GetInt32("UserId");
+        var userSession = Request.Cookies["UserSession"];
+        
+        // Check both session and cookie
+        return userId.HasValue && !string.IsNullOrEmpty(userSession) && 
+               userId.Value.ToString() == userSession;
     }
 
     [HttpGet]
@@ -598,5 +642,98 @@ public class HomeController : Controller
             _logger.LogError(ex, "Error fetching service categories");
             return StatusCode(500, new { message = "Error fetching service categories" });
         }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetTodos()
+    {
+        if (!IsUserLoggedIn()) return Unauthorized();
+
+        var loggedInUserId = GetLoggedInUserId();
+        var todos = await _context.Todos
+            .Where(t => t.HomeownerId == loggedInUserId)
+            .OrderByDescending(t => t.CreatedAt)
+            .ToListAsync();
+
+        return Json(new { success = true, todos });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddTodo([FromBody] TodoDto todoDto)
+    {
+        if (!IsUserLoggedIn()) return Unauthorized();
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        var loggedInUserId = GetLoggedInUserId();
+        var todo = new Todo
+        {
+            Title = todoDto.Title,
+            Description = todoDto.Description,
+            HomeownerId = loggedInUserId.Value,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.Todos.Add(todo);
+        await _context.SaveChangesAsync();
+
+        return Json(new { success = true, todo });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateTodoStatus([FromBody] UpdateTodoStatusDto dto)
+    {
+        if (!IsUserLoggedIn()) return Unauthorized();
+
+        var todo = await _context.Todos.FindAsync(dto.TodoId);
+        if (todo == null) return NotFound();
+
+        var loggedInUserId = GetLoggedInUserId();
+        if (todo.HomeownerId != loggedInUserId) return Unauthorized();
+
+        todo.IsCompleted = dto.IsCompleted;
+        await _context.SaveChangesAsync();
+
+        return Json(new { success = true });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteTodo([FromBody] DeleteTodoDto dto)
+    {
+        if (!IsUserLoggedIn()) return Unauthorized();
+
+        var todo = await _context.Todos.FindAsync(dto.TodoId);
+        if (todo == null) return NotFound();
+
+        var loggedInUserId = GetLoggedInUserId();
+        if (todo.HomeownerId != loggedInUserId) return Unauthorized();
+
+        _context.Todos.Remove(todo);
+        await _context.SaveChangesAsync();
+
+        return Json(new { success = true });
+    }
+
+    public class TodoDto
+    {
+        [Required]
+        public string Title { get; set; } = string.Empty;
+        public string? Description { get; set; }
+    }
+
+    public class UpdateTodoStatusDto
+    {
+        [Required]
+        public int TodoId { get; set; }
+        [Required]
+        public bool IsCompleted { get; set; }
+    }
+
+    public class DeleteTodoDto
+    {
+        [Required]
+        public int TodoId { get; set; }
     }
 }

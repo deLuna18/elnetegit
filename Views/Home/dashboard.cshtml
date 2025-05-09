@@ -68,6 +68,120 @@
     margin-top: auto;
     padding: 0 10px;
 }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    border-radius: 10px;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: black;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.btn-primary {
+    background-color: var(--blue);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: var(--grey);
+    border-radius: 10px;
+    border-left: 10px solid var(--orange);
+}
+
+.todo-item.completed {
+    border-left-color: var(--blue);
+}
+
+.todo-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.todo-checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+.todo-title {
+    font-weight: 500;
+}
+
+.todo-description {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.todo-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.todo-action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+}
+
+.todo-action-btn:hover {
+    color: var(--blue);
+}
 </style>
 
 <title>Dashboard</title>
@@ -189,8 +303,8 @@
 				<li>
 					<i class='bx bxs-message-square-dots'></i>
 					<span class="text">
-						<h3>20</h3>
-						<button id="activeNowBtn">Active Now</button>
+						<h3>@ViewBag.TotalUsers</h3>
+						<button id="activeNowBtn">Active Homeowners</button>
 					</span>
 				</li>
 				<li>
@@ -241,37 +355,14 @@
 				</div>
 				<div class="todo">
 					<div class="head">
-						<h3>March 2025</h3>
-						<i class='bx bx-plus'></i>
-						<i class='bx bx-filter'></i>
+						<h3>My Todo List</h3>
+						<button class="add-todo-btn" onclick="openAddTodoModal()">
+							<i class='bx bx-plus' style="border: none;"></i>
+						</button>
 					</div>
-					<ul class="todo-list">
-						<li class="completed">
-							<p>03 Assembly Meeting</p>
-							<p>Gymnasium, 10:00-1:30 PM</p>
-							<i class='bx bx-dots-vertical-rounded'></i>
-						</li>
-						<li class="completed">
-							<p>09 Welcoming New Homeowners</p>
-							<p>HOA Bldg, 5:30-8:00 PM</p>
-							<i class='bx bx-dots-vertical-rounded'></i>
-						</li>
-						<li class="not-completed">
-							<p>15 Kikay's Birthday Celebration</p>
-							<p>Home, Wholeday!</p>
-							<i class='bx bx-dots-vertical-rounded'></i>
-						</li>
-						<li class="completed">
-							<p>18 Sidoy Balik Bayan Event</p>
-							<p>Home, Wholeday!</p>
-							<i class='bx bx-dots-vertical-rounded'></i>
-						</li>
-						<li class="not-completed">
-							<p>25 General Meeting</p>
-							<p>Gymnasium, 10:30 - 1:00 PM</p>
-							<i class='bx bx-dots-vertical-rounded'></i>
-						</li>
-					</ul>
+					<div class="todo-list" id="todoList">
+						<!-- Todo items will be loaded here -->
+					</div>
 				</div>
 			</div>
 		</main>
@@ -315,6 +406,8 @@
 		</div>
 	</div>
 
+
+
 	<!-- VISITOR MODAL -->
 
 	<div id="visitorModal" class="visitor-modal">
@@ -338,102 +431,359 @@
 		</table>
 	</div>
 
+	<!-- Add Todo Modal -->
+	<div id="addTodoModal" class="modal">
+		<div class="modal-content">
+			<span class="close" onclick="closeModal('addTodoModal')">&times;</span>
+			<h2>Add New Todo</h2>
+			<form id="addTodoForm">
+				@Html.AntiForgeryToken()
+				<div class="form-group">
+					<label for="todoTitle">Title</label>
+					<input type="text" id="todoTitle" name="title" required>
+				</div>
+				<div class="form-group">
+					<label for="todoDescription">Description (Optional)</label>
+					<textarea id="todoDescription" name="description"></textarea>
+				</div>
+				<button type="submit" class="btn-primary">Add Todo</button>
+			</form>
+		</div>
+	</div>
+
 	<script>
-	const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+	document.addEventListener('DOMContentLoaded', function() {
+		// Initialize todo functionality
+		initializeTodoFunctionality();
+		
+		// Initialize sidebar functionality
+		initializeSidebarFunctionality();
+		
+		// Initialize search functionality
+		initializeSearchFunctionality();
 
-		allSideMenu.forEach(item=> {
+		// Initialize messenger functionality
+		initializeMessengerFunctionality();
+
+		// Initialize visitor functionality
+		initializeVisitorFunctionality();
+	});
+
+	function initializeTodoFunctionality() {
+		// Load existing todos
+		loadTodos();
+
+		// Add todo form handling
+		const addTodoForm = document.getElementById('addTodoForm');
+		if (addTodoForm) {
+			addTodoForm.addEventListener('submit', function(e) {
+				e.preventDefault();
+				const title = document.getElementById('todoTitle').value;
+				const description = document.getElementById('todoDescription').value;
+
+				console.log('Submitting todo:', { title, description });
+
+				fetch('/Home/AddTodo', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+					},
+					body: JSON.stringify({ title, description })
+				})
+				.then(response => {
+					console.log('Response status:', response.status);
+					return response.json();
+				})
+				.then(data => {
+					console.log('Response data:', data);
+					if (data.success) {
+						closeModal('addTodoModal');
+						loadTodos();
+						addTodoForm.reset();
+					} else {
+						alert('Failed to add todo: ' + (data.message || 'Unknown error'));
+					}
+				})
+				.catch(error => {
+					console.error('Error adding todo:', error);
+					alert('Error adding todo: ' + error.message);
+				});
+			});
+		}
+	}
+
+	function initializeSidebarFunctionality() {
+		const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+		allSideMenu.forEach(item => {
 			const li = item.parentElement;
-
 			item.addEventListener('click', function () {
-				allSideMenu.forEach(i=> {
+				allSideMenu.forEach(i => {
 					i.parentElement.classList.remove('active');
 				})
 				li.classList.add('active');
 			})
 		});
 
-
 		// TOGGLE SIDEBAR
 		const menuBar = document.querySelector('#content nav .bx.bx-menu');
 		const sidebar = document.getElementById('sidebar');
 
-		menuBar.addEventListener('click', function () {
-			sidebar.classList.toggle('hide');
-		})
+		if (menuBar) {
+			menuBar.addEventListener('click', function () {
+				sidebar.classList.toggle('hide');
+			});
+		}
 
+		if(window.innerWidth < 768) {
+			sidebar.classList.add('hide');
+		}
+	}
 
-
+	function initializeSearchFunctionality() {
 		const searchButton = document.querySelector('#content nav form .form-input button');
 		const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
 		const searchForm = document.querySelector('#content nav form');
 
-		searchButton.addEventListener('click', function (e) {
-			if(window.innerWidth < 576) {
-				e.preventDefault();
-				searchForm.classList.toggle('show');
-				if(searchForm.classList.contains('show')) {
-					searchButtonIcon.classList.replace('bx-search', 'bx-x');
-				} else {
-					searchButtonIcon.classList.replace('bx-x', 'bx-search');
+		if (searchButton) {
+			searchButton.addEventListener('click', function (e) {
+				if(window.innerWidth < 576) {
+					e.preventDefault();
+					searchForm.classList.toggle('show');
+					if(searchForm.classList.contains('show')) {
+						searchButtonIcon.classList.replace('bx-search', 'bx-x');
+					} else {
+						searchButtonIcon.classList.replace('bx-x', 'bx-search');
+					}
 				}
+			});
+		}
+	}
+
+	function handleTodoSubmit(e) {
+		e.preventDefault();
+		const title = document.getElementById('todoTitle').value;
+		const description = document.getElementById('todoDescription').value;
+
+		console.log('Submitting todo:', { title, description });
+
+		fetch('/Home/AddTodo', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+			},
+			body: JSON.stringify({ title, description })
+		})
+		.then(response => {
+			console.log('Response status:', response.status);
+			return response.json();
+		})
+		.then(data => {
+			console.log('Response data:', data);
+			if (data.success) {
+				closeModal('addTodoModal');
+				loadTodos();
+				document.getElementById('addTodoForm').reset();
+			} else {
+				alert('Failed to add todo: ' + (data.message || 'Unknown error'));
 			}
 		})
+		.catch(error => {
+			console.error('Error adding todo:', error);
+			alert('Error adding todo: ' + error.message);
+		});
+	}
 
+	function openAddTodoModal() {
+		const modal = document.getElementById('addTodoModal');
+		if (modal) {
+			modal.style.display = 'block';
+		}
+	}
 
-		if(window.innerWidth < 768) {
-			sidebar.classList.add('hide');
-		} else if(window.innerWidth > 576) {
-			searchButtonIcon.classList.replace('bx-x', 'bx-search');
-			searchForm.classList.remove('show');
+	function closeModal(modalId) {
+		const modal = document.getElementById(modalId);
+		if (modal) {
+			modal.style.display = 'none';
+		}
+	}
+
+	function loadTodos() {
+		console.log('Loading todos...');
+		fetch('/Home/GetTodos')
+			.then(response => {
+				console.log('GetTodos response status:', response.status);
+				if (response.status === 401) {
+					// Redirect to login page if unauthorized
+					window.location.href = '/Home/Index';
+					return;
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (!data) return; // Skip if we redirected
+				console.log('GetTodos response data:', data);
+				if (data.success) {
+					const todoList = document.getElementById('todoList');
+					if (todoList) {
+						todoList.innerHTML = '';
+						if (data.todos && data.todos.length > 0) {
+							data.todos.forEach(todo => {
+								const todoItem = createTodoElement(todo);
+								todoList.appendChild(todoItem);
+							});
+						} else {
+							todoList.innerHTML = '<div class="no-todos">No todos yet. Add one using the + button above!</div>';
+						}
+					}
+				} else {
+					console.error('Failed to load todos:', data.message);
+				}
+			})
+			.catch(error => {
+				console.error('Error loading todos:', error);
+				const todoList = document.getElementById('todoList');
+				if (todoList) {
+					todoList.innerHTML = '<div class="error">Error loading todos. Please try again.</div>';
+				}
+			});
+	}
+
+	function createTodoElement(todo) {
+		const div = document.createElement('div');
+		div.className = `todo-item ${todo.isCompleted ? 'completed' : ''}`;
+		div.innerHTML = `
+			<div class="todo-content">
+				<input type="checkbox" class="todo-checkbox" 
+					   ${todo.isCompleted ? 'checked' : ''} 
+					   onchange="updateTodoStatus(${todo.id}, this.checked)">
+				<div>
+					<div class="todo-title">${todo.title}</div>
+					${todo.description ? `<div class="todo-description">${todo.description}</div>` : ''}
+				</div>
+			</div>
+			<div class="todo-actions">
+				<button class="todo-action-btn" onclick="deleteTodo(${todo.id})">
+					<i class='bx bx-trash'></i>
+				</button>
+			</div>
+		`;
+		return div;
+	}
+
+	function updateTodoStatus(todoId, isCompleted) {
+		fetch('/Home/UpdateTodoStatus', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+			},
+			body: JSON.stringify({ todoId, isCompleted })
+		})
+		.then(response => response.json())
+		.then(data => {
+			if (data.success) {
+				loadTodos();
+			} else {
+				alert('Failed to update todo status: ' + (data.message || 'Unknown error'));
+			}
+		})
+		.catch(error => {
+			console.error('Error updating todo status:', error);
+			alert('Error updating todo status: ' + error.message);
+		});
+	}
+
+	function deleteTodo(todoId) {
+		if (!confirm('Are you sure you want to delete this todo?')) {
+			return;
 		}
 
-		window.addEventListener('resize', function () {
-			if(this.innerWidth > 576) {
-				searchButtonIcon.classList.replace('bx-x', 'bx-search');
-				searchForm.classList.remove('show');
-			}
+		fetch('/Home/DeleteTodo', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+			},
+			body: JSON.stringify({ todoId })
 		})
-
-		const switchMode = document.getElementById('switch-mode');
-
-		switchMode.addEventListener('change', function () {
-			if(this.checked) {
-				document.body.classList.add('dark');
+		.then(response => response.json())
+		.then(data => {
+			if (data.success) {
+				loadTodos();
 			} else {
-				document.body.classList.remove('dark');
+				alert('Failed to delete todo: ' + (data.message || 'Unknown error'));
 			}
 		})
-		/*MESSENGER MODAL */
-				document.getElementById("activeNowBtn").addEventListener("click", function() {
-				document.getElementById("messengerModal").style.display = "flex";
-			});
+		.catch(error => {
+			console.error('Error deleting todo:', error);
+			alert('Error deleting todo: ' + error.message);
+		});
+	}
 
-			function closeMessenger() {
-				document.getElementById("messengerModal").style.display = "none";
-			}
-
-			function openChat(user) {
-				document.getElementById("recentChats").style.display = "none";
-				document.getElementById("chatBox").style.display = "flex";
-				document.getElementById("chatMessages").innerHTML = `<p>Chat with ${user}</p>`; /*need nako ang db */
-			}
-
-			function sendMessage() {
-				let message = document.getElementById("chatInput").value;
-				if (message.trim() !== "") {
-					let chatMessages = document.getElementById("chatMessages");
-					chatMessages.innerHTML += `<p>${message}</p>`;
-					document.getElementById("chatInput").value = "";
-					chatMessages.scrollTop = chatMessages.scrollHeight;
+	function initializeMessengerFunctionality() {
+		const activeNowBtn = document.getElementById("activeNowBtn");
+		if (activeNowBtn) {
+			activeNowBtn.addEventListener("click", function() {
+				const messengerModal = document.getElementById("messengerModal");
+				if (messengerModal) {
+					messengerModal.style.display = "flex";
 				}
-			}
-		/*VISITOR MODAL */
-			document.getElementById("visitorBtn").addEventListener("click", function() {
-				document.getElementById("visitorModal").style.display = "block";
 			});
+		}
+	}
 
-			function closeVisitorModal() {
-				document.getElementById("visitorModal").style.display = "none";
+	function initializeVisitorFunctionality() {
+		const visitorBtn = document.getElementById("visitorBtn");
+		if (visitorBtn) {
+			visitorBtn.addEventListener("click", function() {
+				const visitorModal = document.getElementById("visitorModal");
+				if (visitorModal) {
+					visitorModal.style.display = "block";
+				}
+			});
+		}
+	}
+
+	function closeMessenger() {
+		const messengerModal = document.getElementById("messengerModal");
+		if (messengerModal) {
+			messengerModal.style.display = "none";
+		}
+	}
+
+	function openChat(user) {
+		const recentChats = document.getElementById("recentChats");
+		const chatBox = document.getElementById("chatBox");
+		const chatMessages = document.getElementById("chatMessages");
+		
+		if (recentChats && chatBox && chatMessages) {
+			recentChats.style.display = "none";
+			chatBox.style.display = "flex";
+			chatMessages.innerHTML = `<p>Chat with ${user}</p>`; /*need nako ang db */
+		}
+	}
+
+	function sendMessage() {
+		const chatInput = document.getElementById("chatInput");
+		const chatMessages = document.getElementById("chatMessages");
+		
+		if (chatInput && chatMessages) {
+			let message = chatInput.value;
+			if (message.trim() !== "") {
+				chatMessages.innerHTML += `<p>${message}</p>`;
+				chatInput.value = "";
+				chatMessages.scrollTop = chatMessages.scrollHeight;
 			}
+		}
+	}
+
+	function closeVisitorModal() {
+		const visitorModal = document.getElementById("visitorModal");
+		if (visitorModal) {
+			visitorModal.style.display = "none";
+		}
+	}
 	</script>
 </body>
