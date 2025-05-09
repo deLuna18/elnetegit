@@ -94,3 +94,267 @@ header {
     color: var(--dark);
 }
 
+.table-container {
+    display: flex;
+    gap: 32px;
+    margin-top: 0;
+    justify-content: center;
+}
+
+.table-wrapper {
+    flex: 1 1 0;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(60,145,230,0.08);
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+    margin-bottom: 24px;
+    min-width: 320px;
+    max-width: 600px;
+}
+
+.table-wrapper:hover {
+    box-shadow: 0 8px 24px rgba(60,145,230,0.16);
+    transform: translateY(-2px) scale(1.01);
+}
+
+.table-header {
+    background: var(--blue);
+    color: #fff;
+    padding: 18px 28px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 1rem;
+    background: #fff;
+}
+
+.table th, .table td {
+    padding: 16px 18px;
+    text-align: left;
+}
+
+.table th {
+    background: var(--light-blue);
+    color: var(--dark);
+    font-weight: 700;
+    border-bottom: 2px solid var(--blue);
+    font-size: 1.05em;
+}
+
+.table td {
+    border-bottom: 1px solid #f0f0f0;
+    color: var(--dark);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table tbody tr:hover {
+    background: #f5faff;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-sm {
+    padding: 7px 18px;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, transform 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-warning {
+    background: var(--yellow);
+    color: #333;
+}
+
+.btn-warning:hover {
+    background: #ffe066;
+    color: #222;
+    transform: translateY(-1px) scale(1.04);
+}
+
+.btn-danger {
+    background: var(--red);
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #c23a34;
+    color: #fff;
+    transform: translateY(-1px) scale(1.04);
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+.card-title {
+    color: var(--dark);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin: 15px 0;
+}
+
+/* Professional Table Design */
+.pro-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    font-family: 'Poppins', sans-serif;
+}
+
+.pro-table thead {
+    background: #3C91E6;
+    color: white;
+}
+
+.pro-table th {
+    padding: 15px 20px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+}
+
+.pro-table td {
+    padding: 12px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.pro-table tr:last-child td {
+    border-bottom: none;
+}
+
+.pro-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* Enhanced Action Buttons */
+.action-group {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-pro {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-edit {
+    background: #FFCE26;
+    color: #333;
+}
+
+.btn-delete {
+    background: #DB504A;
+    color: white;
+}
+
+.btn-pro:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Container Layout */
+@media (max-width: 1100px) {
+    .summary-cards-row, .table-container {
+        flex-direction: column;
+        gap: 20px;
+        align-items: stretch;
+    }
+    .summary-card, .table-wrapper {
+        max-width: 100%;
+        min-width: 0;
+        margin: 0 auto;
+    }
+}
+
+/* --- Custom Summary Cards Row --- */
+.summary-cards-row {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 32px;
+    justify-content: center;
+}
+
+.summary-card {
+    flex: 1 1 0;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(60,145,230,0.08);
+    padding: 32px 0 24px 0;
+    text-align: center;
+    transition: box-shadow 0.2s, transform 0.2s;
+    min-width: 220px;
+    max-width: 350px;
+    margin: 0 8px;
+}
+
+.summary-card:hover {
+    box-shadow: 0 8px 24px rgba(60,145,230,0.16);
+    transform: translateY(-2px) scale(1.03);
+}
+
+.summary-card .card-title {
+    font-size: 1.2rem;
+    color: var(--dark);
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.summary-card .card-text {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin: 0;
+}
