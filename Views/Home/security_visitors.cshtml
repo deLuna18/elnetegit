@@ -401,7 +401,14 @@
 					},
 					error: function(xhr) {
 						console.error('Error:', xhr);
-						toastr.error('An error occurred while submitting the visitor pass request.');
+						if (xhr.status === 401) {
+							toastr.error('Please log in to submit a visitor pass request');
+							setTimeout(function() {
+								window.location.href = '/Home/Index';
+							}, 2000);
+						} else {
+							toastr.error('An error occurred while submitting the visitor pass request.');
+						}
 					}
 				});
 			});
@@ -434,7 +441,14 @@
 					},
 					error: function(xhr) {
 						console.error('Error:', xhr);
-						toastr.error('An error occurred while submitting the vehicle registration.');
+						if (xhr.status === 401) {
+							toastr.error('Please log in to register a vehicle');
+							setTimeout(function() {
+								window.location.href = '/Home/Index';
+							}, 2000);
+						} else {
+							toastr.error('An error occurred while submitting the vehicle registration.');
+						}
 					}
 				});
 			});

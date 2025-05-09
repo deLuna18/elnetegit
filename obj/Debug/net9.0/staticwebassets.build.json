@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "URmYYWy+o02F8nJH4k3Vg0HIog+1DhDWKv+VgjIIVP4=",
+  "Hash": "HVxN6ofm+owhsupThJMvSh8S1rnmCGMStZNf+2IkTvo=",
   "Source": "SubdivisionManagement",
   "BasePath": "_content/SubdivisionManagement",
   "Mode": "Default",
@@ -4341,6 +4341,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\receipts\\13f2d4ae-c6d6-4916-9e1c-26a2b7862c8c_delivery.png"
+    },
+    {
+      "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\receipts\\76d55fd4-d90a-43b9-9c3b-ba05b1d7e1cc_laboratory_schedule_2025-05-05 (4).png",
+      "SourceId": "SubdivisionManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\",
+      "BasePath": "_content/SubdivisionManagement",
+      "RelativePath": "uploads/receipts/76d55fd4-d90a-43b9-9c3b-ba05b1d7e1cc_laboratory_schedule_2025-05-05 (4)#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "lzgju91nav",
+      "Integrity": "wU4rNTsJZ8hLS9kN5jnCQs6CprHKdSTYb/Rxm2g6qzo=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\receipts\\76d55fd4-d90a-43b9-9c3b-ba05b1d7e1cc_laboratory_schedule_2025-05-05 (4).png"
     },
     {
       "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\receipts\\992e7f73-77e8-4b68-a493-9d16f3dd52ce_ACT11.pdf",
@@ -32883,6 +32904,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-oTBGrE9jNJB+rKsMlt6pwNJXb8rJWCcHabTeugfdeqU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/receipts/76d55fd4-d90a-43b9-9c3b-ba05b1d7e1cc_laboratory_schedule_2025-05-05 (4).lzgju91nav.png",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\receipts\\76d55fd4-d90a-43b9-9c3b-ba05b1d7e1cc_laboratory_schedule_2025-05-05 (4).png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "49550"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"wU4rNTsJZ8hLS9kN5jnCQs6CprHKdSTYb/Rxm2g6qzo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 09 May 2025 04:42:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "lzgju91nav"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/receipts/76d55fd4-d90a-43b9-9c3b-ba05b1d7e1cc_laboratory_schedule_2025-05-05 (4).png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-wU4rNTsJZ8hLS9kN5jnCQs6CprHKdSTYb/Rxm2g6qzo="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/receipts/76d55fd4-d90a-43b9-9c3b-ba05b1d7e1cc_laboratory_schedule_2025-05-05 (4).png",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\receipts\\76d55fd4-d90a-43b9-9c3b-ba05b1d7e1cc_laboratory_schedule_2025-05-05 (4).png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "49550"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"wU4rNTsJZ8hLS9kN5jnCQs6CprHKdSTYb/Rxm2g6qzo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 09 May 2025 04:42:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-wU4rNTsJZ8hLS9kN5jnCQs6CprHKdSTYb/Rxm2g6qzo="
         }
       ]
     },

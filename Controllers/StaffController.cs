@@ -831,6 +831,431 @@ namespace SubdivisionManagement.Controllers
 
        
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetServiceEmployees()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var employees = await _context.Staffs
+                .Where(s => s.Role == "ServiceEmployee" || s.Role == "Staff")
+                .Select(s => new
+                {
+                    s.Id,
+                    s.Username,
+                    Name = s.FullName,
+                    s.Email,
+                    Phone = s.ContactNumber,
+                    s.Status,
+                    s.Specialization,
+                    s.Department,
+                    s.Position
+                })
+                .ToListAsync();
+
+            return Json(employees);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching service employees");
+            return StatusCode(500, new { message = "Error fetching service employees" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetServiceCategories()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var categories = await _context.ServiceCategories
+                .OrderBy(c => c.Name)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Name,
+                    c.Description,
+                    c.Icon
+                })
+                .ToListAsync();
+
+            return Json(categories);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching service categories");
+            return StatusCode(500, new { message = "Error fetching service categories" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetPendingVisitorPasses()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var passes = await _context.VisitorPasses
+                .Include(vp => vp.Homeowner)
+                .Where(vp => vp.Status == "Pending")
+                .OrderByDescending(vp => vp.RequestDate)
+                .Select(vp => new
+                {
+                    vp.Id,
+                    vp.VisitorName,
+                    VisitDate = vp.VisitDate.ToString("yyyy-MM-dd"),
+                    vp.Purpose,
+                    HomeownerName = vp.Homeowner != null ? $"{vp.Homeowner.FirstName} {vp.Homeowner.LastName}" : "N/A"
+                })
+                .ToListAsync();
+
+            return Json(passes);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching pending visitor passes");
+            return StatusCode(500, new { message = "Error fetching pending visitor passes" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetApprovedVisitorPasses()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var passes = await _context.VisitorPasses
+                .Include(vp => vp.Homeowner)
+                .Where(vp => vp.Status == "Approved")
+                .OrderByDescending(vp => vp.RequestDate)
+                .Select(vp => new
+                {
+                    vp.Id,
+                    vp.VisitorName,
+                    VisitDate = vp.VisitDate.ToString("yyyy-MM-dd"),
+                    vp.Purpose,
+                    HomeownerName = vp.Homeowner != null ? $"{vp.Homeowner.FirstName} {vp.Homeowner.LastName}" : "N/A"
+                })
+                .ToListAsync();
+
+            return Json(passes);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching approved visitor passes");
+            return StatusCode(500, new { message = "Error fetching approved visitor passes" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetPendingVehicleRegistrations()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var registrations = await _context.VehicleRegistrations
+                .Include(vr => vr.Homeowner)
+                .Where(vr => vr.Status == "Pending")
+                .OrderByDescending(vr => vr.RegistrationDate)
+                .Select(vr => new
+                {
+                    vr.Id,
+                    vr.VehicleMake,
+                    vr.VehicleModel,
+                    vr.PlateNumber,
+                    HomeownerName = vr.Homeowner != null ? $"{vr.Homeowner.FirstName} {vr.Homeowner.LastName}" : "N/A"
+                })
+                .ToListAsync();
+
+            return Json(registrations);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching pending vehicle registrations");
+            return StatusCode(500, new { message = "Error fetching pending vehicle registrations" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetApprovedVehicleRegistrations()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var registrations = await _context.VehicleRegistrations
+                .Include(vr => vr.Homeowner)
+                .Where(vr => vr.Status == "Approved")
+                .OrderByDescending(vr => vr.RegistrationDate)
+                .Select(vr => new
+                {
+                    vr.Id,
+                    vr.VehicleMake,
+                    vr.VehicleModel,
+                    vr.PlateNumber,
+                    HomeownerName = vr.Homeowner != null ? $"{vr.Homeowner.FirstName} {vr.Homeowner.LastName}" : "N/A"
+                })
+                .ToListAsync();
+
+            return Json(registrations);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching approved vehicle registrations");
+            return StatusCode(500, new { message = "Error fetching approved vehicle registrations" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetActiveVisitors()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var visitors = await _context.VisitorPasses
+                .Include(vp => vp.Homeowner)
+                .Where(vp => vp.Status == "Approved" && vp.EntryTime.HasValue && !vp.ExitTime.HasValue)
+                .OrderByDescending(vp => vp.EntryTime)
+                .Select(vp => new
+                {
+                    vp.Id,
+                    vp.VisitorName,
+                    EntryTime = vp.EntryTime.Value.ToString("yyyy-MM-dd HH:mm:ss"),
+                    vp.Purpose,
+                    HomeownerName = vp.Homeowner != null ? $"{vp.Homeowner.FirstName} {vp.Homeowner.LastName}" : "N/A",
+                    VisitDuration = CalculateVisitDuration(vp.EntryTime.Value)
+                })
+                .ToListAsync();
+
+            return Json(visitors);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching active visitors");
+            return StatusCode(500, new { message = "Error fetching active visitors" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetTodayExits()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var today = DateTime.UtcNow.Date;
+            var exits = await _context.VisitorPasses
+                .Include(vp => vp.Homeowner)
+                .Where(vp => vp.ExitTime.HasValue && vp.ExitTime.Value.Date == today)
+                .OrderByDescending(vp => vp.ExitTime)
+                .Select(vp => new
+                {
+                    vp.Id,
+                    vp.VisitorName,
+                    EntryTime = vp.EntryTime.HasValue ? vp.EntryTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "N/A",
+                    ExitTime = vp.ExitTime.Value.ToString("yyyy-MM-dd HH:mm:ss"),
+                    vp.Purpose,
+                    HomeownerName = vp.Homeowner != null ? $"{vp.Homeowner.FirstName} {vp.Homeowner.LastName}" : "N/A"
+                })
+                .ToListAsync();
+
+            return Json(exits);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching today's exits");
+            return StatusCode(500, new { message = "Error fetching today's exits" });
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllVehicleRegistrations()
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var registrations = await _context.VehicleRegistrations
+                .Include(vr => vr.Homeowner)
+                .OrderByDescending(vr => vr.RegistrationDate)
+                .Select(vr => new
+                {
+                    vr.Id,
+                    vr.VehicleMake,
+                    vr.VehicleModel,
+                    vr.PlateNumber,
+                    RegistrationDate = vr.RegistrationDate.ToString("yyyy-MM-dd"),
+                    vr.Status,
+                    HomeownerName = vr.Homeowner != null ? $"{vr.Homeowner.FirstName} {vr.Homeowner.LastName}" : "N/A"
+                })
+                .ToListAsync();
+
+            return Json(registrations);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching all vehicle registrations");
+            return StatusCode(500, new { message = "Error fetching all vehicle registrations" });
+        }
+    }
+
+    private string CalculateVisitDuration(DateTime entryTime)
+    {
+        var duration = DateTime.UtcNow - entryTime;
+        if (duration.TotalDays >= 1)
+        {
+            return $"{Math.Floor(duration.TotalDays)} days";
+        }
+        else if (duration.TotalHours >= 1)
+        {
+            return $"{Math.Floor(duration.TotalHours)} hours";
+        }
+        else
+        {
+            return $"{Math.Floor(duration.TotalMinutes)} minutes";
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateVisitorPassStatus([FromBody] UpdateVisitorPassStatusDto model)
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var pass = await _context.VisitorPasses.FindAsync(model.PassId);
+            if (pass == null)
+                return NotFound(new { success = false, message = "Visitor pass not found" });
+
+            pass.Status = model.Action == "approve" ? "Approved" : 
+                         model.Action == "reject" ? "Rejected" : 
+                         model.Action == "revoke" ? "Revoked" : pass.Status;
+
+            if (model.Action == "approve")
+            {
+                pass.EntryTime = DateTime.UtcNow;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Json(new { 
+                success = true, 
+                message = $"Visitor pass {model.Action}d successfully",
+                passDetails = new {
+                    pass.Id,
+                    pass.VisitorName,
+                    EntryTime = pass.EntryTime?.ToString("yyyy-MM-dd HH:mm:ss"),
+                    pass.Purpose,
+                    HomeownerName = pass.Homeowner != null ? $"{pass.Homeowner.FirstName} {pass.Homeowner.LastName}" : "N/A"
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating visitor pass status");
+            return StatusCode(500, new { success = false, message = "Error updating visitor pass status" });
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateVehicleRegistrationStatus([FromBody] UpdateVehicleRegistrationStatusDto model)
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var registration = await _context.VehicleRegistrations.FindAsync(model.RegistrationId);
+            if (registration == null)
+                return NotFound(new { success = false, message = "Vehicle registration not found" });
+
+            registration.Status = model.Action == "approve" ? "Approved" : 
+                                model.Action == "reject" ? "Rejected" : 
+                                model.Action == "revoke" ? "Revoked" : registration.Status;
+
+            await _context.SaveChangesAsync();
+
+            return Json(new { 
+                success = true, 
+                message = $"Vehicle registration {model.Action}d successfully" 
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating vehicle registration status");
+            return StatusCode(500, new { success = false, message = "Error updating vehicle registration status" });
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> RecordVisitorExit([FromBody] RecordVisitorExitDto model)
+    {
+        if (!IsStaffLoggedIn(out _))
+            return Unauthorized();
+
+        try
+        {
+            var pass = await _context.VisitorPasses.FindAsync(model.PassId);
+            if (pass == null)
+                return NotFound(new { success = false, message = "Visitor pass not found" });
+
+            pass.ExitTime = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+
+            return Json(new { 
+                success = true, 
+                message = "Visitor exit recorded successfully",
+                exitDetails = new {
+                    pass.VisitorName,
+                    EntryTime = pass.EntryTime?.ToString("yyyy-MM-dd HH:mm:ss"),
+                    ExitTime = pass.ExitTime?.ToString("yyyy-MM-dd HH:mm:ss"),
+                    pass.Purpose,
+                    HomeownerName = pass.Homeowner != null ? $"{pass.Homeowner.FirstName} {pass.Homeowner.LastName}" : "N/A"
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error recording visitor exit");
+            return StatusCode(500, new { success = false, message = "Error recording visitor exit" });
+        }
+    }
+
+    public class UpdateVisitorPassStatusDto
+    {
+        public int PassId { get; set; }
+        public string Action { get; set; } = string.Empty;
+    }
+
+    public class UpdateVehicleRegistrationStatusDto
+    {
+        public int RegistrationId { get; set; }
+        public string Action { get; set; } = string.Empty;
+    }
+
+    public class RecordVisitorExitDto
+    {
+        public int PassId { get; set; }
+    }
 }
 
 }

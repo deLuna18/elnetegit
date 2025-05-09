@@ -290,15 +290,17 @@ public class HomeController : Controller
         [Required] public string Priority { get; set; } = string.Empty;
     }
 
-[HttpPost]
+    [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> RequestVisitorPass([FromBody] VisitorPassDto passDto)
     {
         try
         {
             var loggedInUserId = GetLoggedInUserId();
-            if (loggedInUserId == null) return Unauthorized(new { success = false, message = "Please log in to continue." });
-            if (!ModelState.IsValid) return BadRequest(new { success = false, message = "Invalid form data." });
+            if (loggedInUserId == null) 
+            {
+                return Unauthorized(new { success = false, message = "Please log in to continue." });
+            }
 
             var visitorPass = new VisitorPass
             {
@@ -341,8 +343,10 @@ public class HomeController : Controller
         try
         {
             var loggedInUserId = GetLoggedInUserId();
-            if (loggedInUserId == null) return Unauthorized(new { success = false, message = "Please log in to continue." });
-            if (!ModelState.IsValid) return BadRequest(new { success = false, message = "Invalid form data." });
+            if (loggedInUserId == null) 
+            {
+                return Unauthorized(new { success = false, message = "Please log in to continue." });
+            }
 
             var registration = new VehicleRegistration
             {

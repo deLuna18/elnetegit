@@ -1428,6 +1428,18 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"xgcqrhtrx5"},{"Name":"integrity","Value":"sha256-oTBGrE9jNJB\u002BrKsMlt6pwNJXb8rJWCcHabTeugfdeqU="},{"Name":"label","Value":"_content/SubdivisionManagement/uploads/receipts/13f2d4ae-c6d6-4916-9e1c-26a2b7862c8c_delivery.png"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1046"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022oTBGrE9jNJB\u002BrKsMlt6pwNJXb8rJWCcHabTeugfdeqU=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 18:44:28 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SubdivisionManagement/uploads/receipts/76d55fd4-d90a-43b9-9c3b-ba05b1d7e1cc_laboratory_schedule_2025-05-05 (4).lzgju91nav.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\76d55fd4-d90a-43b9-9c3b-ba05b1d7e1cc_laboratory_schedule_2025-05-05 (4).png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"lzgju91nav"},{"Name":"integrity","Value":"sha256-wU4rNTsJZ8hLS9kN5jnCQs6CprHKdSTYb/Rxm2g6qzo="},{"Name":"label","Value":"_content/SubdivisionManagement/uploads/receipts/76d55fd4-d90a-43b9-9c3b-ba05b1d7e1cc_laboratory_schedule_2025-05-05 (4).png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"49550"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022wU4rNTsJZ8hLS9kN5jnCQs6CprHKdSTYb/Rxm2g6qzo=\u0022"},{"Name":"Last-Modified","Value":"Fri, 09 May 2025 04:42:56 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SubdivisionManagement/uploads/receipts/76d55fd4-d90a-43b9-9c3b-ba05b1d7e1cc_laboratory_schedule_2025-05-05 (4).png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\76d55fd4-d90a-43b9-9c3b-ba05b1d7e1cc_laboratory_schedule_2025-05-05 (4).png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-wU4rNTsJZ8hLS9kN5jnCQs6CprHKdSTYb/Rxm2g6qzo="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"49550"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022wU4rNTsJZ8hLS9kN5jnCQs6CprHKdSTYb/Rxm2g6qzo=\u0022"},{"Name":"Last-Modified","Value":"Fri, 09 May 2025 04:42:56 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/SubdivisionManagement/uploads/receipts/992e7f73-77e8-4b68-a493-9d16f3dd52ce_ACT11.dkvrk7jbsy.pdf">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\receipts\992e7f73-77e8-4b68-a493-9d16f3dd52ce_ACT11.pdf'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>

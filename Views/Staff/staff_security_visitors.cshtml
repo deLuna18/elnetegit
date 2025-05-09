@@ -259,29 +259,40 @@
         })
 
         function loadPendingVisitorPasses() {
-            $.get('/Staff/GetPendingVisitorPasses', function(data) {
-                $('#pendingVisitorPasses').empty();
-                data.forEach(function(pass) {
-                    const html = `
-                        <div class="list-item" data-id="${pass.id}">
-                            <div class="request-info">
-                                <span class="visitor-name">${pass.visitorName}</span>
-                                <span class="visit-date">${pass.visitDate}</span>
-                                <span class="visit-purpose">${pass.purpose}</span>
-                                <span class="homeowner-name">Homeowner: ${pass.homeownerName}</span>
+            $.ajax({
+                url: '/Staff/GetPendingVisitorPasses',
+                type: 'GET',
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function(data) {
+                    $('#pendingVisitorPasses').empty();
+                    data.forEach(function(pass) {
+                        const html = `
+                            <div class="list-item" data-id="${pass.id}">
+                                <div class="request-info">
+                                    <span class="visitor-name">${pass.visitorName}</span>
+                                    <span class="visit-date">${pass.visitDate}</span>
+                                    <span class="visit-purpose">${pass.purpose}</span>
+                                    <span class="homeowner-name">Homeowner: ${pass.homeownerName}</span>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="btn-approve" onclick="updateVisitorPassStatus(${pass.id}, 'approve')">
+                                        <i class='bx bx-check'></i> Approve
+                                    </button>
+                                    <button class="btn-reject" onclick="updateVisitorPassStatus(${pass.id}, 'reject')">
+                                        <i class='bx bx-x'></i> Reject
+                                    </button>
+                                </div>
                             </div>
-                            <div class="action-buttons">
-                                <button class="btn-approve" onclick="updateVisitorPassStatus(${pass.id}, 'approve')">
-                                    <i class='bx bx-check'></i> Approve
-                                </button>
-                                <button class="btn-reject" onclick="updateVisitorPassStatus(${pass.id}, 'reject')">
-                                    <i class='bx bx-x'></i> Reject
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    $('#pendingVisitorPasses').append(html);
-                });
+                        `;
+                        $('#pendingVisitorPasses').append(html);
+                    });
+                },
+                error: function(xhr) {
+                    console.error('Error loading pending visitor passes:', xhr);
+                    toastr.error('Failed to load pending visitor passes');
+                }
             });
         }
 
@@ -399,7 +410,6 @@
                             `;
                             
                             $('#activeVisitors .no-data').remove();
-                            
                             $('#activeVisitors').prepend(activeVisitorHtml);
                         }
 
@@ -409,6 +419,9 @@
                                 $('#pendingVisitorPasses').append('<div class="no-data">No pending visitor passes</div>');
                             }
                         });
+
+                        loadPendingVisitorPasses();
+                        loadApprovedVisitorPasses();
                     } else {
                         toastr.error(response.message || 'An error occurred');
                     }
@@ -532,7 +545,6 @@
                         `;
                         
                         $('#todayExits .no-data').remove();
-                        
                         $('#todayExits').prepend(exitHtml);
                         
                         $(`#activeVisitors .list-item[data-id="${passId}"]`).fadeOut(function() {
