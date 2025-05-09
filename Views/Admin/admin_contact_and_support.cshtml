@@ -308,24 +308,116 @@
         loadSupportRequests();
     });
 
-    // Update the loadSupportRequests function to initialize charts
+    // Add these functions after the existing script
+    let supportRequests = [];
+
+    // Function to load and display support requests
     async function loadSupportRequests() {
         try {
             const response = await fetch('/Admin/GetSupportRequests');
             const data = await response.json();
+            supportRequests = data;
             updateDashboardStats(data);
             populateRequestsTable(data);
-            initializeCharts(data);
+            updateCharts(data);
         } catch (error) {
             console.error('Error loading support requests:', error);
         }
     }
 
-    // Update dashboard statistics
+    // Function to update dashboard statistics
     function updateDashboardStats(data) {
         document.getElementById('totalRequests').textContent = data.length;
         document.getElementById('pendingRequests').textContent = data.filter(r => r.status === 'Pending').length;
         document.getElementById('resolvedRequests').textContent = data.filter(r => r.status === 'Resolved').length;
+        
+        // Calculate average response time
+        const resolvedRequests = data.filter(r => r.status === 'Resolved');
+        if (resolvedRequests.length > 0) {
+            const avgTime = resolvedRequests.reduce((acc, req) => {
+                const responseTime = new Date(req.resolvedDate) - new Date(req.dateSubmitted);
+                return acc + responseTime;
+            }, 0) / resolvedRequests.length;
+            document.getElementById('avgResponseTime').textContent = `${Math.round(avgTime / (1000 * 60 * 60))}h`;
+        }
+    }
+
+    // Function to update charts
+    function updateCharts(data) {
+        const statusCounts = {
+            pending: data.filter(r => r.status === 'Pending').length,
+            inProgress: data.filter(r => r.status === 'In Progress').length,
+            resolved: data.filter(r => r.status === 'Resolved').length
+        };
+
+        // Update requests chart
+        const requestsChart = Chart.getChart('requestsChart');
+        if (requestsChart) {
+            requestsChart.data.datasets[0].data = [
+                statusCounts.pending,
+                statusCounts.inProgress,
+                statusCounts.resolved
+            ];
+            requestsChart.update();
+        }
+
+        // Update response time chart
+        const timeChart = Chart.getChart('responseTimeChart');
+        if (timeChart) {
+            const monthlyData = calculateMonthlyResponseTimes(data);
+            timeChart.data.datasets[0].data = monthlyData;
+            timeChart.update();
+        }
+    }
+
+    // Function to calculate monthly response times
+    function calculateMonthlyResponseTimes(data) {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+        return months.map(month => {
+            const monthRequests = data.filter(r => 
+                new Date(r.dateSubmitted).toLocaleString('default', { month: 'short' }) === month
+            );
+            if (monthRequests.length === 0) return 0;
+            return monthRequests.reduce((acc, req) => {
+                const responseTime = new Date(req.resolvedDate) - new Date(req.dateSubmitted);
+                return acc + responseTime;
+            }, 0) / monthRequests.length / (1000 * 60 * 60);
+        });
+    }
+
+    // Function to handle status updates
+    async function updateRequestStatus(requestId, newStatus, response) {
+        try {
+            const response = await fetch('/Admin/UpdateRequestStatus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    requestId,
+                    status: newStatus,
+                    response
+                })
+            });
+
+            if (response.ok) {
+                showNotification('Status updated successfully', 'success');
+                loadSupportRequests();
+            } else {
+                throw new Error('Failed to update status');
+            }
+        } catch (error) {
+            showNotification(error.message, 'error');
+        }
+    }
+
+    // Function to show notifications
+    function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
     }
 
     // Populate requests table
@@ -357,86 +449,18 @@
         }
     }
 
-    // Load requests when page loads
-    document.addEventListener('DOMContentLoaded', loadSupportRequests);
-
-    // Initialize contact requests from storage
-    window.contactRequests = JSON.parse(localStorage.getItem('contactRequests') || '[]');
-
-    // Function to get all support requests
-    async function getSupportRequests() {
-        return window.contactRequests;
-    }
-
-    // Function to update request status
-    async function updateRequestStatus(requestId, newStatus, response) {
-        const requests = JSON.parse(localStorage.getItem('contactRequests') || '[]');
-        const index = requests.findIndex(req => req.id === requestId);
-        
-        if (index !== -1) {
-            requests[index].status = newStatus;
-            requests[index].response = response;
-            requests[index].lastUpdatedBy = 'Admin';
-            requests[index].lastUpdated = new Date().toISOString();
-            
-            localStorage.setItem('contactRequests', JSON.stringify(requests));
-            
-            // Notify other pages
-            window.dispatchEvent(new CustomEvent('contactRequestUpdated', { 
-                detail: requests[index] 
-            }));
-            
-            return { success: true, message: 'Request updated successfully' };
-        }
-        
-        return { success: false, message: 'Request not found' };
-    }
-
-    // Listen for new contact requests
-    window.addEventListener('newContactRequest', (event) => {
-        const newRequest = event.detail;
-        window.contactRequests.push(newRequest);
-        localStorage.setItem('contactRequests', JSON.stringify(window.contactRequests));
-        loadSupportRequests(); // Refresh the display
-        updateDashboardStats(); // Update statistics
-    });
-
-    // Update dashboard statistics
-    function updateDashboardStats() {
-        const requests = window.contactRequests;
-        document.getElementById('totalRequests').textContent = requests.length;
-        document.getElementById('pendingRequests').textContent = 
-            requests.filter(r => r.status === 'Pending').length;
-        document.getElementById('resolvedRequests').textContent = 
-            requests.filter(r => r.status === 'Resolved').length;
-        
-        // Calculate average response time
-        const resolvedRequests = requests.filter(r => r.status === 'Resolved');
-        if (resolvedRequests.length > 0) {
-            const totalResponseTime = resolvedRequests.reduce((acc, req) => {
-                const submitted = new Date(req.dateSubmitted);
-                const resolved = new Date(req.lastUpdated);
-                return acc + (resolved - submitted);
-            }, 0);
-            const avgHours = Math.round(totalResponseTime / (resolvedRequests.length * 3600000));
-            document.getElementById('avgResponseTime').textContent = `${avgHours}h`;
-        }
-    }
-
     // Handle status filter
-    document.getElementById('statusFilter').addEventListener('change', function() {
-        const status = this.value;
-        const requests = window.contactRequests;
-        const filteredRequests = status === 'all' ? 
-            requests : 
-            requests.filter(r => r.status.toLowerCase() === status);
-        populateRequestsTable(filteredRequests);
+    document.getElementById('statusFilter').addEventListener('change', async function() {
+        const response = await fetch(`/Admin/GetSupportRequests?status=${this.value}`);
+        const data = await response.json();
+        populateRequestsTable(data);
     });
 
-    // Load requests when page loads
+    // Initialize when page loads
     document.addEventListener('DOMContentLoaded', () => {
         loadSupportRequests();
-        updateDashboardStats();
+        // Set up periodic refresh
+        setInterval(loadSupportRequests, 30000); // Refresh every 30 seconds
     });
 </script>
 

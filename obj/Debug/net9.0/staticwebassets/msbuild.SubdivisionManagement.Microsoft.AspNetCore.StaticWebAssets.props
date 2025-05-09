@@ -408,8 +408,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>5lg61qztri</Fingerprint>
-      <Integrity>eVKSl4vEEZIwJZ2BWIf1fXJhVHOv99bxkRpcoyPEih4=</Integrity>
+      <Fingerprint>wofwrg0555</Fingerprint>
+      <Integrity>cJJFiTb2eeR0Lg2GdfXrq5m3+9iettQBXymzrVmr70g=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\staff_contact_and_support.css'))</OriginalItemSpec>

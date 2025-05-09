@@ -13,6 +13,7 @@ namespace SubdivisionManagement.Model
         public string Message { get; set; } = string.Empty;
         public DateTime DateSubmitted { get; set; } = DateTime.Now;
         public string Status { get; set; } = "Pending";
+        public string? StaffNotes { get; set; }
         
         // Navigation property
         public virtual Homeowner? Homeowner { get; set; }

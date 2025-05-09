@@ -186,144 +186,99 @@
 <script>
     const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
-		allSideMenu.forEach(item=> {
-			const li = item.parentElement;
+    allSideMenu.forEach(item=> {
+        const li = item.parentElement;
 
-			item.addEventListener('click', function () {
-				allSideMenu.forEach(i=> {
-					i.parentElement.classList.remove('active');
-				})
-				li.classList.add('active');
-			})
-		});
+        item.addEventListener('click', function () {
+            allSideMenu.forEach(i=> {
+                i.parentElement.classList.remove('active');
+            })
+            li.classList.add('active');
+        })
+    });
 
+    // TOGGLE SIDEBAR
+    const menuBar = document.querySelector('#content nav .bx.bx-menu');
+    const sidebar = document.getElementById('sidebar');
 
-		// TOGGLE SIDEBAR
-		const menuBar = document.querySelector('#content nav .bx.bx-menu');
-		const sidebar = document.getElementById('sidebar');
+    menuBar.addEventListener('click', function () {
+        sidebar.classList.toggle('hide');
+    })
 
-		menuBar.addEventListener('click', function () {
-			sidebar.classList.toggle('hide');
-		})
+    const switchMode = document.getElementById('switch-mode');
 
-        const switchMode = document.getElementById('switch-mode');
+    switchMode.addEventListener('change', function () {
+        if(this.checked) {
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
+        }
+    })
 
-		switchMode.addEventListener('change', function () {
-			if(this.checked) {
-				document.body.classList.add('dark');
-			} else {
-				document.body.classList.remove('dark');
-			}
-		})
-
-		// Handle form submission
-        document.getElementById('contactForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const formData = {};
-            new FormData(this).forEach((value, key) => {
-                formData[key] = value;
-            });
-
-            try {
-                const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
-                const response = await fetch('/Home/SubmitRequest', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': token
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: result.message,
-                        icon: 'success'
-                    }).then(() => {
-                        this.reset();
-                        loadRequestHistory();
-                    });
-                } else {
-                    throw new Error(result.message || 'Failed to submit request');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: error.message || 'Failed to submit request. Please try again.',
-                    icon: 'error'
-                });
-            }
+    // Handle form submission
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const form = this; // Store form reference
+        const formData = {};
+        new FormData(form).forEach(function(value, key) {
+            formData[key] = value;
         });
 
-		async function loadRequestHistory() {
-			try {
-				const response = await fetch('/Home/GetRequestHistory');
-				const requests = await response.json();
-				
-				const tableBody = document.getElementById('requestHistoryTable');
-				tableBody.innerHTML = requests.map(request => `
-					<tr>
-						<td>${new Date(request.dateSubmitted).toLocaleDateString()}</td>
-						<td>${request.queryType}</td>
-						<td>${request.message}</td>
-						<td><span class="badge bg-${request.status === 'Pending' ? 'warning' : 'success'}">${request.status}</span></td>
-					</tr>
-				`).join('');
-			} catch (error) {
-				console.error('Error loading request history:', error);
-			}
-		}
+        try {
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            const response = await fetch('/Home/SubmitRequest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': token
+                },
+                body: JSON.stringify(formData)
+            });
 
-		// Load request history when modal is opened
-		document.getElementById('requestsModal').addEventListener('show.bs.modal', loadRequestHistory);
+            const result = await response.json();
+            
+            if (result.success) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: result.message,
+                    icon: 'success'
+                }).then(function() {
+                    form.reset(); // Use stored form reference
+                    loadRequestHistory();
+                });
+            } else {
+                throw new Error(result.message || 'Failed to submit request');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error!',
+                text: error.message || 'Failed to submit request. Please try again.',
+                icon: 'error'
+            });
+        }
+    });
 
-		// Shared data structure for contact requests
-		window.contactRequests = window.contactRequests || [];
+    async function loadRequestHistory() {
+        try {
+            const response = await fetch('/Home/GetRequestHistory');
+            const requests = await response.json();
+            
+            const tableBody = document.getElementById('requestHistoryTable');
+            tableBody.innerHTML = requests.map(function(request) {
+                return '<tr>' +
+                    '<td>' + new Date(request.dateSubmitted).toLocaleDateString() + '</td>' +
+                    '<td>' + request.queryType + '</td>' +
+                    '<td>' + request.message + '</td>' +
+                    '<td><span class="badge bg-' + (request.status === 'Pending' ? 'warning' : 'success') + '">' + request.status + '</span></td>' +
+                    '</tr>';
+            }).join('');
+        } catch (error) {
+            console.error('Error loading request history:', error);
+        }
+    }
 
-		// Function to submit a new request
-		async function submitRequest(formData) {
-			const newRequest = {
-				id: Date.now(), // Generate unique ID
-				firstName: formData.FirstName,
-				lastName: formData.LastName,
-				email: formData.Email,
-				queryType: formData.QueryType,
-				message: formData.Message,
-				dateSubmitted: new Date().toISOString(),
-				status: 'New',
-				staffNotes: ''
-			};
-
-			// Add to local storage
-			window.contactRequests.push(newRequest);
-			localStorage.setItem('contactRequests', JSON.stringify(window.contactRequests));
-
-			// Notify other pages
-			window.dispatchEvent(new CustomEvent('newContactRequest', { detail: newRequest }));
-
-			return { success: true, message: 'Request submitted successfully!' };
-		}
-
-		// Function to get request history
-		async function getRequestHistory() {
-			const requests = JSON.parse(localStorage.getItem('contactRequests') || '[]');
-			return requests.filter(req => req.email === document.querySelector('input[name="Email"]').value);
-		}
-
-		// Listen for request updates from admin/staff
-		window.addEventListener('contactRequestUpdated', (event) => {
-			const updatedRequest = event.detail;
-			const requests = JSON.parse(localStorage.getItem('contactRequests') || '[]');
-			const index = requests.findIndex(req => req.id === updatedRequest.id);
-			if (index !== -1) {
-				requests[index] = updatedRequest;
-				localStorage.setItem('contactRequests', JSON.stringify(requests));
-				loadRequestHistory(); // Refresh the display
-			}
-		});
+    // Load request history when modal is opened
+    document.getElementById('requestsModal').addEventListener('show.bs.modal', loadRequestHistory);
 </script>
