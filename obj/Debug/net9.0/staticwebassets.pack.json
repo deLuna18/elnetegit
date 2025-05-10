@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\SubdivisionManagement.dtfmbmr46z.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_announcement.css",
+      "PackagePath": "staticwebassets\\css\\admin_announcement.css"
+    },
+    {
       "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_contact_and_support.css",
       "PackagePath": "staticwebassets\\css\\admin_contact_and_support.css"
     },
@@ -441,12 +445,20 @@
       "PackagePath": "staticwebassets\\uploads\\announcements\\05e0d338-1eef-4440-97f3-b7f50d4b22f0_NSTP POSTER.png"
     },
     {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\086885e3-d604-4030-8152-975f80440ab2_b5f85498-254f-432a-96be-36c463301c7b.jpg",
+      "PackagePath": "staticwebassets\\uploads\\announcements\\086885e3-d604-4030-8152-975f80440ab2_b5f85498-254f-432a-96be-36c463301c7b.jpg"
+    },
+    {
       "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\1fd17691-8a0c-48f8-bbef-44a16bc5dddc_Twitter header.jpg",
       "PackagePath": "staticwebassets\\uploads\\announcements\\1fd17691-8a0c-48f8-bbef-44a16bc5dddc_Twitter header.jpg"
     },
     {
       "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\218f5bb6-ecde-4d46-94d3-7635d7fc4fe8_260784287_360283929204000_1212152271997186550_n (1).jpg",
       "PackagePath": "staticwebassets\\uploads\\announcements\\218f5bb6-ecde-4d46-94d3-7635d7fc4fe8_260784287_360283929204000_1212152271997186550_n (1).jpg"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\2a5a3728-03ab-4e1e-9e9e-b06b7025b949_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.jpg",
+      "PackagePath": "staticwebassets\\uploads\\announcements\\2a5a3728-03ab-4e1e-9e9e-b06b7025b949_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.jpg"
     },
     {
       "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\422092e8-99d3-4ff4-ac90-0647e2dcf6a4_260784287_360283929204000_1212152271997186550_n (1).jpg",
@@ -469,6 +481,10 @@
       "PackagePath": "staticwebassets\\uploads\\announcements\\90c2ee46-2fd0-42e8-b5c2-444b57b340dc_b5f85498-254f-432a-96be-36c463301c7b.jpg"
     },
     {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\93646add-8e27-430b-9293-22b48ede2fd1_Basketball.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\announcements\\93646add-8e27-430b-9293-22b48ede2fd1_Basketball.jpeg"
+    },
+    {
       "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\96ab695a-27df-4281-8add-adc5481fa68e_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.jpg",
       "PackagePath": "staticwebassets\\uploads\\announcements\\96ab695a-27df-4281-8add-adc5481fa68e_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.jpg"
     },
@@ -483,6 +499,10 @@
     {
       "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\aba2d68d-d925-41e8-96eb-3635934b77e6_news2.jpg",
       "PackagePath": "staticwebassets\\uploads\\announcements\\aba2d68d-d925-41e8-96eb-3635934b77e6_news2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\b10142c1-b8cd-4fae-a390-72c0f6ce39b7_Basketball.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\announcements\\b10142c1-b8cd-4fae-a390-72c0f6ce39b7_Basketball.jpeg"
     },
     {
       "Id": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\b4df4e7e-e1a7-4297-b112-b879e02bfa03_Newjeans.jpg",

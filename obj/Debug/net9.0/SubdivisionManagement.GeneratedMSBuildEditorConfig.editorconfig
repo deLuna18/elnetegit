@@ -36,6 +36,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWRtaW5GYWNpbGl0eVJlc2VydmF0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Home/Downloads/elnet - Copy (2) - Copy/elnet - Copy (2) - Copy/Views/Admin/admin_announcement.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cYWRtaW5fYW5ub3VuY2VtZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Home/Downloads/elnet - Copy (2) - Copy/elnet - Copy (2) - Copy/Views/Admin/admin_contact_and_support.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cYWRtaW5fY29udGFjdF9hbmRfc3VwcG9ydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -150,6 +154,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Home/Downloads/elnet - Copy (2) - Copy/elnet - Copy (2) - Copy/Views/Staff/staff_contact_and_support.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhZmZcc3RhZmZfY29udGFjdF9hbmRfc3VwcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Home/Downloads/elnet - Copy (2) - Copy/elnet - Copy (2) - Copy/Views/Staff/staff_profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhZmZcc3RhZmZfcHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Home/Downloads/elnet - Copy (2) - Copy/elnet - Copy (2) - Copy/Views/Staff/staff_security_visitors.cshtml]

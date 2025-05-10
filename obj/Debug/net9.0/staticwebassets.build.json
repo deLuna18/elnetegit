@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Nrg9qMwVUJ8hE80nF23T7XKO/KbAMq2rL2kr2qyWdKI=",
+  "Hash": "fKi57XRtKCmCbO+dAvU993tUQO1HJJGtfyqefdODJzg=",
   "Source": "SubdivisionManagement",
   "BasePath": "_content/SubdivisionManagement",
   "Mode": "Default",
@@ -99,6 +99,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\1sr9fve6d5-8tv23tgjgc.gz",
+      "SourceId": "SubdivisionManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/SubdivisionManagement",
+      "RelativePath": "css/admin_announcement#[.{fingerprint=8tv23tgjgc}]?.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_announcement.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "tenlv7v7xc",
+      "Integrity": "O+tzOEOgcce9lv0VY32iEjaV2WCreZezcATKuedsMkk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_announcement.css"
     },
     {
       "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\20027f0869-vb2bozibkf.gz",
@@ -1884,6 +1905,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\SubdivisionManagement.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_announcement.css",
+      "SourceId": "SubdivisionManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\",
+      "BasePath": "_content/SubdivisionManagement",
+      "RelativePath": "css/admin_announcement#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "8tv23tgjgc",
+      "Integrity": "dLuMay6u/beGjNxuA1rjbejLFMXFPBw0Xk5WmqKC91Q=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\admin_announcement.css"
     },
     {
       "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_contact_and_support.css",
@@ -4175,6 +4217,27 @@
       "OriginalItemSpec": "wwwroot\\uploads\\announcements\\05e0d338-1eef-4440-97f3-b7f50d4b22f0_NSTP POSTER.png"
     },
     {
+      "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\086885e3-d604-4030-8152-975f80440ab2_b5f85498-254f-432a-96be-36c463301c7b.jpg",
+      "SourceId": "SubdivisionManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\",
+      "BasePath": "_content/SubdivisionManagement",
+      "RelativePath": "uploads/announcements/086885e3-d604-4030-8152-975f80440ab2_b5f85498-254f-432a-96be-36c463301c7b#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "j2zxu8uv5e",
+      "Integrity": "y83ocXkNeP8g9KBk2WbYP4a/8sqo0rbKcIBn4XiHLxw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\announcements\\086885e3-d604-4030-8152-975f80440ab2_b5f85498-254f-432a-96be-36c463301c7b.jpg"
+    },
+    {
       "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\1fd17691-8a0c-48f8-bbef-44a16bc5dddc_Twitter header.jpg",
       "SourceId": "SubdivisionManagement",
       "SourceType": "Discovered",
@@ -4215,6 +4278,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\announcements\\218f5bb6-ecde-4d46-94d3-7635d7fc4fe8_260784287_360283929204000_1212152271997186550_n (1).jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\2a5a3728-03ab-4e1e-9e9e-b06b7025b949_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.jpg",
+      "SourceId": "SubdivisionManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\",
+      "BasePath": "_content/SubdivisionManagement",
+      "RelativePath": "uploads/announcements/2a5a3728-03ab-4e1e-9e9e-b06b7025b949_0b96f5e0-fdb5-42f8-91fd-23d0703928f4#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "c7ljidetnh",
+      "Integrity": "6EevDVirohn5WQoVCDB2n2W9VOK5JcyO4mEg/vSdpCE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\announcements\\2a5a3728-03ab-4e1e-9e9e-b06b7025b949_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.jpg"
     },
     {
       "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\422092e8-99d3-4ff4-ac90-0647e2dcf6a4_260784287_360283929204000_1212152271997186550_n (1).jpg",
@@ -4322,6 +4406,27 @@
       "OriginalItemSpec": "wwwroot\\uploads\\announcements\\90c2ee46-2fd0-42e8-b5c2-444b57b340dc_b5f85498-254f-432a-96be-36c463301c7b.jpg"
     },
     {
+      "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\93646add-8e27-430b-9293-22b48ede2fd1_Basketball.jpeg",
+      "SourceId": "SubdivisionManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\",
+      "BasePath": "_content/SubdivisionManagement",
+      "RelativePath": "uploads/announcements/93646add-8e27-430b-9293-22b48ede2fd1_Basketball#[.{fingerprint}]?.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "wkkndwbhuc",
+      "Integrity": "8GToGomAYedQGBO6hnZCodznpGiYcf9ChbJ4M+cOMZs=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\announcements\\93646add-8e27-430b-9293-22b48ede2fd1_Basketball.jpeg"
+    },
+    {
       "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\96ab695a-27df-4281-8add-adc5481fa68e_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.jpg",
       "SourceId": "SubdivisionManagement",
       "SourceType": "Discovered",
@@ -4404,6 +4509,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\announcements\\aba2d68d-d925-41e8-96eb-3635934b77e6_news2.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\b10142c1-b8cd-4fae-a390-72c0f6ce39b7_Basketball.jpeg",
+      "SourceId": "SubdivisionManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\",
+      "BasePath": "_content/SubdivisionManagement",
+      "RelativePath": "uploads/announcements/b10142c1-b8cd-4fae-a390-72c0f6ce39b7_Basketball#[.{fingerprint}]?.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "wkkndwbhuc",
+      "Integrity": "8GToGomAYedQGBO6hnZCodznpGiYcf9ChbJ4M+cOMZs=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\announcements\\b10142c1-b8cd-4fae-a390-72c0f6ce39b7_Basketball.jpeg"
     },
     {
       "Identity": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\b4df4e7e-e1a7-4297-b112-b879e02bfa03_Newjeans.jpg",
@@ -4659,6 +4785,304 @@
     }
   ],
   "Endpoints": [
+    {
+      "Route": "css/admin_announcement.8tv23tgjgc.css",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\1sr9fve6d5-8tv23tgjgc.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000603500302"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1656"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"O+tzOEOgcce9lv0VY32iEjaV2WCreZezcATKuedsMkk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:06:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"dLuMay6u/beGjNxuA1rjbejLFMXFPBw0Xk5WmqKC91Q=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8tv23tgjgc"
+        },
+        {
+          "Name": "label",
+          "Value": "css/admin_announcement.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dLuMay6u/beGjNxuA1rjbejLFMXFPBw0Xk5WmqKC91Q="
+        }
+      ]
+    },
+    {
+      "Route": "css/admin_announcement.8tv23tgjgc.css",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_announcement.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6709"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dLuMay6u/beGjNxuA1rjbejLFMXFPBw0Xk5WmqKC91Q=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:06:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8tv23tgjgc"
+        },
+        {
+          "Name": "label",
+          "Value": "css/admin_announcement.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dLuMay6u/beGjNxuA1rjbejLFMXFPBw0Xk5WmqKC91Q="
+        }
+      ]
+    },
+    {
+      "Route": "css/admin_announcement.8tv23tgjgc.css.gz",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\1sr9fve6d5-8tv23tgjgc.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1656"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"O+tzOEOgcce9lv0VY32iEjaV2WCreZezcATKuedsMkk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:06:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8tv23tgjgc"
+        },
+        {
+          "Name": "label",
+          "Value": "css/admin_announcement.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-O+tzOEOgcce9lv0VY32iEjaV2WCreZezcATKuedsMkk="
+        }
+      ]
+    },
+    {
+      "Route": "css/admin_announcement.css",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\1sr9fve6d5-8tv23tgjgc.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000603500302"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1656"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"O+tzOEOgcce9lv0VY32iEjaV2WCreZezcATKuedsMkk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:06:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"dLuMay6u/beGjNxuA1rjbejLFMXFPBw0Xk5WmqKC91Q=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dLuMay6u/beGjNxuA1rjbejLFMXFPBw0Xk5WmqKC91Q="
+        }
+      ]
+    },
+    {
+      "Route": "css/admin_announcement.css",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\css\\admin_announcement.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6709"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dLuMay6u/beGjNxuA1rjbejLFMXFPBw0Xk5WmqKC91Q=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:06:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dLuMay6u/beGjNxuA1rjbejLFMXFPBw0Xk5WmqKC91Q="
+        }
+      ]
+    },
+    {
+      "Route": "css/admin_announcement.css.gz",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\1sr9fve6d5-8tv23tgjgc.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1656"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"O+tzOEOgcce9lv0VY32iEjaV2WCreZezcATKuedsMkk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:06:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-O+tzOEOgcce9lv0VY32iEjaV2WCreZezcATKuedsMkk="
+        }
+      ]
+    },
     {
       "Route": "css/admin_contact_and_support.css",
       "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\obj\\Debug\\net9.0\\compressed\\s0tvfwaw3k-q20onysk2q.gz",
@@ -32554,6 +32978,88 @@
       ]
     },
     {
+      "Route": "uploads/announcements/086885e3-d604-4030-8152-975f80440ab2_b5f85498-254f-432a-96be-36c463301c7b.j2zxu8uv5e.jpg",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\086885e3-d604-4030-8152-975f80440ab2_b5f85498-254f-432a-96be-36c463301c7b.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "137234"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"y83ocXkNeP8g9KBk2WbYP4a/8sqo0rbKcIBn4XiHLxw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:20:35 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "j2zxu8uv5e"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/announcements/086885e3-d604-4030-8152-975f80440ab2_b5f85498-254f-432a-96be-36c463301c7b.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-y83ocXkNeP8g9KBk2WbYP4a/8sqo0rbKcIBn4XiHLxw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/announcements/086885e3-d604-4030-8152-975f80440ab2_b5f85498-254f-432a-96be-36c463301c7b.jpg",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\086885e3-d604-4030-8152-975f80440ab2_b5f85498-254f-432a-96be-36c463301c7b.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "137234"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"y83ocXkNeP8g9KBk2WbYP4a/8sqo0rbKcIBn4XiHLxw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:20:35 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-y83ocXkNeP8g9KBk2WbYP4a/8sqo0rbKcIBn4XiHLxw="
+        }
+      ]
+    },
+    {
       "Route": "uploads/announcements/1fd17691-8a0c-48f8-bbef-44a16bc5dddc_Twitter header.7ulwg7rus7.jpg",
       "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\1fd17691-8a0c-48f8-bbef-44a16bc5dddc_Twitter header.jpg",
       "Selectors": [],
@@ -32714,6 +33220,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-eTa5eAytAgULvWLdIhG+zFQlfoh21uAIHvvT/oandY0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/announcements/2a5a3728-03ab-4e1e-9e9e-b06b7025b949_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.c7ljidetnh.jpg",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\2a5a3728-03ab-4e1e-9e9e-b06b7025b949_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "64450"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6EevDVirohn5WQoVCDB2n2W9VOK5JcyO4mEg/vSdpCE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:07:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "c7ljidetnh"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/announcements/2a5a3728-03ab-4e1e-9e9e-b06b7025b949_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-6EevDVirohn5WQoVCDB2n2W9VOK5JcyO4mEg/vSdpCE="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/announcements/2a5a3728-03ab-4e1e-9e9e-b06b7025b949_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.jpg",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\2a5a3728-03ab-4e1e-9e9e-b06b7025b949_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "64450"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6EevDVirohn5WQoVCDB2n2W9VOK5JcyO4mEg/vSdpCE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:07:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-6EevDVirohn5WQoVCDB2n2W9VOK5JcyO4mEg/vSdpCE="
         }
       ]
     },
@@ -33128,6 +33716,88 @@
       ]
     },
     {
+      "Route": "uploads/announcements/93646add-8e27-430b-9293-22b48ede2fd1_Basketball.jpeg",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\93646add-8e27-430b-9293-22b48ede2fd1_Basketball.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "232247"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"8GToGomAYedQGBO6hnZCodznpGiYcf9ChbJ4M+cOMZs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:07:08 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-8GToGomAYedQGBO6hnZCodznpGiYcf9ChbJ4M+cOMZs="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/announcements/93646add-8e27-430b-9293-22b48ede2fd1_Basketball.wkkndwbhuc.jpeg",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\93646add-8e27-430b-9293-22b48ede2fd1_Basketball.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "232247"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"8GToGomAYedQGBO6hnZCodznpGiYcf9ChbJ4M+cOMZs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:07:08 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wkkndwbhuc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/announcements/93646add-8e27-430b-9293-22b48ede2fd1_Basketball.jpeg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-8GToGomAYedQGBO6hnZCodznpGiYcf9ChbJ4M+cOMZs="
+        }
+      ]
+    },
+    {
       "Route": "uploads/announcements/96ab695a-27df-4281-8add-adc5481fa68e_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.c7ljidetnh.jpg",
       "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\96ab695a-27df-4281-8add-adc5481fa68e_0b96f5e0-fdb5-42f8-91fd-23d0703928f4.jpg",
       "Selectors": [],
@@ -33452,6 +34122,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-LLbsLIXETOBb8ZTwGGEEkBW2s7e573cm8ohjWEqHfJg="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/announcements/b10142c1-b8cd-4fae-a390-72c0f6ce39b7_Basketball.jpeg",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\b10142c1-b8cd-4fae-a390-72c0f6ce39b7_Basketball.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "232247"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"8GToGomAYedQGBO6hnZCodznpGiYcf9ChbJ4M+cOMZs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:09:18 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-8GToGomAYedQGBO6hnZCodznpGiYcf9ChbJ4M+cOMZs="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/announcements/b10142c1-b8cd-4fae-a390-72c0f6ce39b7_Basketball.wkkndwbhuc.jpeg",
+      "AssetFile": "C:\\Users\\Home\\Downloads\\elnet - Copy (2) - Copy\\elnet - Copy (2) - Copy\\wwwroot\\uploads\\announcements\\b10142c1-b8cd-4fae-a390-72c0f6ce39b7_Basketball.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "232247"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"8GToGomAYedQGBO6hnZCodznpGiYcf9ChbJ4M+cOMZs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 11:09:18 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wkkndwbhuc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/announcements/b10142c1-b8cd-4fae-a390-72c0f6ce39b7_Basketball.jpeg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-8GToGomAYedQGBO6hnZCodznpGiYcf9ChbJ4M+cOMZs="
         }
       ]
     },

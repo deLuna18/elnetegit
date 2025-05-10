@@ -1,3 +1,5 @@
+@model SubdivisionManagement.Model.Homeowner
+
 @{
     ViewData["Title"] = "Edit_Profile";
 }
@@ -20,13 +22,13 @@
 			<span class="text">Welcome</span>
 		</a>
 		<ul class="side-menu top">
-			<li class="active">
+			<li>
 				<a asp-area="" asp-controller="Home" asp-action="dashboard">
 					<i class='bx bxs-dashboard'></i>
 					<span class="text">Dashboard</span>
 				</a>
 			</li>
-			<li>
+			<li class="active">
 				<a asp-area="" asp-controller="Home" asp-action="profile">
 					<i class='bx bxs-user'></i>
 					<span class="text">Profile</span>
@@ -108,8 +110,8 @@
 				<i class='bx bxs-bell'></i>
 				<span class="num">8</span>
 			</a>
-			<a asp-area="" asp-controller="Home" asp-action="Edit_Profile">
-				<img src="~/images/profile.jpg" style="border-radius: 50%; width: 36px; height: 36px; object-fit: cover;">
+			<a asp-area="" asp-controller="Home" asp-action="Profile">
+				<img src="@Url.Content($"~/images/{Model.Profile}")" style="border-radius: 50%; width: 36px; height: 36px; object-fit: cover;">
 			</a>
 		</nav>
 		<!-- NAVBAR -->
@@ -121,39 +123,55 @@
 					<h1> Edit Profile</h1>
 				</div>
                 <div class="profile-container">
-                <form asp-action="Edit_Profile" asp-controller="Home" method="post">
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger">
+                        @TempData["ErrorMessage"]
+                    </div>
+                }
+                <form asp-action="UpdateProfile" asp-controller="Home" method="post">
                 <div class="profile-card">
                     <div class="profile-image">
-                        <img src="~/images/profile.jpg" alt="Profile Picture">
-                        <h2>Cornelio, Cedric Espiritu</h2>
-                    </div>
-                    <div>
-
+                        <img src="@Url.Content($"~/images/{Model.Profile}")" alt="Profile Picture">
+                        <h2>@Model.LastName, @Model.FirstName @Model.MiddleName</h2>
                     </div>
                     <div class="row">
                         <div class="column">
-                            <p> Full Name </p>
-                                 <input type="text" value="Cedric Espiritu Cornelio">
+                            <p>First Name</p>
+                            <input type="text" asp-for="FirstName" value="@Model.FirstName">
+                            <p>Middle Name</p>
+                            <input type="text" asp-for="MiddleName" value="@Model.MiddleName">
+                            <p>Last Name</p>
+                            <input type="text" asp-for="LastName" value="@Model.LastName">
                             <p>Email Address</p>
-                            <input type="email" value="cedcedcornelio@gmail.com" id="email" name="email" required>
-                            <p>Phone Number </p>
-                                <input type="text" value="+63 01234567890">
-                            <p>Block Number </p>
-                                <input type="text" value="1">
-                            
+                            <input type="email" asp-for="Email" value="@Model.Email">
+                            <p>Phone Number</p>
+                            <input type="text" asp-for="PhoneNumber" value="@Model.PhoneNumber">
+                            <p>Phase</p>
+                            <input type="text" asp-for="Phase" value="@Model.Phase">
                         </div>
                         <div class="column">
-                            <p>House/Lot Number </p>
-                                <input type="text" value="2">
-                            <p>Street/Phase </p>
-                                <input type="text" value="Kalachuchi St.">
-                            <p>Emergency Contact Information </p>
-                                <input type="text" value="+63 12345678901">
-                            <p>Vehicle Information </p>
-                                <input type="text" value="ABC 1234, Toyota Fortuner, Black">
-							<br>
-							<br>
-								<a class="edit-btn" asp-area="" asp-controller="Home" asp-action="profile">Save Changes</a>                        </div>
+                            <p>Block Number</p>
+                            <input type="text" asp-for="Block" value="@Model.Block">
+                            <p>House/Lot Number</p>
+                            <input type="text" asp-for="HouseNumber" value="@Model.HouseNumber">
+                            <p>Street</p>
+                            <input type="text" asp-for="Street" value="@Model.Street">
+                            <p>Emergency Contact Name</p>
+                            <input type="text" asp-for="EmergencyContactName" value="@Model.EmergencyContactName">
+                            <p>Emergency Contact Number</p>
+                            <input type="text" asp-for="EmergencyContactNumber" value="@Model.EmergencyContactNumber">
+                            <br>
+                            <br>
+                            <button type="submit" class="edit-btn">Save Changes</button>
+                            <a class="edit-btn" style="background-color: var(--grey); color: var(--dark);" asp-area="" asp-controller="Home" asp-action="profile">Cancel</a>
+                        </div>
 					</div>
                 </form>
             </div>

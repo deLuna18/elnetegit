@@ -1174,4 +1174,163 @@ public class AdminController : Controller
         public string Status { get; set; } = string.Empty;
         public string Response { get; set; } = string.Empty;
     }
+
+    [HttpGet]
+    [Route("Admin/Announcement")]
+    public IActionResult AdminAnnouncement()
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+        {
+            return RedirectToAction("Login");
+        }
+
+        var announcements = _context.Announcements
+            .Include(a => a.Staff)
+            .OrderByDescending(a => a.DateCreated)
+            .ToList();
+
+        ViewBag.AdminName = HttpContext.Session.GetString("AdminUser");
+        return View("admin_announcement", announcements);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddAnnouncement([FromForm] Announcement announcement, IFormFile image)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Json(new { success = false, message = "Unauthorized" });
+
+        try
+        {
+            if (image != null)
+            {
+                var uploadDir = Path.Combine("wwwroot", "uploads", "announcements");
+                Directory.CreateDirectory(uploadDir);
+
+                var fileName = $"{Guid.NewGuid()}_{image.FileName}";
+                var filePath = Path.Combine(uploadDir, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(stream);
+                }
+
+                announcement.ImagePath = $"/uploads/announcements/{fileName}";
+            }
+
+            announcement.DateCreated = DateTime.Now;
+            // Get the admin ID from the session
+            var admin = _context.Admins.FirstOrDefault(a => a.Username == HttpContext.Session.GetString("AdminUser"));
+            if (admin != null)
+            {
+                // Use admin ID as StaffId since it's non-nullable
+                announcement.StaffId = admin.Id;
+            }
+            else
+            {
+                return Json(new { success = false, message = "Admin not found" });
+            }
+
+            _context.Announcements.Add(announcement);
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true, message = "Announcement added successfully" });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = "Error adding announcement: " + ex.Message });
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditAnnouncement([FromForm] Announcement announcement, IFormFile? image)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Json(new { success = false, message = "Unauthorized" });
+
+        try
+        {
+            var existingAnnouncement = await _context.Announcements.FindAsync(announcement.Id);
+            if (existingAnnouncement == null)
+                return Json(new { success = false, message = "Announcement not found" });
+
+            // Get the admin ID from the session
+            var admin = _context.Admins.FirstOrDefault(a => a.Username == HttpContext.Session.GetString("AdminUser"));
+            if (admin == null)
+                return Json(new { success = false, message = "Admin not found" });
+
+            existingAnnouncement.Type = announcement.Type;
+            existingAnnouncement.Description = announcement.Description;
+            existingAnnouncement.StaffId = admin.Id; // Update StaffId to admin's ID
+
+            if (image != null)
+            {
+                // Delete old image if exists
+                if (!string.IsNullOrEmpty(existingAnnouncement.ImagePath))
+                {
+                    var oldPath = Path.Combine("wwwroot", existingAnnouncement.ImagePath.TrimStart('/'));
+                    if (System.IO.File.Exists(oldPath))
+                        System.IO.File.Delete(oldPath);
+                }
+
+                var uploadDir = Path.Combine("wwwroot", "uploads", "announcements");
+                Directory.CreateDirectory(uploadDir);
+
+                var fileName = $"{Guid.NewGuid()}_{image.FileName}";
+                var filePath = Path.Combine(uploadDir, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(stream);
+                }
+
+                existingAnnouncement.ImagePath = $"/uploads/announcements/{fileName}";
+            }
+
+            await _context.SaveChangesAsync();
+            return Json(new { success = true, message = "Announcement updated successfully" });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = "Error updating announcement: " + ex.Message });
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteAnnouncement(int id)
+    {
+        if (HttpContext.Session.GetString("AdminUser") == null)
+            return Json(new { success = false, message = "Unauthorized" });
+
+        try
+        {
+            var announcement = await _context.Announcements.FindAsync(id);
+            if (announcement == null)
+                return Json(new { success = false, message = "Announcement not found" });
+
+            // Verify that the announcement was created by an admin
+            var admin = _context.Admins.FirstOrDefault(a => a.Id == announcement.StaffId);
+            if (admin == null)
+                return Json(new { success = false, message = "Cannot delete announcement: Not authorized" });
+
+            // Delete image if exists
+            if (!string.IsNullOrEmpty(announcement.ImagePath))
+            {
+                var filePath = Path.Combine("wwwroot", announcement.ImagePath.TrimStart('/'));
+                if (System.IO.File.Exists(filePath))
+                    System.IO.File.Delete(filePath);
+            }
+
+            _context.Announcements.Remove(announcement);
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true, message = "Announcement deleted successfully" });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = "Error deleting announcement: " + ex.Message });
+        }
+    }
 }

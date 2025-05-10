@@ -60,6 +60,11 @@ app.MapControllerRoute(
     pattern: "Admin/FacilityReservation",
     defaults: new { controller = "Admin", action = "AdminFacilityReservation" });
 
+app.MapControllerRoute(
+    name: "admin_announcement",
+    pattern: "Admin/Announcement",
+    defaults: new { controller = "Admin", action = "AdminAnnouncement" });
+
 SeedDatabase(app.Services);
 
 app.Run();
