@@ -1599,6 +1599,84 @@ namespace SubdivisionManagement.Controllers
         public string NewStatus { get; set; } = string.Empty;
         public string? StaffNotes { get; set; }
     }
+
+    public IActionResult Profile()
+    {
+        if (!IsStaffLoggedIn(out var username))
+        {
+            return RedirectToAction("Login");
+        }
+
+        var staff = GetLoggedInStaffUser(username);
+        if (staff == null)
+        {
+            return RedirectToAction("Login");
+        }
+
+        return View("staff_profile", staff);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ChangeStaffPassword(string currentPassword, string newPassword, string confirmPassword)
+    {
+        if (!IsStaffLoggedIn(out var username))
+        {
+            return RedirectToAction("Login");
+        }
+
+        var staff = GetLoggedInStaffUser(username);
+        if (staff == null)
+        {
+            return RedirectToAction("Login");
+        }
+
+        // Verify current password
+        if (!VerifyPassword(currentPassword, staff.PasswordHash, staff.PasswordSalt))
+        {
+            TempData["ErrorMessage"] = "Current password is incorrect.";
+            return RedirectToAction("Profile");
+        }
+
+        // Validate new password
+        if (newPassword != confirmPassword)
+        {
+            TempData["ErrorMessage"] = "New password and confirmation password do not match.";
+            return RedirectToAction("Profile");
+        }
+
+        // Generate new salt and hash for the new password
+        var salt = new byte[16];
+        using (var rng = System.Security.Cryptography.RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(salt);
+        }
+
+        var hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: newPassword,
+            salt: salt,
+            prf: KeyDerivationPrf.HMACSHA256,
+            iterationCount: 10000,
+            numBytesRequested: 256 / 8));
+
+        // Update password
+        staff.PasswordHash = hashedPassword;
+        staff.PasswordSalt = Convert.ToBase64String(salt);
+
+        try
+        {
+            _context.Staffs.Update(staff);
+            await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Password changed successfully.";
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error changing staff password");
+            TempData["ErrorMessage"] = "An error occurred while changing the password.";
+        }
+
+        return RedirectToAction("Profile");
+    }
 }
 
 }
